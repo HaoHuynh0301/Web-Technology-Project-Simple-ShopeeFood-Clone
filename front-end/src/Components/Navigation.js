@@ -18,18 +18,21 @@ function Navigation() {
     return(
         <ReactBoostrap.Navbar collapseOnSelect expand="lg" bg={orangeColor} variant="light" style = {{backgroundColor: orangeColor}}>
                 <ReactBoostrap.Container>
-                    <ReactBoostrap.Navbar.Brand><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>NotShoppeFood</Link></ReactBoostrap.Navbar.Brand>
+                    <ReactBoostrap.Navbar.Brand><Link style = {{textDecoration: "none", color: blackColor}} to = '/home'>NotShoppeFood</Link></ReactBoostrap.Navbar.Brand>
                     <ReactBoostrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <ReactBoostrap.Navbar.Collapse id="responsive-navbar-nav">
                         <ReactBoostrap.Nav className="me-auto">
-                        <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Trang chủ</Link></ReactBoostrap.Nav.Link>
+                        <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/home'>Trang chủ</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Đồ ăn</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Thực phẩm</Link></ReactBoostrap.Nav.Link>
+                        <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Bia</Link></ReactBoostrap.Nav.Link>
+                        <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Hoa</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link href="#pricing"></ReactBoostrap.Nav.Link>
                         </ReactBoostrap.Nav>
                         <ReactBoostrap.Nav>
                         <ReactBoostrap.NavDropdown title="Người dùng" id="collasible-nav-dropdown">
                             <ReactBoostrap.NavDropdown.Item><Link style = {{textDecoration: "none", color: blackColor}} to = '/user-infor'>Thông tin người dùng</Link></ReactBoostrap.NavDropdown.Item>
+                            <ReactBoostrap.NavDropdown.Item><Link style = {{textDecoration: "none", color: blackColor}} to = '/user-infor'>Đơn hàng của tôi</Link></ReactBoostrap.NavDropdown.Item>
                             <ReactBoostrap.NavDropdown.Item><button style = {{
                                 borderWidth: '0px',
                                 backgroundColor: 'auto',
