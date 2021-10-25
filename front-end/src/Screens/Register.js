@@ -16,8 +16,18 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            name: '',
+            phoneNumber: '',
+            email: '',
+            username: '',
+            pass1: '',
+            pass2: ''
         }
+        this.handleRegister = this.handleRegister.bind(this);
+    }
+
+    handleRegister = () => {
+
     }
 
     render() {
