@@ -1,11 +1,15 @@
 import shopeefoodLogo from '../assets/shopeefoodlogo.jpg';
+import appstore from '../assets/appstore.png';
+import chplay from '../assets/chplay.jpg';
 
 function Footer() {
     return(
         <div style = {{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-around'
+            justifyContent: 'space-around',
+            borderTop: 'solid 0.2px #cccccc',
+            paddingTop: '20px'
         }}>
             <div>
                 <p style = {{fontSize: '18px', marginBottom: '10px'}}>Công ty</p>
@@ -20,10 +24,27 @@ function Footer() {
             }}>
                 <p style = {{fontSize: '18px', marginBottom: '10px'}}>Ứng dụng NotShoppeFood</p>
                 <img style = {{
-                    height: '100px',
-                    width: '100px',
+                    height: '70px',
+                    width: '200px',
+                    borderRadius: '10px'
+                }} src = {appstore}></img>
+                <img style = {{
+                    height: '70px',
+                    width: '200px',
+                    borderRadius: '10px'
+                }} src = {chplay}></img>
+            </div>
+            <div style = {{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
+                <img style = {{
+                    height: '120px',
+                    width: '120px',
                     borderRadius: '10px'
                 }} src = {shopeefoodLogo}></img>
+                <p style = {{color: 'grey', fontSize: '13px', marginTop: '15px'}}>2021 NotShoppeFood</p>
             </div>
             <div>
                 <p style = {{fontSize: '18px', marginBottom: '10px'}}>Địa chỉ công ty</p>
