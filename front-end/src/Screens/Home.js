@@ -9,6 +9,9 @@ import {
     useHistory ,
     withRouter
 } from "react-router-dom";
+import {
+    Navigation
+} from '../Components';
 
 class Home extends Component {
     constructor(props) {
@@ -17,7 +20,12 @@ class Home extends Component {
 
     render () {
         return(
-            <div>Home</div>
+            <div>
+                <Navigation />
+                Home
+            </div>
         );
     }
 }
+
+export default Home;

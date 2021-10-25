@@ -9,6 +9,7 @@ import {
     useHistory ,
     withRouter
 } from "react-router-dom";
+import { Home } from ".";
 import './css/login.css';
 
 class Login extends Component {
@@ -22,7 +23,11 @@ class Login extends Component {
     }
 
     handleSignIn = () => {
-
+        return(
+            <Route exact path = '/'>
+                <Home />
+            </Route>
+        );
     }
 
     render() {

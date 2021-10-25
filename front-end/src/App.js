@@ -7,7 +7,8 @@ import {
 } from "react-router-dom";
 import {
     Login,
-    Register
+    Register,
+    Home
 } from './Screens';
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
                 </Route>
                 <Route path = '/register'>
                     <Register />
+                </Route>
+                <Route path = '/home'>
+                    <Home />
                 </Route>
             </Switch>
         </BrowserRouter>
