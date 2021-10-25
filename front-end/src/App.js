@@ -6,7 +6,8 @@ import {
     BrowserRouter
 } from "react-router-dom";
 import {
-    Login
+    Login,
+    Register
 } from './Screens';
 
 function App() {
@@ -15,6 +16,9 @@ function App() {
             <Switch>
                 <Route path = '/login'>
                     <Login />
+                </Route>
+                <Route path = '/register'>
+                    <Register />
                 </Route>
             </Switch>
         </BrowserRouter>
