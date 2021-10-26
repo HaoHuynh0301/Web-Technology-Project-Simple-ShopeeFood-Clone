@@ -24,7 +24,7 @@ class Home extends Component {
             <div>
                 <Navigation />
                 <div style = {{
-                    height: '620px'
+                    height: '520px'
                 }}></div>
                 <Footer />
             </div>

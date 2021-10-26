@@ -4,7 +4,7 @@ import {
     Footer
 } from '../Components';
 import {
-    blueColor, orangeColor
+    blueColor
 } from '../contants';
 
 class Profile extends Component {
@@ -31,7 +31,7 @@ class Profile extends Component {
     mainView = () => {
         return(
             <div style = {{
-                height: '635px',
+                height: '520px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',

@@ -27,7 +27,7 @@ class FoodDetail extends Component {
     mainView = () => {
         return(
             <div style = {{
-                height: '635px',
+                height: '520px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',

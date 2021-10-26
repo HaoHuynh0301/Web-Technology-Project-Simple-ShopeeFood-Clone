@@ -5,10 +5,6 @@ import {
 } from '../contants';
 import {
     Link,
-    Redirect,
-    Route,
-    useHistory ,
-    withRouter
 } from "react-router-dom";
 import './css/register.css';
 

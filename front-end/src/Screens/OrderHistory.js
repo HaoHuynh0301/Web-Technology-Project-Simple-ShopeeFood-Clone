@@ -88,7 +88,7 @@ class OrderHistory extends Component {
             })
             return(
                 <div style = {{
-                    height: '635px',
+                    height: '520px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
