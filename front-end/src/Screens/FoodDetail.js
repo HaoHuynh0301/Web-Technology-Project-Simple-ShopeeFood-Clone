@@ -101,7 +101,7 @@ class FoodDetail extends Component {
                                 <p style = {{
                                     fontWeight: 'bold',
                                     color: 'green'
-                                }}>Mở cửa</p>
+                                }}>Còn hàng</p>
                                 <img style = {{
                                     height: '20px',
                                     width: '20px',
