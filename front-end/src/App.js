@@ -9,7 +9,8 @@ import {
     Login,
     Register,
     Home,
-    Profile
+    Profile,
+    OrderHistory
 } from './Screens';
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
                 </Route>
                 <Route exact path = '/profile'>
                     <Profile />
+                </Route>
+                <Route exact path = '/history-order'>
+                    <OrderHistory />
                 </Route>
             </Switch>
         </BrowserRouter>
