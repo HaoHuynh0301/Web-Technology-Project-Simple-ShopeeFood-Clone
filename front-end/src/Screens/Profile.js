@@ -13,12 +13,19 @@ class Profile extends Component {
         this.state = {
             name: 'Huỳnh Quan Nhật Hào',
             password: 'hao152903',
-            phonenumber: '0932843656'
+            phonenumber: '0932843656',
+            email: 'hao152903@gmail.com'
         }
+        this.handleChangeInformation = this.handleChangeInformation.bind(this);
+        this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
     }
 
     handleChangeInformation = () => {
         alert('Change');
+    }
+
+    handleChangePhoneNumber = () => {
+        alert('Change phonenumber');
     }
 
     mainView = () => {
@@ -32,7 +39,7 @@ class Profile extends Component {
             }}>
                 <div style = {{
                     height: '90%',
-                    width: '50%',
+                    width: '40%',
                     border: 'solid 0.2px #e6e6e6',
                     boxShadow: '5px 10px 18px #888888'
                 }}>
@@ -46,6 +53,8 @@ class Profile extends Component {
                     <div style = {{
                         paddingTop: '30px',
                         paddingLeft: '20px',
+                        borderBottom: 'solid 0.5px #e6e6e6',
+                        paddingBottom: '20px'
                     }}>
                         <p style = {{
                             fontWeight: 'bold',
@@ -76,10 +85,10 @@ class Profile extends Component {
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}> 
-                            <p style = {{marginRight: '60px', fontWeight: 'bold'}}>Số điện thoại</p>
-                            <input type = 'text' value = {this.state.phonenumber} onChange = {(event) => {
+                            <p style = {{marginRight: '118px', fontWeight: 'bold'}}>Email</p>
+                            <input type = 'text' value = {this.state.email} onChange = {(event) => {
                                 this.setState({
-                                    phonenumber: event.target.value
+                                    email: event.target.value
                                 })
                             }} style = {{
                                 height: '30px',
@@ -117,6 +126,45 @@ class Profile extends Component {
                             justifyContent: 'center',
                             marginTop: '5px'
                         }}>Xác nhận thay đổi</button>
+                    </div>
+                    <div style = {{
+                        paddingTop: '30px',
+                        paddingLeft: '20px',
+                    }}>
+                        <p style = {{
+                            fontWeight: 'bold',
+                            color: blueColor,
+                            marginBottom: '20px'
+                        }}>Quản lý số điện thoại</p>
+                        <div style = {{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}> 
+                            <p style = {{marginRight: '60px', fontWeight: 'bold'}}>Số điện thoại</p>
+                            <input type = 'text' value = {this.state.phonenumber} onChange = {(event) => {
+                                this.setState({
+                                    phonenumber: event.target.value
+                                })
+                            }} style = {{
+                                height: '30px',
+                                borderRadius: '5px',
+                                border: 'solid 0.5px grey',
+                                padding: '5px'
+                            }}></input>
+                        </div>
+                        <button onClick = {this.handleChangeInformation} style = {{
+                                border: 'solid 0.5px grey',
+                                padding: '10px',
+                                borderRadius: '5px',
+                                backgroundColor: blueColor,
+                                color: 'white',
+                                height: '30px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                marginTop: '10px'
+                            }}>Cập nhật số điện thoại</button>
                     </div>
                 </div>
             </div>  
