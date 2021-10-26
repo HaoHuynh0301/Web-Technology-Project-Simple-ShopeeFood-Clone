@@ -10,7 +10,8 @@ import {
     Register,
     Home,
     Profile,
-    OrderHistory
+    OrderHistory,
+    FoodDetail
 } from './Screens';
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
                 </Route>
                 <Route exact path = '/history-order'>
                     <OrderHistory />
+                </Route>
+                <Route exact path = '/detail/:id'>
+                    <FoodDetail />
                 </Route>
             </Switch>
         </BrowserRouter>
