@@ -8,21 +8,25 @@ import {
 import {
     Login,
     Register,
-    Home
+    Home,
+    Profile
 } from './Screens';
 
 function App() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path = '/login'>
+                <Route exact path = '/login'>
                     <Login />
                 </Route>
-                <Route path = '/register'>
+                <Route exact path = '/register'>
                     <Register />
                 </Route>
-                <Route path = '/home'>
+                <Route exact path = '/home'>
                     <Home />
+                </Route>
+                <Route exact path = '/profile'>
+                    <Profile />
                 </Route>
             </Switch>
         </BrowserRouter>
