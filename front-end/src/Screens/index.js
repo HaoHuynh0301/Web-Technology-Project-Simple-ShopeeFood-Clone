@@ -4,6 +4,7 @@ import Home from './Home';
 import Profile from "./Profile";
 import OrderHistory from "./OrderHistory";
 import FoodDetail from "./FoodDetail";
+import OrderInstance from './OrderInstance';
 
 export {
     Login,
@@ -11,5 +12,6 @@ export {
     Home,
     Profile,
     OrderHistory,
-    FoodDetail
+    FoodDetail,
+    OrderInstance
 }

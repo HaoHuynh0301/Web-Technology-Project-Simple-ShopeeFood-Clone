@@ -33,6 +33,7 @@ function Navigation() {
                         <ReactBoostrap.NavDropdown title="Người dùng" id="collasible-nav-dropdown">
                             <ReactBoostrap.NavDropdown.Item><Link style = {{textDecoration: "none", color: blackColor}} to = '/profile'>Thông tin người dùng</Link></ReactBoostrap.NavDropdown.Item>
                             <ReactBoostrap.NavDropdown.Item><Link style = {{textDecoration: "none", color: blackColor}} to = '/history-order'>Lịch sử đơn hàng</Link></ReactBoostrap.NavDropdown.Item>
+                            <ReactBoostrap.NavDropdown.Item><Link style = {{textDecoration: "none", color: blackColor}} to = '/order-instance'>Đơn hàng hiện tại</Link></ReactBoostrap.NavDropdown.Item>
                             <ReactBoostrap.NavDropdown.Item><button style = {{
                                 borderWidth: '0px',
                                 backgroundColor: 'auto',

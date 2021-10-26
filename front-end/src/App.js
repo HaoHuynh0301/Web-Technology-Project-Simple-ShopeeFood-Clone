@@ -11,7 +11,8 @@ import {
     Home,
     Profile,
     OrderHistory,
-    FoodDetail
+    FoodDetail,
+    OrderInstance
 } from './Screens';
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
                 </Route>
                 <Route exact path = '/detail/:id'>
                     <FoodDetail />
+                </Route>
+                <Route exact path = '/order-instance'>
+                    <OrderInstance />
                 </Route>
             </Switch>
         </BrowserRouter>
