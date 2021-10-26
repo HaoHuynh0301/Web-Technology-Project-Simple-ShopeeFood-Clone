@@ -1,0 +1,26 @@
+body {
+  background-image: url("/shopee_food_clone/static/image/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+label,
+h4 {
+  color: #ee4d2d;
+  margin: 0;
+}
+
+.card img {
+  height: 15em;
+  object-fit: contain;
+}
+
+.btn {
+  background-color: #fff;
+  border-color: #ee4d2d;
+  color: #ee4d2d;
+}
+
+.container {
+  background: transparent;
+}

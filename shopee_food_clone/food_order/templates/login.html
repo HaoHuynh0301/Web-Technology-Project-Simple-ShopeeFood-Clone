@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-3">
+        <form method="post" class="card">
+            {% csrf_token %}
+            <div class="card-header" style="text-align: center">
+                <h4><strong>LOGIN</strong></h4>
+            </div>
+            <div class="card-body">
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+                <div class="mb-3">
+                    <label for="staticEmail" class="form-label">
+                        Username
+                    </label>
+
+                    <div class="col-sm-12">
+                        <input name="username" type="text" class="form-control" id="staticEmail"
+                            placeholder="Enter your email">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">
+                        Password
+                    </label>
+
+                    <div class="col-sm-12">
+                        <input name="password" type="password" class="form-control" id="inputPassword"
+                            placeholder="Enter your password">
+                    </div>
+                </div>
+
+                <div class="mb-3 d-grid">
+                    <button type="submit" href="#" class="btn"
+                        style="color: white; background-color: #ee4d2d">Login</button>
+                </div>
+
+                <div class="mb-3 d-grid">
+                    <a href="{% url 'register' %}" class="btn">Create an account</a>
+                </div>
+            </div>
+        </form method="post">
+    </div>
+</div>
+{% endblock %}
