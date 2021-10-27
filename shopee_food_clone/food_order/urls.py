@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from . import views
 
@@ -25,4 +26,9 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
     path('cart/', views.order_detail, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
+
+    path('api/register/', views.registerUserApi, name="api-register"),
+    path('api/login/', TokenObtainPairView.as_view(), name="api-login"),
+    path('api/update-password/', views.UpdatePasswordApi, name="api-update-password"),
+    path('api/require-login/', views.example_view, name="api-require-login"),
 ]

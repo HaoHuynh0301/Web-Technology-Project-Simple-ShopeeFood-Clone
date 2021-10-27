@@ -3,6 +3,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+
+from .serializers import *
 from .models import *
 from .forms import *
 
@@ -39,7 +46,7 @@ def registerUser(request):
             messages.success(request, "Create account successfully!")
             # Redirect to show messages.
             return redirect("register")
-    
+
     # Save form to context dictionary.
     context = {
         "form": form,
@@ -83,10 +90,11 @@ def order_detail(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(
+        customer=customer, complete=False)
     # Save product to cart.
     items = order.orderdetail_set.all()
-    
+
     # Save list of products in cart to context dictionary.
     context = {
         "items": items,
@@ -99,3 +107,39 @@ def order_detail(request):
 @login_required(login_url="login")
 def checkout(request):
     return redirect("index")
+
+
+@api_view(['POST'])
+def registerUserApi(request):
+    serializer = CustomerCreationSerializer(data=request.data)
+    if serializer.is_valid() and serializer.clean_password2():
+        form = CustomerCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            phone_number = serializer.data['phone_number']
+            Customer.objects.create(user=user, phone_number=phone_number)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def UpdatePasswordApi(request, format=None):
+    try:
+        new_password = request.data["password"]
+        user = request.user
+        user.set_password(new_password)
+        user.save()
+        return Response({"message": "Change password successfully!"}, status=status.HTTP_200_OK)
+    except:
+        return Response({"error": "Something went wrong!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def example_view(request, format=None):
+    content = {
+        'user': str(request.user),  # `django.contrib.auth.User` instance.
+        'auth': str(request.auth),  # None
+    }
+    return Response(content)

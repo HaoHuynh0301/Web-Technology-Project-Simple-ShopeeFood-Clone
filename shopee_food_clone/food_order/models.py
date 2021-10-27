@@ -15,7 +15,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="product-image/", blank=True)
     name = models.CharField(max_length=255)
     price = models.FloatField(default=0)
-    stock_number = models.IntegerField(default=0)
+    description = models.TextField(blank=True)
     category = models.ManyToManyField(Category)
 
     def __str__(self):
@@ -26,9 +26,6 @@ class Product(models.Model):
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     phone_number = models.CharField(max_length=10)
-
-    def __str__(self):
-        return self.user.username
 
 
 # Database table for order
