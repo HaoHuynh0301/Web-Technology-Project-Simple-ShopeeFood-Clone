@@ -11,7 +11,7 @@ import {
     orangeColor
 } from '../contants';
 
-class DoAn extends Component {
+class Bia extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -176,4 +176,4 @@ class DoAn extends Component {
     }
 }
 
-export default DoAn;
+export default Bia;

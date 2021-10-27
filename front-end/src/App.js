@@ -13,7 +13,9 @@ import {
     OrderHistory,
     FoodDetail,
     OrderInstance,
-    DoAn
+    DoAn,
+    ThucPham,
+    Bia
 } from './Screens';
 
 function App() {
@@ -43,6 +45,12 @@ function App() {
                 </Route>
                 <Route path = '/'>
                     <DoAn />
+                </Route>
+                <Route path = '/thuc-pham'>
+                    <ThucPham />
+                </Route>
+                <Route path = '/bia'>
+                    <Bia />
                 </Route>
             </Switch>
         </BrowserRouter>

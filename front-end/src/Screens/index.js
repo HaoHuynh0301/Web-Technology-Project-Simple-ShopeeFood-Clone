@@ -6,6 +6,8 @@ import OrderHistory from "./OrderHistory";
 import FoodDetail from "./FoodDetail";
 import OrderInstance from './OrderInstance';
 import DoAn from "./DoAn";
+import ThucPham from "./ThucPham";
+import Bia from "./Bia";
 
 export {
     Login,
@@ -15,5 +17,7 @@ export {
     OrderHistory,
     FoodDetail,
     OrderInstance,
-    DoAn
+    DoAn,
+    ThucPham,
+    Bia
 }
