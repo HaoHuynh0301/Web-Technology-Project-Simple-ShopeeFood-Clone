@@ -38,10 +38,6 @@ class DoAn extends Component {
                     'price': 40000
                 }
             ],
-
-            //Modal
-
-            isShow: false,
             instanceFood: {}
         }
     }
@@ -192,39 +188,6 @@ class DoAn extends Component {
                 <Navigation />
                 {this.mainView()}
                 <Footer />
-                <Modal show={this.state.isShow} onHide={() => {
-                    this.setState({
-                        isShow: false
-                    })
-                }}>
-                    <Modal.Header closeButton>
-                    <Modal.Title>Xác nhận thêm vào đơn hàng của bạn</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p>+ {this.state.instanceFood.name}</p>
-                        <p>+ {this.state.instanceFood.description}</p>
-                        <p>+ {this.state.instanceFood.price}</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={() => {
-                        this.setState({
-                            isShow: false
-                        });
-                    }}>
-                        Hủy
-                    </Button>
-                    <Button style = {{
-                        backgroundColor: orangeColor,
-                        border: 'solid 0.5px ' + orangeColor
-                    }} onClick={() => {
-                        this.setState({
-                            isShow: false
-                        })
-                    }}>
-                        Thêm vào
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
             </div>
         );
     }

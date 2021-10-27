@@ -37,6 +37,10 @@ class FoodDetail extends Component {
         })
     }
 
+    handleAddToCard = () => {
+        
+    }
+
     mainView = () => {
         return(
             <div style = {{
@@ -179,9 +183,7 @@ class FoodDetail extends Component {
                         backgroundColor: orangeColor,
                         border: 'solid 0.5px ' + orangeColor
                     }} onClick={() => {
-                        this.setState({
-                            isShow: false
-                        })
+                        this.handleAddToCard()
                     }}>
                         Thêm vào
                     </Button>
