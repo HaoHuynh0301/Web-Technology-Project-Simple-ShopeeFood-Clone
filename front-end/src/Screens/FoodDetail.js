@@ -10,18 +10,31 @@ import {
     Link
 } from 'react-router-dom'
 import { orangeColor } from "../contants";
+import {
+    Modal,
+    Button
+} from 'react-bootstrap'
 
 class FoodDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            foodInformation: {}
+            foodInformation: {
+                'id': 1,
+                'name': 'Mì xào giòn',
+                'description': 'Ngon say lalalala',
+                'categories:': 'Mì, thịt bò, bông cải xào',
+                'price': 20000
+            },
+            isShow: false
         }
         this.handleOrder = this.handleOrder.bind(this);
     }
 
     handleOrder = () => {
-        alert('Order');
+        this.setState({
+            isShow: true
+        })
     }
 
     mainView = () => {
@@ -141,6 +154,39 @@ class FoodDetail extends Component {
                 <Navigation />
                 {this.mainView()}
                 <Footer />
+                <Modal show={this.state.isShow} onHide={() => {
+                    this.setState({
+                        isShow: false
+                    })
+                }}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận thêm vào đơn hàng của bạn</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>+ {this.state.foodInformation.name}</p>
+                        <p>+ {this.state.foodInformation.description}</p>
+                        <p>+ {this.state.foodInformation.price}</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => {
+                        this.setState({
+                            isShow: false
+                        });
+                    }}>
+                        Hủy
+                    </Button>
+                    <Button style = {{
+                        backgroundColor: orangeColor,
+                        border: 'solid 0.5px ' + orangeColor
+                    }} onClick={() => {
+                        this.setState({
+                            isShow: false
+                        })
+                    }}>
+                        Thêm vào
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }

@@ -10,6 +10,9 @@ import {
     blueColor,
     orangeColor
 } from '../contants';
+import {
+    Link
+} from 'react-router-dom';
 
 class Bia extends Component {
     constructor(props) {
@@ -30,20 +33,35 @@ class Bia extends Component {
                     'categories:': 'Mì, thịt bò, bông cải xào',
                     'price': 40000
                 }
-            ]
+            ],
+
+            //Modal
+
+            isShow: false,
+            instanceFood: {}
         }
     }
 
     componentDidMount() {
-        
+
     }
 
     handleEndReached = () => {
         console.log("load more");
     };
 
-    handleOrder = (id) => {
-        alert(id);
+    handleAddToInstanceOrder = () => {
+        this.setState({
+            isShow: false,
+            instanceFood: {}
+        })
+    }
+
+    handleOrder = (item) => {
+        this.setState({
+            isShow: true,
+            instanceFood: item
+        })
     }
 
     emptyView = () => {
@@ -116,9 +134,7 @@ class Bia extends Component {
                                 color: blueColor,
                                 marginTop: '10px'
                             }}>Giá: {item.price} vnđ</p>
-                            <button onClick = {() => {
-                                this.handleOrder(item.id);
-                            }} style = {{
+                            <Link to = {'/detail/' + item.id}  style = {{
                                 border: 'solid 0.5px white',
                                 backgroundColor: orangeColor,
                                 marginLeft: '10px',
@@ -130,10 +146,11 @@ class Bia extends Component {
                                 display: 'flex',
                                 flexDirection: 'row',
                                 justifyContent: 'center',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                textDecoration: 'none'
                             }}>
-                                +
-                            </button>
+                                ...
+                            </Link>
                         </div>
                     </div>
                 );

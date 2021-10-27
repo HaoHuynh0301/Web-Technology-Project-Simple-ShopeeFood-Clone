@@ -43,13 +43,13 @@ function App() {
                 <Route exact path = '/order-instance'>
                     <OrderInstance />
                 </Route>
-                <Route path = '/'>
+                <Route exact path = '/'>
                     <DoAn />
                 </Route>
-                <Route path = '/thuc-pham'>
+                <Route exact path = '/thuc-pham'>
                     <ThucPham />
                 </Route>
-                <Route path = '/bia'>
+                <Route exact path = '/bia'>
                     <Bia />
                 </Route>
             </Switch>

@@ -25,7 +25,6 @@ function Navigation() {
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Đồ ăn</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/thuc-pham'>Thực phẩm</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/bia'>Bia</Link></ReactBoostrap.Nav.Link>
-                        <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Hoa</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link href="#pricing"></ReactBoostrap.Nav.Link>
                         </ReactBoostrap.Nav>
                         <ReactBoostrap.Nav>

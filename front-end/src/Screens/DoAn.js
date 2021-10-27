@@ -14,6 +14,9 @@ import {
     Modal,
     Button
 } from 'react-bootstrap'
+import {
+    Link
+} from 'react-router-dom';
 
 class DoAn extends Component {
     constructor(props) {
@@ -135,9 +138,7 @@ class DoAn extends Component {
                                 color: blueColor,
                                 marginTop: '10px'
                             }}>Giá: {item.price} vnđ</p>
-                            <button onClick = {() => {
-                                this.handleOrder(item);
-                            }} style = {{
+                            <Link to = {'/detail/' + item.id}  style = {{
                                 border: 'solid 0.5px white',
                                 backgroundColor: orangeColor,
                                 marginLeft: '10px',
@@ -149,10 +150,11 @@ class DoAn extends Component {
                                 display: 'flex',
                                 flexDirection: 'row',
                                 justifyContent: 'center',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                textDecoration: 'none'
                             }}>
-                                +
-                            </button>
+                                ...
+                            </Link>
                         </div>
                     </div>
                 );
