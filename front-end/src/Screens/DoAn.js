@@ -10,6 +10,10 @@ import {
     blueColor,
     orangeColor
 } from '../contants';
+import {
+    Modal,
+    Button
+} from 'react-bootstrap'
 
 class DoAn extends Component {
     constructor(props) {
@@ -30,20 +34,35 @@ class DoAn extends Component {
                     'categories:': 'Mì, thịt bò, bông cải xào',
                     'price': 40000
                 }
-            ]
+            ],
+
+            //Modal
+
+            isShow: false,
+            instanceFood: {}
         }
     }
 
     componentDidMount() {
-        
+
     }
 
     handleEndReached = () => {
         console.log("load more");
     };
 
-    handleOrder = (id) => {
-        alert(id);
+    handleAddToInstanceOrder = () => {
+        this.setState({
+            isShow: false,
+            instanceFood: {}
+        })
+    }
+
+    handleOrder = (item) => {
+        this.setState({
+            isShow: true,
+            instanceFood: item
+        })
     }
 
     emptyView = () => {
@@ -117,7 +136,7 @@ class DoAn extends Component {
                                 marginTop: '10px'
                             }}>Giá: {item.price} vnđ</p>
                             <button onClick = {() => {
-                                this.handleOrder(item.id);
+                                this.handleOrder(item);
                             }} style = {{
                                 border: 'solid 0.5px white',
                                 backgroundColor: orangeColor,
@@ -171,6 +190,39 @@ class DoAn extends Component {
                 <Navigation />
                 {this.mainView()}
                 <Footer />
+                <Modal show={this.state.isShow} onHide={() => {
+                    this.setState({
+                        isShow: false
+                    })
+                }}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận thêm vào đơn hàng của bạn</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>+ {this.state.instanceFood.name}</p>
+                        <p>+ {this.state.instanceFood.description}</p>
+                        <p>+ {this.state.instanceFood.price}</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => {
+                        this.setState({
+                            isShow: false
+                        });
+                    }}>
+                        Hủy
+                    </Button>
+                    <Button style = {{
+                        backgroundColor: orangeColor,
+                        border: 'solid 0.5px ' + orangeColor
+                    }} onClick={() => {
+                        this.setState({
+                            isShow: false
+                        })
+                    }}>
+                        Thêm vào
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
