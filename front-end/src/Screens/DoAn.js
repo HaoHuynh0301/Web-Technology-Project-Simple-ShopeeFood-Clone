@@ -4,13 +4,35 @@ import {
     Footer
 } from '../Components';
 import { ScrollView } from "@cantonjs/react-scroll-view";
+import tmpImage from '../assets/hamburger.jpg';
+import backgroundImg from '../assets/foodbackground.jpg';
+import {
+    blueColor,
+    orangeColor
+} from '../contants';
 
 class DoAn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listFoods: ['1']
+            listFoods: [
+                {
+                    'id': 1,
+                    'name': 'Mì xào giòn',
+                    'description': 'Ngon say lalalala',
+                    'categories:': 'Mì, thịt bò, bông cải xào',
+                    'price': 20000
+                }
+            ]
         }
+    }
+
+    handleEndReached = () => {
+        console.log("load more");
+    };
+
+    handleOrder = (id) => {
+        alert(id);
     }
 
     emptyView = () => {
@@ -38,10 +60,70 @@ class DoAn extends Component {
                 </div>
             );
         } else {
-            const item = this.state.listFoods.map((index, item) => {
+            const item = this.state.listFoods.map((item, index) => {
                 return(
-                    <div key = {index}>
-                        
+                    <div style = {{
+                        height: '150px',
+                        width: '700px',
+                        border: 'solid 0.5px grey',
+                        borderRadius: '15px',
+                        padding: '10px',
+                        marginRight: '10px',
+                        marginLeft: '10px',
+                        marginTop: '10px',
+                        marginBottom: '10px',
+                        display: 'flex',
+                        flexDirection: 'row' 
+                    }} key = {index}>
+                        <img src = {tmpImage} style = {{
+                            borderRadius: '10px',
+                            boxShadow: '2px 2px 2px #888888'
+                        }}></img>
+
+                        {/* Information of food wrapper */}
+                        <div style = {{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            marginLeft: '20px',
+                            padding: '10px'
+                        }}>
+                            <p style = {{
+                                fontWeight: 'bold',
+                                fontSize: '20px'
+                            }}>{item.name}</p>
+                            <p>{item.description}</p>
+                            <p>Thành phần: {item["categories:"]}</p>
+                        </div>
+                        <div style = {{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignSelf: 'center',
+                            marginLeft: '5px'
+                        }}>
+                            <p style = {{
+                                fontWeight: 'bold',
+                                color: blueColor,
+                                marginTop: '10px'
+                            }}>Giá: {item.price} vnđ</p>
+                            <button onClick = {() => {
+                                this.handleOrder(item.id);
+                            }} style = {{
+                                border: 'solid 0.5px white',
+                                backgroundColor: orangeColor,
+                                marginLeft: '10px',
+                                height: '40px',
+                                width: '40px',
+                                fontWeight: 'bold',
+                                color: 'white',
+                                borderRadius: '20px',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                +
+                            </button>
+                        </div>
                     </div>
                 );
             })
@@ -51,20 +133,22 @@ class DoAn extends Component {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    backgroundImage: `url(${backgroundImg})`,
+                    boxShadow: '5px 10px 18px #888888'
                 }}>
-                    <p style = {{
-                        fontWeight: 'bold',
-                        fontSize: '25px'
-                    }}>DÁNH SÁCH ĐỒ ĂN</p>
                     <div style = {{
-                        height: '85%',
-                        width: '80%',
-                        border: 'solid 0.2px #e6e6e6',
-                        boxShadow: '5px 10px 18px #888888',
+                        backgroundColor: 'white',
+                        opacity: '1'
                     }}>
-
+                        <ScrollView onEndReached={this.handleEndReached} style = {{
+                            height: '450px',
+                            boxShadow: '5px 10px 18px #888888',
+                        }}>
+                            {item}
+                        </ScrollView>
                     </div>
+                    
                 </div>
             );
         }

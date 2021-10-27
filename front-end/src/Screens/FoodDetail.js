@@ -64,7 +64,8 @@ class FoodDetail extends Component {
                     <div style = {{
                         display: 'flex',
                         flexDirection: 'column',
-                        width: '600px'
+                        width: '600px',
+                        marginLeft: '30px'
                     }}>
                         <div style = {{
                             display: 'flex',

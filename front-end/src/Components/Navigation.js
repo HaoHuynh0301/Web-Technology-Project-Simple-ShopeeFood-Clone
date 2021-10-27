@@ -18,7 +18,7 @@ function Navigation() {
     return(
         <ReactBoostrap.Navbar collapseOnSelect expand="lg" bg={orangeColor} variant="light" style = {{backgroundColor: orangeColor}}>
                 <ReactBoostrap.Container>
-                    <ReactBoostrap.Navbar.Brand><Link style = {{textDecoration: "none", color: blackColor}} to = '/home'>NotShoppeFood</Link></ReactBoostrap.Navbar.Brand>
+                    <ReactBoostrap.Navbar.Brand><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>NotShoppeFood</Link></ReactBoostrap.Navbar.Brand>
                     <ReactBoostrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <ReactBoostrap.Navbar.Collapse id="responsive-navbar-nav">
                         <ReactBoostrap.Nav className="me-auto">
