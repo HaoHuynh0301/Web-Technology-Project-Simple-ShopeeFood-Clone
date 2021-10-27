@@ -48,30 +48,21 @@ class OrderInstance extends Component {
             Longitude: null
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
+        this.getDriverCoordinate = this.getDriverCoordinate.bind(this);
     }
 
-    getCoordinate = (address) => {
-        axios.get(`http://api.positionstack.com/v1/forward?access_key=ee95aa7c3e382e9aa806014b08955f13&query=1600 `)
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log('Error');
-        })
-    }
-
-    getCurrentPosition = () => {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            this.setState({
-                Latitude: position.coords.latitude,
-                Longitude: position.coords.longitude
-            })
-        });
+    getDriverCoordinate = () => {
+        //Code here
     }
 
     componentDidMount () {
-        // this.getCoordinate('Cần Thơ');
-        this.getCurrentPosition();
+        this.interval = setInterval(() => {
+            this.getDriverCoordinate();
+        }, 2000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     handleGetOrder = () => {
@@ -79,6 +70,10 @@ class OrderInstance extends Component {
             id: '1',
             status: 1,
         }
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("Latitude is :", position.coords.latitude);
+            console.log("Longitude is :", position.coords.longitude);
+        });
         this.setState({
             instanceOrder: tmpContext
         });
