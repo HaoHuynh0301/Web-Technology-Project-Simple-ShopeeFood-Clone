@@ -5,7 +5,7 @@ import {
 } from '../Components';
 import { ScrollView } from "@cantonjs/react-scroll-view";
 import tmpImage from '../assets/hamburger.jpg';
-import backgroundImg from '../assets/foodbackground.jpg';
+import backgroundImg from '../assets/foodbackground3.jpg';
 import {
     blueColor,
     orangeColor

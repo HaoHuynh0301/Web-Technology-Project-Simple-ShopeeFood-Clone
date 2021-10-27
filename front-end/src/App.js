@@ -17,8 +17,11 @@ import {
     ThucPham,
     Bia
 } from './Screens';
+const localStorage = require('local-storage');
+const axios = require('axios');
 
 function App() {
+    
     return (
         <BrowserRouter>
             <Switch>

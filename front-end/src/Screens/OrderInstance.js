@@ -3,6 +3,9 @@ import {
     Navigation,
     Footer
 } from '../Components';
+import {
+    useLocation
+} from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import storeIcon from '../assets/store.png';
 import motorIcon from '../assets/motor.png';
@@ -12,6 +15,7 @@ import {
     orangeColor
 } from '../contants';
 import LoadingGif from '../assets/loading.gif';
+const axios = require('axios');
 
 
 class OrderInstance extends Component {
@@ -37,9 +41,37 @@ class OrderInstance extends Component {
                     'categories:': 'Mì, thịt bò, bông cải xào',
                     'price': 40000
                 }
-            ]
+            ],
+
+            // Current location
+            Latitude: null,
+            Longitude: null
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
+    }
+
+    getCoordinate = (address) => {
+        axios.get(`http://api.positionstack.com/v1/forward?access_key=ee95aa7c3e382e9aa806014b08955f13&query=1600 `)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log('Error');
+        })
+    }
+
+    getCurrentPosition = () => {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            this.setState({
+                Latitude: position.coords.latitude,
+                Longitude: position.coords.longitude
+            })
+        });
+    }
+
+    componentDidMount () {
+        // this.getCoordinate('Cần Thơ');
+        this.getCurrentPosition();
     }
 
     handleGetOrder = () => {

@@ -5,7 +5,7 @@ import {
 } from '../Components';
 import { ScrollView } from "@cantonjs/react-scroll-view";
 import tmpImage from '../assets/hamburger.jpg';
-import backgroundImg from '../assets/foodbackground.jpg';
+import backgroundImg from '../assets/foodbackground2.jpg';
 import {
     blueColor,
     orangeColor
@@ -43,7 +43,7 @@ class Bia extends Component {
     }
 
     componentDidMount() {
-
+        
     }
 
     handleEndReached = () => {
