@@ -5,6 +5,7 @@ import Profile from "./Profile";
 import OrderHistory from "./OrderHistory";
 import FoodDetail from "./FoodDetail";
 import OrderInstance from './OrderInstance';
+import DoAn from "./DoAn";
 
 export {
     Login,
@@ -13,5 +14,6 @@ export {
     Profile,
     OrderHistory,
     FoodDetail,
-    OrderInstance
+    OrderInstance,
+    DoAn
 }

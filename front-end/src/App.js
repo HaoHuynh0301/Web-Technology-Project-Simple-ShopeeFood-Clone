@@ -12,7 +12,8 @@ import {
     Profile,
     OrderHistory,
     FoodDetail,
-    OrderInstance
+    OrderInstance,
+    DoAn
 } from './Screens';
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
                 </Route>
                 <Route exact path = '/order-instance'>
                     <OrderInstance />
+                </Route>
+                <Route path = '/'>
+                    <DoAn />
                 </Route>
             </Switch>
         </BrowserRouter>

@@ -22,7 +22,6 @@ function Navigation() {
                     <ReactBoostrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <ReactBoostrap.Navbar.Collapse id="responsive-navbar-nav">
                         <ReactBoostrap.Nav className="me-auto">
-                        <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/home'>Trang chủ</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Đồ ăn</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Thực phẩm</Link></ReactBoostrap.Nav.Link>
                         <ReactBoostrap.Nav.Link><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>Bia</Link></ReactBoostrap.Nav.Link>

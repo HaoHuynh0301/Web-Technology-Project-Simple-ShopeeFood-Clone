@@ -51,7 +51,7 @@ class Profile extends Component {
                         <p style = {{fontWeight: 'bold', fontSize: '20px'}}>Thông tin người dùng</p>
                     </div>
                     <div style = {{
-                        paddingTop: '30px',
+                        paddingTop: '20px',
                         paddingLeft: '20px',
                         borderBottom: 'solid 0.5px #e6e6e6',
                         paddingBottom: '20px'
