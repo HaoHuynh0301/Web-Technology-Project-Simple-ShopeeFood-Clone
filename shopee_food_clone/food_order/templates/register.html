@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-3">
+        <form class="card" method="post">
+            {% csrf_token %}
+            <div class="card-header" style="text-align: center">
+                <h4><strong>CREATE ACCOUNT</strong></h4>
+            </div>
+            <div class="card-body">
+                {{form.errors}}
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+                <div class="mb-3">
+                    <label class="form-label">
+                       Username
+                    </label>
+                    <div class="col-sm-12">
+                        {{form.username}}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                       Email
+                    </label>
+                    <div class="col-sm-12">
+                        {{form.email}}
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">
+                       Phone number
+                    </label>
+                    <div class="col-sm-12">
+                        {{form.phone_number}}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                       Password
+                    </label>
+                    <div class="col-sm-12">
+                        {{form.password1}}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                       Confirm password
+                    </label>
+                    <div class="col-sm-12">
+                        {{form.password2}}
+                    </div>
+                </div>
+
+                <div class="mb-3 d-grid">
+                    <button type="submit" class="btn" style="color: white; background-color: #ee4d2d">
+                        Create account
+                    </button>
+                </div>
+
+                <div class="mb-3 d-grid">
+                    <a href="{% url 'login' %}" class="btn">Already have an account</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
