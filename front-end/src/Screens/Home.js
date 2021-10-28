@@ -10,7 +10,8 @@ import {
     withRouter
 } from "react-router-dom";
 import {
-    Navigation
+    Navigation,
+    Footer
 } from '../Components';
 
 class Home extends Component {
@@ -22,7 +23,10 @@ class Home extends Component {
         return(
             <div>
                 <Navigation />
-                Home
+                <div style = {{
+                    height: '520px'
+                }}></div>
+                <Footer />
             </div>
         );
     }

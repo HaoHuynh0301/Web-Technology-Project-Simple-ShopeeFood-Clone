@@ -90,8 +90,7 @@ def order_detail(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
-    order, created = Order.objects.get_or_create(
-        customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
     # Save product to cart.
     items = order.orderdetail_set.all()
 
@@ -109,37 +108,106 @@ def checkout(request):
     return redirect("index")
 
 
-@api_view(['POST'])
+# Functions for API.
+# API function to register customer.
+@api_view(["POST"])
 def registerUserApi(request):
+    # Serialize POST request.
     serializer = CustomerCreationSerializer(data=request.data)
+    # Save customer to database if valid.
     if serializer.is_valid() and serializer.clean_password2():
         form = CustomerCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            phone_number = serializer.data['phone_number']
+            phone_number = form.cleaned_data["phone_number"]
             Customer.objects.create(user=user, phone_number=phone_number)
+        # Return JSON result.
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # Return JSON errors.
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
+# API function to update password. Require login.
+@api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def UpdatePasswordApi(request, format=None):
+def updatePasswordApi(request, format=None):
     try:
         new_password = request.data["password"]
         user = request.user
         user.set_password(new_password)
         user.save()
-        return Response({"message": "Change password successfully!"}, status=status.HTTP_200_OK)
+        return Response(
+            {"message": "Change password successfully!"}, status=status.HTTP_200_OK
+        )
     except:
-        return Response({"error": "Something went wrong!"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"error": "Something went wrong!"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
-@api_view(['GET'])
+# API function to get all products. Require login.
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getAllProductsApi(request):
+    # Get all products.
+    product = Product.objects.all()
+    # Serialize data for the respone.
+    productSerializer = ProductSerializer(product, many=True)
+    # Return JSON result.
+    return Response(productSerializer.data, status=status.HTTP_200_OK)
+
+
+# API function to get a product by product id. Require login.
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getProductsApi(request, pk):
+    # Get product with given pk
+    product = Product.objects.get(pk=pk)
+    # Serialize data for the response.
+    productSerializer = ProductSerializer(product, many=False)
+    # Return JSON result.
+    return Response(productSerializer.data, status=status.HTTP_200_OK)
+
+
+# API function to add a product. Require login.
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def addProductsApi(request):
+    # Get product with given pk
+    productSerializer = ProductSerializer(data=request.data)
+    # Save product to database if valid.
+    if productSerializer.is_valid():
+        productSerializer.save()
+        # Return JSON result.
+        return Response(productSerializer.data, status=status.HTTP_200_OK)
+    # Return JSON error.
+    else:
+        return Response(productSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# API function to edit a product by product id. Require login.
+@api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+def editProductsApi(request, pk):
+    # Get product with given pk
+    product = Product.objects.get(pk=pk)
+    # Serialize data for the response.
+    productSerializer = ProductSerializer(instance=product, data=request.data)
+    # Save product to database if valid.
+    if productSerializer.is_valid():
+        productSerializer.save()
+        # Return JSON result.
+        return Response(productSerializer.data, status=status.HTTP_200_OK)
+    # Return JSON error.
+    else:
+        return Response(productSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def example_view(request, format=None):
     content = {
-        'user': str(request.user),  # `django.contrib.auth.User` instance.
-        'auth': str(request.auth),  # None
+        "user": str(request.user),  # `django.contrib.auth.User` instance.
+        "auth": str(request.auth),  # None
     }
     return Response(content)
