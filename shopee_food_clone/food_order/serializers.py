@@ -5,6 +5,7 @@ from rest_framework import serializers
 from .models import *
 
 
+# Serializer for register customer.
 class CustomerCreationSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField()
     username = serializers.CharField()
@@ -15,7 +16,14 @@ class CustomerCreationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ["full_name", "username", "email", "password1", "password2", "phone_number"]
+        fields = [
+            "full_name",
+            "username",
+            "email",
+            "password1",
+            "password2",
+            "phone_number",
+        ]
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -26,7 +34,15 @@ class CustomerCreationSerializer(serializers.ModelSerializer):
         return True
 
 
+# Serializer for get product.
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
+        fields = "__all__"
+
+
+# Serializer for get cart product.
+class OrderDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderDetail
         fields = "__all__"

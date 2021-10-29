@@ -87,7 +87,7 @@ def logoutUser(request):
 
 # Function to render cart data.
 @login_required(login_url="login")
-def order_detail(request):
+def cart(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
@@ -162,7 +162,7 @@ def getAllProductsApi(request):
 # API function to get a product by product id. Require login.
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def getProductsApi(request, pk):
+def getProductApi(request, pk):
     # Get product with given pk
     product = Product.objects.get(pk=pk)
     # Serialize data for the response.
@@ -203,3 +203,19 @@ def editProductsApi(request, pk):
     # Return JSON error.
     else:
         return Response(productSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# API function to get cart data of user. Require login.
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def cartApi(request):
+    # Get customer information.
+    customer = request.user.customer
+    # Save customer to order.
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    # Save product to cart.
+    items = order.orderdetail_set.all()
+    # Serialize data for the respone.
+    orderDetailSerializer = OrderDetailSerializer(items, many=True)
+    # Return JSON result.
+    return Response(orderDetailSerializer.data, status=status.HTTP_200_OK)
