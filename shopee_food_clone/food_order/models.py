@@ -41,6 +41,18 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def get_order_total(self):
+        items = self.orderdetail_set.all()
+        total = sum([item.get_order_detail_total for item in items])
+        return total
+
+    @property
+    def get_order_items(self):
+        items = self.orderdetail_set.all()
+        total = sum([item.quantity for item in items])
+        return total
+
 
 # Database table for order detail
 class OrderDetail(models.Model):
@@ -51,6 +63,11 @@ class OrderDetail(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    @property
+    def get_order_detail_total(self):
+        total = self.product.price * self.quantity
+        return total
 
 
 # Database table for shipping information.
