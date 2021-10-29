@@ -20,12 +20,12 @@ class CustomerAdmin(admin.ModelAdmin):
 
 # display individual fields of order on admin page.
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["id", "customer", "date_ordered", "complete"]
+    list_display = ["id", "customer", "date_ordered", "complete", "get_order_total"]
 
 
 # display individual fields of order detail on admin page.
 class OrderDetailAdmin(admin.ModelAdmin):
-    list_display = ["id", "product", "order", "quantity", "date_added"]
+    list_display = ["id", "product", "order", "quantity", "date_added", "get_order_detail_total"]
 
 
 # display individual fields of shipping address on admin page.

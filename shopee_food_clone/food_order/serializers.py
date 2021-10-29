@@ -45,4 +45,11 @@ class ProductSerializer(serializers.ModelSerializer):
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderDetail
-        fields = "__all__"
+        fields = [
+            "id",
+            "product",
+            "order",
+            "quantity",
+            "date_added",
+            "get_order_detail_total",
+        ]

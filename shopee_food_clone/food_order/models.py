@@ -47,12 +47,6 @@ class Order(models.Model):
         total = sum([item.get_order_detail_total for item in items])
         return total
 
-    @property
-    def get_order_items(self):
-        items = self.orderdetail_set.all()
-        total = sum([item.quantity for item in items])
-        return total
-
 
 # Database table for order detail
 class OrderDetail(models.Model):
