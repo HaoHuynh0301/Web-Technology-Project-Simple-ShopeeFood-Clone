@@ -40,8 +40,9 @@ def registerUser(request):
         if form.is_valid():
             user = form.save()
             # Save post phone number and user to customer.
+            full_name = form.cleaned_data["full_name"]
             phone_number = form.cleaned_data["phone_number"]
-            Customer.objects.create(user=user, phone_number=phone_number)
+            Customer.objects.create(user=user, full_name=full_name, phone_number=phone_number)
             # Notification for create account successfully.
             messages.success(request, "Create account successfully!")
             # Redirect to show messages.
@@ -119,8 +120,9 @@ def registerUserApi(request):
         form = CustomerCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            full_name = form.cleaned_data["full_name"]
             phone_number = form.cleaned_data["phone_number"]
-            Customer.objects.create(user=user, phone_number=phone_number)
+            Customer.objects.create(user=user, full_name=full_name, phone_number=phone_number)
         # Return JSON result.
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     # Return JSON errors.
@@ -187,7 +189,7 @@ def addProductsApi(request):
 
 # API function to edit a product by product id. Require login.
 @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def editProductsApi(request, pk):
     # Get product with given pk
     product = Product.objects.get(pk=pk)
@@ -201,13 +203,3 @@ def editProductsApi(request, pk):
     # Return JSON error.
     else:
         return Response(productSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def example_view(request, format=None):
-    content = {
-        "user": str(request.user),  # `django.contrib.auth.User` instance.
-        "auth": str(request.auth),  # None
-    }
-    return Response(content)

@@ -6,6 +6,7 @@ from .models import *
 
 
 class CustomerCreationSerializer(serializers.ModelSerializer):
+    full_name = serializers.CharField()
     username = serializers.CharField()
     email = serializers.EmailField()
     password1 = serializers.CharField()
@@ -14,7 +15,7 @@ class CustomerCreationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ["username", "email", "password1", "password2", "phone_number"]
+        fields = ["full_name", "username", "email", "password1", "password2", "phone_number"]
 
     def clean_password2(self):
         # Check that the two password entries match

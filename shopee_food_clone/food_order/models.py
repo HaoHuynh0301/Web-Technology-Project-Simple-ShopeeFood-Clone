@@ -25,7 +25,11 @@ class Product(models.Model):
 # Database table for customer
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    full_name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.full_name
 
 
 # Database table for order
@@ -47,3 +51,14 @@ class OrderDetail(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+# Database table for shipping information.
+class ShippingAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    address = models.CharField(max_length=255, null=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.address

@@ -34,5 +34,4 @@ urlpatterns = [
     path('api/get-product/<int:pk>/', views.getProductsApi, name="api_get_product"),
     path('api/add-product/', views.addProductsApi, name="api_add_product"),
     path('api/edit-product/<int:pk>', views.editProductsApi, name="api_edit_product"),
-    path('api/require-login/', views.example_view, name="api_require_login"),
 ]
