@@ -18,6 +18,10 @@ class CustomerCreationForm(UserCreationForm):
     phone_number = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
+    
+    full_name = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
 
     class Meta:
         model = User
