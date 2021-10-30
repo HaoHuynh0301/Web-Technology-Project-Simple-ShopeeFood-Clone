@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -219,3 +221,33 @@ def cartApi(request):
     orderDetailSerializer = OrderDetailSerializer(items, many=True)
     # Return JSON result.
     return Response(orderDetailSerializer.data, status=status.HTTP_200_OK)
+
+
+# API function to add product to cart. Require login.
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def addToCartApi(request):
+    # JSON format: {"productId":1,"action":"add"}
+    # Get upload JSON data from request.
+    data = json.loads(request.body)
+    productId = data["productId"]
+    action = data["action"]
+
+    # Get customer information
+    customer = request.user.customer
+    product = Product.objects.get(pk=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderDetail.objects.get_or_create(order=order, product=product)
+
+    # Check button action.
+    if action == "add":
+        orderItem.quantity = orderItem.quantity + 1
+    elif action == "remove":
+        orderItem.quantity = orderItem.quantity - 1
+    orderItem.save()
+    # Delete product from cart if quantity 0.
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+    # Return JSON result.
+    return Response({"message": "added"}, status=status.HTTP_200_OK)
