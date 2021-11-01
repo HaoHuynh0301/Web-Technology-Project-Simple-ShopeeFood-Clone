@@ -36,4 +36,6 @@ urlpatterns = [
     path('api/edit-product/<int:pk>', views.editProductsApi, name="api_edit_product"),
     path('api/add-to-cart/', views.addToCartApi, name="api_add_to_cart"),
     path('api/cart/', views.cartApi, name="api_cart"),
+    path('api/checkout/', views.checkoutApi, name="api_checkout"),
+    path('api/complete-order/', views.completeOrderApi, name="api_complete_order"),
 ]

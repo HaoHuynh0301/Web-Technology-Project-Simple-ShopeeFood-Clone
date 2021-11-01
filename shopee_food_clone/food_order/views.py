@@ -44,7 +44,9 @@ def registerUser(request):
             # Save post phone number and user to customer.
             full_name = form.cleaned_data["full_name"]
             phone_number = form.cleaned_data["phone_number"]
-            Customer.objects.create(user=user, full_name=full_name, phone_number=phone_number)
+            Customer.objects.create(
+                user=user, full_name=full_name, phone_number=phone_number
+            )
             # Notification for create account successfully.
             messages.success(request, "Create account successfully!")
             # Redirect to show messages.
@@ -124,7 +126,9 @@ def registerUserApi(request):
             user = form.save()
             full_name = form.cleaned_data["full_name"]
             phone_number = form.cleaned_data["phone_number"]
-            Customer.objects.create(user=user, full_name=full_name, phone_number=phone_number)
+            Customer.objects.create(
+                user=user, full_name=full_name, phone_number=phone_number
+            )
         # Return JSON result.
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     # Return JSON errors.
@@ -228,14 +232,16 @@ def cartApi(request):
 @permission_classes([IsAuthenticated])
 def addToCartApi(request):
     # JSON format: {"productId":1,"action":"add"}
-    # Get upload JSON data from request.
+    # Get JSON data from request.
     data = json.loads(request.body)
     productId = data["productId"]
     action = data["action"]
 
     # Get customer information
     customer = request.user.customer
+    # Get product information.
     product = Product.objects.get(pk=productId)
+    # Get or create new order.
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     orderItem, created = OrderDetail.objects.get_or_create(order=order, product=product)
 
@@ -251,3 +257,35 @@ def addToCartApi(request):
 
     # Return JSON result.
     return Response({"message": "added"}, status=status.HTTP_200_OK)
+
+
+# API function to checkout. Require login.
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def checkoutApi(request):
+    # Get JSON data from request.
+    data = json.loads(request.body)
+    address = data["address"]
+    # Get customer information
+    customer = request.user.customer
+    # Get order.
+    order = Order.objects.get(customer=customer, complete=False)
+    # Create new shipping.
+    ShippingAddress.objects.create(customer=customer, order=order, address=address)
+    # Return JSON result.
+    return Response({"message": "Create order successfully!"}, status=status.HTTP_200_OK)
+
+
+# API function to checkout. Require login.
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def completeOrderApi(request):
+    # Get customer information
+    customer = request.user.customer
+    # Get order.
+    order = Order.objects.get(customer=customer, complete=False)
+    # Update complete status for order.
+    order.complete = True
+    order.save()
+    # Return JSON result.
+    return Response({"message": "Order completed!"}, status=status.HTTP_200_OK)
