@@ -37,5 +37,6 @@ urlpatterns = [
     path('api/add-to-cart/', views.addToCartApi, name="api_add_to_cart"),
     path('api/cart/', views.cartApi, name="api_cart"),
     path('api/checkout/', views.checkoutApi, name="api_checkout"),
-    path('api/complete-order/', views.completeOrderApi, name="api_complete_order"),
+    path('api/receive-order/<int:pk>/', views.confirmReceivedOrderApi, name="api_confirm_receive"),
+    path('api/order-history/', views.getAllOrderApi, name="api_order_history"),
 ]

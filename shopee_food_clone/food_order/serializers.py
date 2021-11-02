@@ -53,3 +53,10 @@ class OrderDetailSerializer(serializers.ModelSerializer):
             "date_added",
             "get_order_detail_total",
         ]
+
+
+# Serializer for get all order of customer.
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = "__all__"

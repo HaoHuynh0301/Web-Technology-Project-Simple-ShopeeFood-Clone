@@ -95,7 +95,7 @@ def cart(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
     # Save product to cart.
     items = order.orderdetail_set.all()
 
@@ -218,7 +218,7 @@ def cartApi(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
     # Save product to cart.
     items = order.orderdetail_set.all()
     # Serialize data for the respone.
@@ -231,7 +231,8 @@ def cartApi(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def addToCartApi(request):
-    # JSON format: {"productId":1,"action":"add"}
+    # JSON format for add: {"productId":1,"action":"add"}
+    # JSON format for remove: {"productId":1,"action":"remove"}
     # Get JSON data from request.
     data = json.loads(request.body)
     productId = data["productId"]
@@ -242,7 +243,7 @@ def addToCartApi(request):
     # Get product information.
     product = Product.objects.get(pk=productId)
     # Get or create new order.
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
     orderItem, created = OrderDetail.objects.get_or_create(order=order, product=product)
 
     # Check button action.
@@ -268,24 +269,40 @@ def checkoutApi(request):
     address = data["address"]
     # Get customer information
     customer = request.user.customer
-    # Get order.
-    order = Order.objects.get(customer=customer, complete=False)
+    # Update checkout status for order.
+    order = Order.objects.get(customer=customer, is_checkout=False)
+    order.is_checkout = True
+    order.save()
     # Create new shipping.
     ShippingAddress.objects.create(customer=customer, order=order, address=address)
     # Return JSON result.
     return Response({"message": "Create order successfully!"}, status=status.HTTP_200_OK)
 
 
-# API function to checkout. Require login.
+# API function to confirm received order of customer. Require login.
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def completeOrderApi(request):
+def confirmReceivedOrderApi(request, pk):
     # Get customer information
     customer = request.user.customer
     # Get order.
-    order = Order.objects.get(customer=customer, complete=False)
-    # Update complete status for order.
-    order.complete = True
+    order = Order.objects.get(pk=pk, customer=customer)
+    # Update is_checkout status for order.
+    order.is_delivered = True
     order.save()
     # Return JSON result.
     return Response({"message": "Order completed!"}, status=status.HTTP_200_OK)
+
+
+# API function to get all order of customer. Require login.
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getAllOrderApi(request):
+    # Get customer information
+    customer = request.user.customer
+    # Get order.
+    order = Order.objects.all().filter(customer=customer)
+    # Serialize data for the respone.
+    orderSerializer = OrderSerializer(order, many=True)
+    # Return JSON result.
+    return Response(orderSerializer.data, status=status.HTTP_200_OK)
