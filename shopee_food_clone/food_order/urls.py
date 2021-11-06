@@ -39,4 +39,6 @@ urlpatterns = [
     path('api/checkout/', views.checkoutApi, name="api_checkout"),
     path('api/receive-order/<int:pk>/', views.confirmReceivedOrderApi, name="api_confirm_receive"),
     path('api/order-history/', views.getAllOrderApi, name="api_order_history"),
+    path('api/middleware/', views.middleware, name="api_middleware"),
+    path('api/update-coordinate/<int:pk>/', views.updateCoordinate, name="api_update_coordinate"),
 ]
