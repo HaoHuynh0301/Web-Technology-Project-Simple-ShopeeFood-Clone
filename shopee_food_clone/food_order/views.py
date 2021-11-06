@@ -316,3 +316,10 @@ def getAllOrderApi(request):
     orderSerializer = OrderSerializer(order, many=True)
     # Return JSON result.
     return Response(orderSerializer.data, status=status.HTTP_200_OK)
+
+
+# API function to middleware. Require login.
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def middleware(request):
+    return Response(status=status.HTTP_200_OK)
