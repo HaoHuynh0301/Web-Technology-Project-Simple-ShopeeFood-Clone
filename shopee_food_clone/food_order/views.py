@@ -95,7 +95,8 @@ def cart(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
-    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
+    order, created = Order.objects.get_or_create(
+        customer=customer, is_checkout=False)
     # Save product to cart.
     items = order.orderdetail_set.all()
 
@@ -218,7 +219,8 @@ def cartApi(request):
     # Get customer information.
     customer = request.user.customer
     # Save customer to order.
-    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
+    order, created = Order.objects.get_or_create(
+        customer=customer, is_checkout=False)
     # Save product to cart.
     items = order.orderdetail_set.all()
     # Serialize data for the respone.
@@ -243,8 +245,12 @@ def addToCartApi(request):
     # Get product information.
     product = Product.objects.get(pk=productId)
     # Get or create new order.
-    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
-    orderItem, created = OrderDetail.objects.get_or_create(order=order, product=product)
+    order, created = Order.objects.get_or_create(
+        customer=customer,
+        is_checkout=False
+    )
+    orderItem, created = OrderDetail.objects.get_or_create(
+        order=order, product=product)
 
     # Check button action.
     if action == "add":
@@ -274,7 +280,11 @@ def checkoutApi(request):
     order.is_checkout = True
     order.save()
     # Create new shipping.
-    ShippingAddress.objects.create(customer=customer, order=order, address=address)
+    ShippingAddress.objects.create(
+        customer=customer,
+        order=order,
+        address=address
+    )
     # Return JSON result.
     return Response({"message": "Create order successfully!"}, status=status.HTTP_200_OK)
 
