@@ -15,6 +15,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="product-image/", blank=True)
     name = models.CharField(max_length=255)
     price = models.FloatField(default=0)
+    note = models.TextField(blank=True)
     description = models.TextField(blank=True)
     category = models.ManyToManyField(Category)
 
@@ -69,6 +70,9 @@ class OrderDetail(models.Model):
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    province = models.CharField(max_length=255, null=False)
+    district = models.CharField(max_length=255, null=False)
+    ward = models.CharField(max_length=255, null=False)
     address = models.CharField(max_length=255, null=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
