@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
-    orangeColor
+    orangeColor,
+    ipAddress
 } from '../contants';
 import {
     Link,
@@ -12,6 +13,8 @@ import {
 import { Home } from ".";
 import auth from "../auth";
 import './css/login.css';
+const axios = require('axios');
+const localStorage = require('local-storage');
 
 class Login extends Component {
     constructor(props) {
@@ -23,10 +26,28 @@ class Login extends Component {
         this.handleSignIn = this.handleSignIn.bind(this);
     }
 
-    handleSignIn = () => {
-        auth.login(() => {
-            this.props.history.push('/');
+    handleSignIn = (event) => {
+        // auth.login(() => {
+        //     this.props.history.push('/');
+        // });
+        event.preventDefault();
+        axios.post(`${ipAddress}/api/login/`, {
+            username: this.state.username,
+            password: this.state.password
         })
+        .then((response) => {
+            localStorage.set('token', response.data.access);
+            auth.login(() => {
+                this.props.history.push('/');
+            })
+            this.setState({
+                username: '',
+                password: '',
+            });
+        })
+        .catch((error) => {
+            alert('Tài khoản hoặc mật khẩu của bạn không đúng!');
+        });
     }
 
     render() {

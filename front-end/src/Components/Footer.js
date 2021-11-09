@@ -44,7 +44,7 @@ function Footer() {
                     width: '120px',
                     borderRadius: '10px'
                 }} src = {shopeefoodLogo}></img>
-                <p style = {{color: 'grey', fontSize: '13px', marginTop: '15px'}}>2021 NotShoppeFood</p>
+                <p style = {{color: 'grey', fontSize: '13px', marginTop: '15px'}}>2021@ NotShoppeFood</p>
             </div>
             <div>
                 <p style = {{fontSize: '18px', marginBottom: '10px', fontWeight: 'bold'}}>Địa chỉ công ty</p>

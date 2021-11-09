@@ -24,7 +24,7 @@ const localStorage = require('local-storage');
 
 class Auth {
     constructor() {
-        this.authenticate = false;
+        this.authenticate = true;
     }
 
     login(cb) {
