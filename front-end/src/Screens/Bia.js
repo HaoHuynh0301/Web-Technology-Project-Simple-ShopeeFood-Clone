@@ -8,31 +8,21 @@ import tmpImage from '../assets/hamburger.jpg';
 import backgroundImg from '../assets/foodbackground2.jpg';
 import {
     blueColor,
-    orangeColor
+    orangeColor,
+    ipAddress
 } from '../contants';
 import {
     Link
 } from 'react-router-dom';
+const axios = require('axios');
+const localStorage = require('local-storage');
 
 class Bia extends Component {
     constructor(props) {
         super(props);
         this.state = {
             listFoods: [
-                {
-                    'id': 1,
-                    'name': 'Mì xào giòn',
-                    'description': 'Ngon say lalalala',
-                    'categories:': 'Mì, thịt bò, bông cải xào',
-                    'price': 20000
-                },
-                {
-                    'id': 2,
-                    'name': 'Mì xào giòn',
-                    'description': 'Ngon say lalalala',
-                    'categories:': 'Mì, thịt bò, bông cải xào',
-                    'price': 40000
-                }
+               
             ],
 
             //Modal
@@ -40,10 +30,29 @@ class Bia extends Component {
             isShow: false,
             instanceFood: {}
         }
+        this.getProducts = this.getProducts.bind(this);
     }
 
     componentDidMount() {
-        
+        this.getProducts();
+    }
+
+    getProducts = () => {
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/product?id=3`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            this.setState({
+                listFoods: response.data
+            })
+        })
+        .catch((error) => {
+            alert('CÓ LỖI TRONG QUÁ TRÌNH LẤY DỮ LIỆU!');
+        })
     }
 
     handleEndReached = () => {
@@ -114,14 +123,15 @@ class Bia extends Component {
                             display: 'flex',
                             flexDirection: 'column',
                             marginLeft: '20px',
-                            padding: '10px'
+                            padding: '10px',
+                            width: '250px'
                         }}>
                             <p style = {{
                                 fontWeight: 'bold',
                                 fontSize: '20px'
                             }}>{item.name}</p>
-                            <p>{item.description}</p>
-                            <p>Thành phần: {item["categories:"]}</p>
+                            <p>{item.note}</p>
+                            <p>Thành phần: {item.description}</p>
                         </div>
                         <div style = {{
                             display: 'flex',
