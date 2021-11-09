@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -166,6 +166,17 @@ def getAllProductsApi(request):
     productSerializer = ProductSerializer(product, many=True)
     # Return JSON result.
     return Response(productSerializer.data, status=status.HTTP_200_OK)
+
+class ProductView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        categoryId = request.query_params.get('id')
+        instanceCategory = Category.objects.filter(id = categoryId)
+        if len(instanceCategory) > 0:
+            serializer = ProductSerializer(instanceCategory, many = True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)
 
 
 # API function to get a product by product id. Require login.
