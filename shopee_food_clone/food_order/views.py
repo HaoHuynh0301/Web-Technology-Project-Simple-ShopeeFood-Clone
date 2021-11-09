@@ -131,7 +131,7 @@ def registerUserApi(request):
                 user=user, full_name=full_name, phone_number=phone_number
             )
         # Return JSON result.
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({'msg':'Created'}, status=status.HTTP_201_CREATED)
     # Return JSON errors.
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
