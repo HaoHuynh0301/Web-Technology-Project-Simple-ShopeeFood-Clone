@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import {
     orangeColor,
-    fontSize
+    fontSize,
+    ipAddress
 } from '../contants';
 import {
     Link,
 } from "react-router-dom";
 import './css/register.css';
+const axios = require('axios');
+const localStorage = require('local-storage');
 
 class Register extends Component {
     constructor(props) {
@@ -22,8 +25,23 @@ class Register extends Component {
         this.handleRegister = this.handleRegister.bind(this);
     }
 
-    handleRegister = () => {
-
+    handleRegister = (event) => {
+        event.preventDefault();
+        axios.post(`${ipAddress}/api/login/`, {
+            full_name: this.state.name,
+            username: this.state.username,
+            email: this.state.email,
+            password1: this.state.pass1,
+            password2: this.state.pass2,
+            phone_number: this.state.phoneNumber
+        })
+        .then((response) => {
+            alert('ĐĂNG KÝ TÀI KHOẢN THÀNH CÔNG');
+            this.props.history.push('/');
+        })
+        .catch((error) => {
+            alert('THÔNG TIN TÀI KHOẢN KHÔNG HỢP LỆ');
+        })
     }
 
     render() {
