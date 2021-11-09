@@ -9,11 +9,16 @@ import clockIcon from '../assets/clock.png';
 import {
     Link
 } from 'react-router-dom'
-import { orangeColor } from "../contants";
+import { 
+    orangeColor ,
+    ipAddress
+} from "../contants";
 import {
     Modal,
     Button
-} from 'react-bootstrap'
+} from 'react-bootstrap';
+const axios = require('axios');
+const localStorage = require('local-storage');
 
 class FoodDetail extends Component {
     constructor(props) {
@@ -29,11 +34,34 @@ class FoodDetail extends Component {
             isShow: false
         }
         this.handleOrder = this.handleOrder.bind(this);
+        this.getProductInformation = this.getProductInformation.bind(this);
     }
 
     handleOrder = () => {
         this.setState({
             isShow: true
+        })
+    }
+
+    componentDidMount = () => {
+        this.getProductInformation();
+    }
+
+    getProductInformation = () => {
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/get-product/${this.props.match.params.id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            this.setState({
+                foodInformation: response.data
+            })
+        })
+        .catch((error) => {
+            alert('CÓ LỖI TRONG QUÁ TRÌNH LẤY DỮ LIỆU!');
         })
     }
 
@@ -82,11 +110,12 @@ class FoodDetail extends Component {
                         display: 'flex',
                         flexDirection: 'column',
                         width: '600px',
-                        marginLeft: '30px'
+                        marginLeft: '70px'
                     }}>
                         <div style = {{
                             display: 'flex',
-                            flexDirection: 'row'
+                            flexDirection: 'row',
+                            marginBottom: '30px'
                         }}>
                             <img style = {{
                                 height: '25px',
@@ -95,45 +124,51 @@ class FoodDetail extends Component {
                             }} src = {heartIcon}></img>
                             <p style = {{
                                 color: 'grey'
-                            }}>Quán ăn</p>
+                            }}>Yêu thích</p>
                         </div>
 
                         {/* Name of Food Wrapper */}
                         <div style = {{
                             display: 'flex',
                             flexDirection: 'column',
+                            marginBottom: '30px'
                         }}>
-                            <p style = {{
-                                fontWeight: 'bold',
-                                fontSize: '30px'
-                            }}>M.Y.O QUÁN ĂN SIÊU NGON</p>
-
-                            {/* Address */}
-                            <p>Số 14, Quản Trọng Hoàng</p>
+                            <div style = {{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginBottom: '30px'
+                            }}>
+                                <p style = {{
+                                    fontWeight: 'bold',
+                                    fontSize: '30px'
+                                }}>{this.state.foodInformation.name}</p>
+                                <p style = {{
+                                    marginLeft: '20px',
+                                    fontSize: '20px'
+                                }}>
+                                   -     {this.state.foodInformation.description}
+                                </p>
+                            </div>
+                            
 
                             {/* Status */}
                             <div style = {{
                                 display: 'flex',
                                 flexDirection: 'row',
+                                marginBottom: '30px'
                             }}>
                                 <p style = {{
                                     fontWeight: 'bold',
                                     color: 'green'
                                 }}>Còn hàng</p>
-                                <img style = {{
-                                    height: '20px',
-                                    width: '20px',
-                                    marginTop: '4px',
-                                    marginLeft: '10px'
-                                }} src = {clockIcon}></img>
-                                <p>7h30 - 20:00</p>
                             </div>
                             
                             {/* Price */}
                             <p style = {{
                                 fontSize: '22px',
                                 fontWeight: 'bold'
-                            }}>30.000 vnđ</p>
+                            }}>{this.state.foodInformation.price} vnđ</p>
                             <button style = {{
                                 height: '35px',
                                 width: '80%',
