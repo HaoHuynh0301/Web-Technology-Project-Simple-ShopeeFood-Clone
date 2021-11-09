@@ -17,6 +17,8 @@ import {
     ThucPham,
     Bia
 } from './Screens';
+import { ProtectedRoute } from './protected.route';
+import auth from './auth';
 const localStorage = require('local-storage');
 const axios = require('axios');
 
@@ -31,30 +33,30 @@ function App() {
                 <Route exact path = '/register'>
                     <Register />
                 </Route>
-                <Route exact path = '/home'>
-                    <Home />
-                </Route>
+                <ProtectedRoute exact path = '/home' component = {Home}>
+                </ProtectedRoute >
                 <Route exact path = '/profile'>
                     <Profile />
                 </Route>
-                <Route exact path = '/history-order'>
-                    <OrderHistory />
-                </Route>
-                <Route exact path = '/detail/:id'>
-                    <FoodDetail />
-                </Route>
-                <Route exact path = '/order-instance'>
-                    <OrderInstance />
-                </Route>
-                <Route exact path = '/'>
-                    <DoAn />
-                </Route>
-                <Route exact path = '/thuc-pham'>
-                    <ThucPham />
-                </Route>
-                <Route exact path = '/bia'>
-                    <Bia />
-                </Route>
+                <ProtectedRoute exact path = '/history-order' component = {OrderHistory}>
+                </ProtectedRoute>
+                <ProtectedRoute exact path = '/detail/:id' component = {FoodDetail}>
+                </ProtectedRoute>
+                <ProtectedRoute exact path = '/order-instance' component = {OrderInstance}>
+                </ProtectedRoute>
+                <ProtectedRoute exact path = '/' component = {DoAn}>
+                </ProtectedRoute>
+                <ProtectedRoute exact path = '/thuc-pham' component = {ThucPham}>
+                </ProtectedRoute>
+                <ProtectedRoute exact path = '/bia' component = {Bia}>
+                </ProtectedRoute>
+                <Route path = "*" component = {() => {
+                    return(
+                        <div>
+                            404
+                        </div>
+                    );
+                }}></Route>
             </Switch>
         </BrowserRouter>
     ); 
