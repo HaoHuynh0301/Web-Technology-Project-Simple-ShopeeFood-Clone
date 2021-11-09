@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-8z4u6vv6-=p$sjs@wz#yv*w+jb#(9frz@po!0px-1e(ifr95n_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
-
+    'corsheaders',
     'food_order.apps.FoodOrderConfig',
 ]
 
@@ -176,3 +176,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=30),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
