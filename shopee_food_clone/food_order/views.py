@@ -377,3 +377,16 @@ class CustomerView(APIView):
         instanceUser = request.user
         serializer = CustomerSerializer(instanceUser)
         return Response(serializer.data, status = status.HTTP_200_OK)
+    
+    def post(self, request, format = None):
+        fullName = request.data['full_name']
+        email = request.data['email']
+        password = request.data['password']
+        phoneNumber = request.data['phone_number']
+        instanceUser = request.user
+        serializer = CustomerSerializer(instanceUser, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            instanceUser.set_password(password)
+            instanceUser.save()
+        return Response({'msg': 'Updated'}, status = status.HTTP_200_OK)
