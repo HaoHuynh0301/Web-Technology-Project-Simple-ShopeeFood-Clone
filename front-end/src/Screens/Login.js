@@ -20,7 +20,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: ''
         }
         this.handleSignIn = this.handleSignIn.bind(this);
@@ -32,7 +32,7 @@ class Login extends Component {
         // });
         event.preventDefault();
         axios.post(`${ipAddress}/api/login/`, {
-            username: this.state.username,
+            email: this.state.email,
             password: this.state.password
         })
         .then((response) => {
@@ -41,7 +41,7 @@ class Login extends Component {
                 this.props.history.push('/');
             })
             this.setState({
-                username: '',
+                email: '',
                 password: '',
             });
         })
@@ -65,12 +65,12 @@ class Login extends Component {
                                 alignSelf: "flex-start",
                                 marginLeft: "12px",
                                 fontSize: "20px"
-                            }}>Tên đăng nhập</p>
+                            }}>Email</p>
                             <input type = 'text' className = 'inputStyle' 
-                                value = {this.state.username}
+                                value = {this.state.email}
                                 onChange = {(event) => {
                                     this.setState({
-                                        username: event.target.value
+                                        email: event.target.value
                                     });
                                 }}
                             ></input>

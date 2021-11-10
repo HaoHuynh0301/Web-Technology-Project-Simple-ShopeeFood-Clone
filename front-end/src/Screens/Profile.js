@@ -20,6 +20,14 @@ class Profile extends Component {
         this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
     }
 
+    componentDidMount = () => {
+
+    }
+
+    getUserInformation = () => {
+        
+    }
+
     handleChangeInformation = () => {
         alert('Change');
     }
