@@ -374,10 +374,6 @@ class CustomerView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request, format = None):
-        instanceUser = request.user.customer
-        context = {
-            'username': instanceUser.username,
-            'email': instanceUser.email,
-            'password': instanceUser.password,
-        }
-        return Response(context, status = status.HTTP_200_OK)
+        instanceUser = request.user
+        serializer = CustomerSerializer(instanceUser)
+        return Response(serializer.data, status = status.HTTP_200_OK)
