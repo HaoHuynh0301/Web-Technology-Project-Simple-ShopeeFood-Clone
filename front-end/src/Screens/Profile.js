@@ -21,6 +21,7 @@ class Profile extends Component {
         }
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
         this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
+        this.handleChangeInformation = this.handleChangeInformation.bind(this);
     }
 
     componentDidMount = () => {
