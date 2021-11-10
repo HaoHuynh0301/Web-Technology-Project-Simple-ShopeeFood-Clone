@@ -20,7 +20,6 @@ class Profile extends Component {
             email: ''
         }
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
-        this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
     }
 
@@ -41,7 +40,6 @@ class Profile extends Component {
                 name: response.data.full_name,
                 phonenumber: response.data.phone_number,
                 email: response.data.email,
-                password: response.data.password
             })
         })
         .catch((error) => {
@@ -50,11 +48,24 @@ class Profile extends Component {
     }
 
     handleChangeInformation = () => {
-        alert('Change');
-    }
-
-    handleChangePhoneNumber = () => {
-        alert('Change phonenumber');
+        const token = localStorage.get('token');
+        axios.post(`${ipAddress}/api/customer-infor/`, {
+            full_name: this.state.full_name,
+            email: this.state.email,
+            phone_number: this.state.phonenumber,
+            password: this.state.password
+        } ,{
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            alert('CẬP NHẬT THÀNH CÔNG!');
+        })
+        .catch((error) => {
+            alert('CẬP NHẬT KHÔNG THÀNH KHÔNG!');
+        })
     }
 
     mainView = () => {
