@@ -34,6 +34,24 @@ class CustomerCreationSerializer(serializers.ModelSerializer):
         return True
 
 
+class CustomerSerializer(serializers.ModelSerializer):
+    full_name = serializers.CharField()
+    username = serializers.CharField()
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    phone_number = serializers.CharField()
+    
+    class Meta:
+        model = Customer
+        fields = [
+            "full_name",
+            "username",
+            "email",
+            "password",
+            "phone_number",
+        ]
+        
+
 # Serializer for get product.
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:

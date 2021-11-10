@@ -13,9 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ["id", "name", "price", "description"]
 
 
-# display individual fields of customer on admin page.
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "full_name", "phone_number"]
+admin.site.register(Customer)
 
 
 # display individual fields of order on admin page.
@@ -36,7 +34,6 @@ class ShippingAdressAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderDetail, OrderDetailAdmin)
 admin.site.register(ShippingAddress, ShippingAdressAdmin)

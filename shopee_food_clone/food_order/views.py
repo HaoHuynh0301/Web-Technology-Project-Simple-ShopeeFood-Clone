@@ -167,17 +167,6 @@ def getAllProductsApi(request):
     # Return JSON result.
     return Response(productSerializer.data, status=status.HTTP_200_OK)
 
-class ProductView(APIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get(self, request, format = None):
-        categoryId = request.query_params.get('id')
-        instanceCategory = Category.objects.filter(id = categoryId)
-        if len(instanceCategory) > 0:
-            serializer = ProductSerializer(instanceCategory, many = True)
-            return Response(serializer.data, status = status.HTTP_200_OK)
-        return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)
-
 
 # API function to get a product by product id. Require login.
 @api_view(["GET"])
@@ -366,3 +355,29 @@ def updateCoordinate(request, pk):
     order.save()
     # Return JSON result.
     return Response({"message": "Order completed!"}, status=status.HTTP_200_OK)
+
+
+class ProductView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        categoryId = request.query_params.get('id')
+        instanceCategory = Category.objects.filter(id = categoryId)
+        if len(instanceCategory) > 0:
+            products = instanceCategory[0].product_set.all()
+            serializer = ProductSerializer(products, many = True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class CustomerView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        instanceUser = request.user.customer
+        context = {
+            'username': instanceUser.username,
+            'email': instanceUser.email,
+            'password': instanceUser.password,
+        }
+        return Response(context, status = status.HTTP_200_OK)

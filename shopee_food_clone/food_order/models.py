@@ -1,8 +1,46 @@
 from django.db import models
+from django.utils import timezone
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser, PermissionsMixin
+)
 
+class MyUserManager(BaseUserManager):
+    def create_user(self, 
+                    email, 
+                    full_name, 
+                    phone_number, 
+                    password = None):
+        if not email:
+            raise ValueError('Users must have an email address')
 
-# Create your models here.
+        user = self.model(
+            email = self.normalize_email(email),
+            full_name = full_name,
+            phone_number = phone_number,
+        )
+
+        user.set_password(password)
+        user.save()
+        return user
+    
+    def create_superuser(self, 
+                        email, 
+                        full_name, 
+                        phone_number, 
+                        password = None):
+        user = self.create_user(
+            email = email,
+            full_name = full_name,
+            phone_number = phone_number,
+            password = password
+        )
+        user.is_admin = True
+        user.is_superuser = True
+        user.save()
+        return user
+
 # Database table for category.
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -25,13 +63,39 @@ class Product(models.Model):
 
 
 # Database table for customer
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    full_name = models.CharField(max_length=255)
+class Customer(AbstractBaseUser):
+    email = models.EmailField(
+        verbose_name = 'email address',
+        max_length = 255,
+        unique = True,
+    )
+    full_name = models.CharField(max_length = 255, blank = True)
     phone_number = models.CharField(max_length=10)
+    is_active = models.BooleanField(default = True)
+    is_admin = models.BooleanField(default = False)
+    is_superuser = models.BooleanField(default = False)
+    
+    objects = MyUserManager()
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [
+                        'full_name', 
+                        'phone_number', 
+                        ]
 
     def __str__(self):
         return self.full_name
+    
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        return self.is_admin
+    
+    def has_perm(self, perm, obj = None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True   
 
 
 # Database table for order
