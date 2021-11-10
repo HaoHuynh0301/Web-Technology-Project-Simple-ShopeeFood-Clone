@@ -4,28 +4,48 @@ import {
     Footer
 } from '../Components';
 import {
-    blueColor
+    blueColor,
+    ipAddress
 } from '../contants';
+const axios = require('axios');
+const localStorage = require('local-storage');
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: 'Huỳnh Quan Nhật Hào',
-            password: 'hao152903',
-            phonenumber: '0932843656',
-            email: 'hao152903@gmail.com'
+            name: '',
+            password: '',
+            phonenumber: '',
+            email: ''
         }
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
         this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
     }
 
     componentDidMount = () => {
-
+        this.getUserInformation();
     }
 
     getUserInformation = () => {
-        
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/customer-infor/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            this.setState({
+                name: response.data.full_name,
+                phonenumber: response.data.phone_number,
+                email: response.data.email,
+                password: response.data.password
+            })
+        })
+        .catch((error) => {
+            console.log('Error');
+        })
     }
 
     handleChangeInformation = () => {
