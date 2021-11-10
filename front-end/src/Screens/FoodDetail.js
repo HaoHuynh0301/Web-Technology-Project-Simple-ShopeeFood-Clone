@@ -25,11 +25,6 @@ class FoodDetail extends Component {
         super(props);
         this.state = {
             foodInformation: {
-                'id': 1,
-                'name': 'Mì xào giòn',
-                'description': 'Ngon say lalalala',
-                'categories:': 'Mì, thịt bò, bông cải xào',
-                'price': 20000
             },
             isShow: false
         }
@@ -66,7 +61,25 @@ class FoodDetail extends Component {
     }
 
     handleAddToCard = () => {
-        
+        const token = localStorage.get('token');
+        axios.post(`${ipAddress}/api/add-to-cart/`, {
+            product_id: this.state.foodInformation.id,
+            action: "add"
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            alert('THÊM VÀO GIỎ HÀNG THÀNH CÔNG!');
+            this.setState({
+                isShow: false
+            });
+        })
+        .catch((error) => {
+            alert('THÊM VÀO ĐƠN HÀNG KHÔNG THÀNH CÔNG!');
+        })
     }
 
     mainView = () => {
