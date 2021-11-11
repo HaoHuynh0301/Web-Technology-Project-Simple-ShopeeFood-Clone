@@ -218,16 +218,18 @@ def editProductsApi(request, pk):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def cartApi(request):
-    # Get customer information.
-    customer = request.user.customer
-    # Save customer to order.
-    order, created = Order.objects.get_or_create(customer=customer, is_checkout=False)
-    # Save product to cart.
-    items = order.orderdetail_set.all()
-    # Serialize data for the respone.
-    orderDetailSerializer = OrderDetailSerializer(items, many=True)
-    # Return JSON result.
-    return Response(orderDetailSerializer.data, status=status.HTTP_200_OK)
+    customer = request.user
+    instanceOrder = Order.objects.filter(customer = customer, is_delivered = False)
+    if len(instanceOrder) > 0:
+        orderDetails = instanceOrder[0].orderdetail_set.all()
+        orderSerializer = OrderSerializer(instanceOrder[0])
+        serializer = OrderDetailSerializer(orderDetails, many = True)
+        context = {
+            'order': orderSerializer.data,
+            'items': serializer.data
+        }
+        return Response(context, status = status.HTTP_200_OK)
+    return Response({'msg': 'NOT FOUND'}, status = status.HTTP_400_BAD_REQUEST)
 
 
 # API function to add product to cart. Require login.
@@ -237,22 +239,22 @@ def addToCartApi(request):
     # JSON format for add: {"productId":1,"action":"add"}
     # JSON format for remove: {"productId":1,"action":"remove"}
     # Get JSON data from request.
-    data = json.loads(request.body)
-    productId = data["productId"]
+    data = request.data
+    productId = data["product_id"]
     action = data["action"]
 
     # Get customer information
-    customer = request.user.customer
+    customer = request.user
     # Get product information.
-    product = Product.objects.get(pk=productId)
+    product = Product.objects.get(pk = productId)
     # Get or create new order.
     order, created = Order.objects.get_or_create(
-        customer=customer,
-        is_checkout=False
+        customer = customer,
+        is_checkout = False
     )
     orderItem, created = OrderDetail.objects.get_or_create(
-        order=order, 
-        product=product
+        order = order, 
+        product = product
     )
 
     # Check button action.
@@ -323,9 +325,9 @@ def confirmReceivedOrderApi(request, pk):
 @permission_classes([IsAuthenticated])
 def getAllOrderApi(request):
     # Get customer information
-    customer = request.user.customer
+    customer = request.user
     # Get order.
-    order = Order.objects.all().filter(customer=customer)
+    order = Order.objects.all().filter(customer = customer)
     # Serialize data for the respone.
     orderSerializer = OrderSerializer(order, many=True)
     # Return JSON result.
@@ -379,14 +381,12 @@ class CustomerView(APIView):
         return Response(serializer.data, status = status.HTTP_200_OK)
     
     def post(self, request, format = None):
-        fullName = request.data['full_name']
-        email = request.data['email']
         password = request.data['password']
-        phoneNumber = request.data['phone_number']
         instanceUser = request.user
-        serializer = CustomerSerializer(instanceUser, request.data)
+        serializer = CustomerSerializer(instanceUser, data = request.data)
         if serializer.is_valid():
             serializer.save()
             instanceUser.set_password(password)
             instanceUser.save()
-        return Response({'msg': 'Updated'}, status = status.HTTP_200_OK)
+            return Response({'msg': 'Updated'}, status = status.HTTP_200_OK)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
