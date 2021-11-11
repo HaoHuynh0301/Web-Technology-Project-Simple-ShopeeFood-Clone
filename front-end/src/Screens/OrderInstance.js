@@ -12,10 +12,12 @@ import motorIcon from '../assets/motor.png';
 import 'leaflet/dist/leaflet.css';
 import {
     blueColor,
-    orangeColor
+    orangeColor,
+    ipAddress
 } from '../contants';
 import LoadingGif from '../assets/loading.gif';
 const axios = require('axios');
+const localStorage = require('local-storage');
 
 
 class OrderInstance extends Component {
@@ -49,16 +51,34 @@ class OrderInstance extends Component {
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDriverCoordinate = this.getDriverCoordinate.bind(this);
+        this.getInformation = this.getInformation.bind(this);
     }
 
     getDriverCoordinate = () => {
         //Code here
     }
 
+    getInformation = () => {
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/cart/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log('KHÔNG CÓ DỮ LIỆU');
+        })
+    }
+
     componentDidMount () {
         this.interval = setInterval(() => {
             this.getDriverCoordinate();
         }, 2000);
+        this.getInformation();
     }
 
     componentWillUnmount() {
