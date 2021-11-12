@@ -40,7 +40,7 @@ class OrderInstance extends Component {
             Longitude: null,
             totalCast: null
         }
-        // this.handleGetOrder = this.handleGetOrder.bind(this);
+        this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
         this.setProductName = this.setProductName.bind(this);

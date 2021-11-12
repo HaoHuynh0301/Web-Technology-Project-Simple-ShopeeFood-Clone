@@ -7,17 +7,23 @@ import {
     Footer
 } from '../Components';
 import {
+    ipAddress,
     orangeColor
 } from '../contants';
+const axios = require('axios');
+const localStorage = require('local-storage');
 
 class OrderHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            historyOrders: [{'id': 1}, {'id': 2}]
+            historyOrders: [
+
+            ]
         }
 
         this.handleReOrder = this.handleReOrder.bind(this);
+        this.getHistoryOrders = this.getHistoryOrders.bind(this);
     }
 
     handleReOrder = (id) => {
@@ -54,22 +60,51 @@ class OrderHistory extends Component {
         );
     }
 
+    componentDidMount = () => {
+        this.getHistoryOrders();
+    }
+
+    getHistoryOrders = () => {
+        //delivered-orders/
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/delivered-orders/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+            this.setState({
+                historyOrders: response.data
+            });
+        })
+        .catch((error) => {
+            console.log('Error');
+        })
+    }
+
     mainView = () => {
         if(this.state.historyOrders.length > 0) {
             const listHistoryOrder = this.state.historyOrders.map((item, index) => {
                 return(
-                    <div style = {{
+                    <div key = {index} style = {{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'space-around',
+                        // justifyContent: 'space-arundo',
                         borderBottom: 'solid 0.5px #e6e6e6',
                         paddingBottom: '5px',
                         marginTop: '10px'
                     }} key = {index}>
-                        <p>1</p>
-                        <p>17h50</p>
-                        <p>So - Lòng đào - An Khánh</p>
-                        <p>70.000 vnđ</p>
+                        <p style = {{
+                            marginRight: '100px',
+                            marginLeft: '50px'
+                        }}>{item.id}</p>
+                        <p>{item.date_ordered}</p>
+                        <p style = {{
+                            marginLeft: '120px',
+                            marginRight: '100px',
+                        }}>70.000 vnđ</p>
                         <button onClick = {() => {
                             this.handleReOrder(item.id);
                         }} style = {{
@@ -124,11 +159,7 @@ class OrderHistory extends Component {
                                 fontWeight: 'bold'
                             }}>Thời gian</p>
                             <p style = {{
-                                marginLeft: '130px',
-                                fontWeight: 'bold'
-                            }}>Địa điểm</p>
-                            <p style = {{
-                                marginLeft: '200px',
+                                marginLeft: '250px',
                                 fontWeight: 'bold'
                             }}>Tổng tiền</p>
                             <p style = {{
