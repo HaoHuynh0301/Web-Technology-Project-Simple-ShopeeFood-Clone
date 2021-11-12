@@ -430,5 +430,13 @@ class ReOrderView(APIView):
                     lattitude = '',
                     longitude = ''
                 )
+                reOrderDetail = reOrder[0].orderdetail_set.all()
+                for orderDetail in reOrderDetail:
+                    OrderDetail.objects.create(
+                        product = orderDetail.product,
+                        order = newOrder,
+                        quantity = orderDetail.quantity,
+                        date_added = orderDetail.date_added
+                    )
             return Response({'msg': 'CREATED'}, status = status.HTTP_200_OK)
         return Response({'msg': 'Error'}, status = status.HTTP_400_BAD_REQUEST)
