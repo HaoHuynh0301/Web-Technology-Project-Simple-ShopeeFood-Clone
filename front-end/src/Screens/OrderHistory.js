@@ -104,7 +104,7 @@ class OrderHistory extends Component {
                         <p style = {{
                             marginLeft: '120px',
                             marginRight: '100px',
-                        }}>70.000 vnđ</p>
+                        }}>{item} vnđ</p>
                         <button onClick = {() => {
                             this.handleReOrder(item.id);
                         }} style = {{

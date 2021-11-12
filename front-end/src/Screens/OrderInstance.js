@@ -3,12 +3,8 @@ import {
     Navigation,
     Footer
 } from '../Components';
-import {
-    useLocation
-} from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import storeIcon from '../assets/store.png';
-import motorIcon from '../assets/motor.png';
 import 'leaflet/dist/leaflet.css';
 import {
     blueColor,
@@ -38,12 +34,11 @@ class OrderInstance extends Component {
             // Current location
             Latitude: null,
             Longitude: null,
-            totalCast: null
+            totalCast: 0
         }
-        this.handleGetOrder = this.handleGetOrder.bind(this);
+        // this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
-        this.setProductName = this.setProductName.bind(this);
     }
 
     getDeliveredCoordinate = () => {
@@ -65,32 +60,6 @@ class OrderInstance extends Component {
         })
     }
 
-    setProductName = () => {
-        const token = localStorage.get('token');
-        if(this.state.listFoodsInstance.length !== 0) {
-            let tmpContext = this.state.listFoodsInstance;
-            for (let i = 0; i < tmpContext.length; i++) {
-                axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                .then((response) => {
-                    tmpContext[i].product = response.data;
-                })
-                .catch((error) => {
-                    console.log('Error');
-                });
-            }
-            console.log(tmpContext);
-            this.setState({
-                listFoodsInstance: tmpContext
-            });
-        }
-        
-    }
-
     getInformation = () => {
         const token = localStorage.get('token');
         axios.get(`${ipAddress}/api/cart/`, {
@@ -99,12 +68,12 @@ class OrderInstance extends Component {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(async (response) => {
-            console.log(response.data.order);
+        .then((response) => {
             this.setState({
                 instanceOrder: response.data.order,
                 listFoodsInstance: response.data.items
             });
+            console.log(response.data.items);
             let tmpContext = response.data.items;
             for (let i = 0; i < tmpContext.length; i = i + 1) {
                 axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
@@ -114,13 +83,14 @@ class OrderInstance extends Component {
                     }
                 })
                 .then((secondresponse) => {
-                    tmpContext[i].product = secondresponse.data;
+                    this.setState({
+                        totalCast: this.state.totalCast + response.data.items[i].get_order_detail_total
+                    })
                 })
                 .catch((error) => {
                     console.log('Error');
                 });
             }
-            // console.log(tmpContext);
             this.setState({
                 listFoodsInstance: tmpContext
             });
@@ -131,9 +101,10 @@ class OrderInstance extends Component {
     }
 
     componentDidMount () {
-        this.interval = setInterval(() => {
-            this.getInformation();
-        }, 10000);
+        this.getInformation();
+        // this.interval = setInterval(() => {
+        //     this.getInformation();
+        // }, 10000);
         this.getDeliveredCoordinate();
     }
 
@@ -141,14 +112,14 @@ class OrderInstance extends Component {
         clearInterval(this.interval);
     }
 
-    
-
     handleGetOrder = () => {
         const token = localStorage.get('token');
+        let totalCast = this.state.totalCast;
         navigator.geolocation.getCurrentPosition(function(position) {
             axios.post(`${ipAddress}/api/checkout/`, {
                 lattitude: position.coords.latitude,
-                longitude: position.coords.longitude
+                longitude: position.coords.longitude,
+                cast: totalCast
             }, {
                 headers: {
                     'Content-Type': 'application/json',
