@@ -137,7 +137,7 @@ class OrderInstance extends Component {
     }
 
     mainView = () => {
-        if(this.state.instanceOrder != null) {
+        if(this.state.instanceOrder !== null) {
             if(this.state.instanceOrder.is_checkout === true) {
                 if(this.state.shippingAddress === null) {
                     return(
@@ -373,25 +373,24 @@ class OrderInstance extends Component {
                             </div>
                         </div>
                     </div>
+                );    
+            } else {
+                return(
+                    <div style = {{
+                        height: '520px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <img style = {{
+                            height: '50px',
+                            width: '50px'
+                        }} src = {LoadingGif}></img>
+                    </div>
                 );
-                
             }
-        } else {
-            return(
-                <div style = {{
-                    height: '520px',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <img style = {{
-                        height: '50px',
-                        width: '50px'
-                    }} src = {LoadingGif}></img>
-                </div>
-            );
-        }
+        } 
     }
 
     render() {

@@ -21,13 +21,26 @@ class OrderHistory extends Component {
 
             ]
         }
-
         this.handleReOrder = this.handleReOrder.bind(this);
         this.getHistoryOrders = this.getHistoryOrders.bind(this);
     }
 
     handleReOrder = (id) => {
-        alert(id)
+        const token = localStorage.get('token');
+        axios.post(`${ipAddress}/api/re-order/`, {
+            order_id: id
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            alert('Re-order THÀNH CÔNG!');
+        })
+        .catch((error) => {
+            alert('HÃY THANH TOÁN ĐƠN HÀNG TRƯỚC KHI NHẬN ĐƠN KHÁC NHÉ!');
+        })
     }
 
     emptyHistoryOrders = () => {
@@ -152,7 +165,7 @@ class OrderHistory extends Component {
                             <p style = {{
                                 marginLeft: '40px',
                                 fontWeight: 'bold'
-                            }}>STT</p>
+                            }}>ID</p>
                             <p style = {{
                                 marginLeft: '100px',
                                 fontWeight: 'bold'
@@ -161,10 +174,6 @@ class OrderHistory extends Component {
                                 marginLeft: '250px',
                                 fontWeight: 'bold'
                             }}>Tổng tiền</p>
-                            <p style = {{
-                                marginLeft: '130px',
-                                fontWeight: 'bold'
-                            }}>Trạng thái</p>
                         </div>
                         {listHistoryOrder}
                     </div>
