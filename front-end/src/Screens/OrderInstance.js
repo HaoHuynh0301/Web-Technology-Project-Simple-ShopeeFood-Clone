@@ -25,37 +25,51 @@ class OrderInstance extends Component {
         super(props);
         this.state = {
             instanceOrder: {
-                id: '1',
-                status: 2,
+
             },
             listFoodsInstance: [
-                {
-                    'id': 1,
-                    'name': 'Mì xào giòn',
-                    'description': 'Ngon say lalalala',
-                    'categories:': 'Mì, thịt bò, bông cải xào',
-                    'price': 20000
-                },
-                {
-                    'id': 2,
-                    'name': 'Mì xào giòn',
-                    'description': 'Ngon say lalalala',
-                    'categories:': 'Mì, thịt bò, bông cải xào',
-                    'price': 40000
-                }
+               
             ],
 
             // Current location
             Latitude: null,
-            Longitude: null
+            Longitude: null,
+            totalCast: null
         }
-        this.handleGetOrder = this.handleGetOrder.bind(this);
+        // this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDriverCoordinate = this.getDriverCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
+        this.setProductName = this.setProductName.bind(this);
     }
 
     getDriverCoordinate = () => {
         //Code here
+    }
+
+    setProductName = () => {
+        const token = localStorage.get('token');
+        if(this.state.listFoodsInstance.length !== 0) {
+            let tmpContext = this.state.listFoodsInstance;
+            for (let i = 0; i < tmpContext.length; i++) {
+                axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then((response) => {
+                    tmpContext[i].product = response.data;
+                })
+                .catch((error) => {
+                    console.log('Error');
+                });
+            }
+            console.log(tmpContext);
+            this.setState({
+                listFoodsInstance: tmpContext
+            });
+        }
+        
     }
 
     getInformation = () => {
@@ -66,8 +80,30 @@ class OrderInstance extends Component {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then((response) => {
-            console.log(response.data);
+        .then(async (response) => {
+            this.setState({
+                instanceOrder: response.data.order,
+                listFoodsInstance: response.data.items
+            });
+            let tmpContext = response.data.items;
+            for (let i = 0; i < tmpContext.length; i = i + 1) {
+                axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then((secondresponse) => {
+                    tmpContext[i].product = secondresponse.data;
+                })
+                .catch((error) => {
+                    console.log('Error');
+                });
+            }
+            // console.log(tmpContext);
+            this.setState({
+                listFoodsInstance: tmpContext
+            });
         })
         .catch((error) => {
             console.log('KHÔNG CÓ DỮ LIỆU');
@@ -85,23 +121,37 @@ class OrderInstance extends Component {
         clearInterval(this.interval);
     }
 
+    
+
     handleGetOrder = () => {
-        let tmpContext = {
-            id: '1',
-            status: 1,
-        }
+        const token = localStorage.get('token');
+        let lattitude = null;
+        let longitude = null;
         navigator.geolocation.getCurrentPosition(function(position) {
-            console.log("Latitude is :", position.coords.latitude);
-            console.log("Longitude is :", position.coords.longitude);
+            lattitude = position.coords.latitude;
+            longitude = position.coords.longitude;
         });
-        this.setState({
-            instanceOrder: tmpContext
-        });
+        axios.post(`${ipAddress}/api/checkout/`, {
+            lattitude: lattitude,
+            longitude: longitude
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+            this.getInformation();
+        }).
+        catch((error) => {
+            alert('XÁC NHẬN ĐƠN HÀNG KHÔNG THÀNH CÔNG!');
+        })
     }
 
     mainView = () => {
         if(this.state.instanceOrder != null) {
-            if(this.state.instanceOrder.status === 1) {
+            if(this.state.instanceOrder.is_checkout === true) {
                 return(
                     <div style = {{
                         height: '520px',
@@ -191,10 +241,10 @@ class OrderInstance extends Component {
                         </div>
                     </div>
                 );
-            } else if(this.state.instanceOrder.status === 2) {
+            } else if(this.state.instanceOrder.is_checkout === false) {
                 const item = this.state.listFoodsInstance.map((item, index) => {
                     return(
-                        <div style = {{
+                        <div key = {index} style = {{
                             display: 'flex',
                             flexDirection: 'column',
                         }}>
@@ -203,7 +253,7 @@ class OrderInstance extends Component {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between'
                             }}>
-                                <p style = {{fontWeight: 'bold'}}>{item.name}</p> <p>{item.price} vnđ</p>
+                                <p style = {{fontWeight: 'bold'}}>{item.product} - {item.quantity}</p> <p>{item.get_order_detail_total} vnđ</p>
                             </div>
                             <div style = {{
                                 height: '0.5px',
@@ -244,7 +294,7 @@ class OrderInstance extends Component {
                                     <p style = {{
                                         fontWeight: 'bold'
                                     }}>Tổng cộng: </p>
-                                    <p>100000 vnđ</p>
+                                    <p>{this.state.totalCast} vnđ</p>
                                 </div>
                                 <button onClick = {() => {
                                     this.handleGetOrder()
