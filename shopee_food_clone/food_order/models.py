@@ -104,6 +104,7 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
     is_checkout = models.BooleanField(default=False)
     is_delivered = models.BooleanField(default=False)
+    cast = models.FloatField(default=0)
     lattitude = models.CharField(max_length=255, null=True, blank=True)
     longitude = models.CharField(max_length=255, null=True, blank=True)
 
