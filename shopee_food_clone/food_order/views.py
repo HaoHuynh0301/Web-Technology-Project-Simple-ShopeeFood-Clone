@@ -395,3 +395,15 @@ class InstanceAddressView(APIView):
             serializer = ShippingAddressSerializer(shippingAddress[0])
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'NOT FOUND'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class DeliveredOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        user = request.user
+        deliveredOrder = user.order_set.filter(is_delivered = True)
+        if len(deliveredOrder) > 0:
+            serializer = OrderSerializer(deliveredOrder, many = True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response({'msg': 'ERROR'}, status = status.HTTP_400_BAD_REQUEST)
