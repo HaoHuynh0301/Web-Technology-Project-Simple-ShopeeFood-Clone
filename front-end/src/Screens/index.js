@@ -8,6 +8,7 @@ import OrderInstance from './OrderInstance';
 import DoAn from "./DoAn";
 import ThucPham from "./ThucPham";
 import Bia from "./Bia";
+import RoutingMachine from "./RoutingMachine";
 
 export {
     Login,
@@ -19,5 +20,6 @@ export {
     OrderInstance,
     DoAn,
     ThucPham,
-    Bia
+    Bia,
+    RoutingMachine
 }

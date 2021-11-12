@@ -15,6 +15,7 @@ import {
     orangeColor,
     ipAddress
 } from '../contants';
+import { RoutingMachine } from ".";
 import LoadingGif from '../assets/loading.gif';
 const axios = require('axios');
 const localStorage = require('local-storage');
@@ -30,6 +31,9 @@ class OrderInstance extends Component {
             listFoodsInstance: [
                
             ],
+            shippingAddress: [
+
+            ],
 
             // Current location
             Latitude: null,
@@ -37,13 +41,28 @@ class OrderInstance extends Component {
             totalCast: null
         }
         // this.handleGetOrder = this.handleGetOrder.bind(this);
-        this.getDriverCoordinate = this.getDriverCoordinate.bind(this);
+        this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
         this.setProductName = this.setProductName.bind(this);
     }
 
-    getDriverCoordinate = () => {
-        //Code here
+    getDeliveredCoordinate = () => {
+        //shipping-address/
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/shipping-address/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            this.setState({
+                shippingAddress: response.data
+            })
+        })
+        .catch((error) => {
+            console.log('ERROR');
+        })
     }
 
     setProductName = () => {
@@ -113,9 +132,9 @@ class OrderInstance extends Component {
 
     componentDidMount () {
         this.interval = setInterval(() => {
-            this.getDriverCoordinate();
-        }, 2000);
-        this.getInformation();
+            this.getInformation();
+        }, 10000);
+        this.getDeliveredCoordinate();
     }
 
     componentWillUnmount() {
@@ -126,11 +145,7 @@ class OrderInstance extends Component {
 
     handleGetOrder = () => {
         const token = localStorage.get('token');
-        let lattitude = null;
-        let longitude = null;
         navigator.geolocation.getCurrentPosition(function(position) {
-            // lattitude = position.coords.latitude;
-            // longitude = position.coords.longitude;
             axios.post(`${ipAddress}/api/checkout/`, {
                 lattitude: position.coords.latitude,
                 longitude: position.coords.longitude
@@ -153,95 +168,172 @@ class OrderInstance extends Component {
     mainView = () => {
         if(this.state.instanceOrder != null) {
             if(this.state.instanceOrder.is_checkout === true) {
-                return(
-                    <div style = {{
-                        height: '520px',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
+                if(this.state.shippingAddress === null) {
+                    return(
                         <div style = {{
-                            border: 'solid 0.2px #e6e6e6',
-                            boxShadow: '5px 10px 18px #888888',
-                            height: '90%',
-                            width: '70%'
-                        }}>
-                            <MapContainer style = {{
-                                height: '100%',
-                                width: '100%',
-                                border: 'solid 0.5px grey'
-                            }} center={[14.058324, 108.277199]} zoom={8} scrollWheelZoom={true}>
-                                <TileLayer
-                                    attribution='Vị trí đơn hàng'
-                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                />
-                                <Marker position={[21.0245, 105.84117]}>
-                                    <Popup>
-                                        Vị trí giao dự kiến
-                                    </Popup>
-                                </Marker>
-                            </MapContainer>
-                        </div>
-                        <div style = {{
-                            width: '360px',
-                            border: 'solid 0.5px grey',
-                            marginLeft: '20px',
-                            borderRadius: '10px',
-                            padding: '20px',
+                            height: '520px',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
                         }}>
                             <div style = {{
-                                display: 'flex',
-                                flexDirection: 'row'
+                                border: 'solid 0.2px #e6e6e6',
+                                boxShadow: '5px 10px 18px #888888',
+                                height: '90%',
+                                width: '70%'
                             }}>
-                                <img src = {storeIcon} style = {{
-                                    height: '30px',
-                                    width: '30px'
-                                }}></img>
-                                <p style = {{
-                                    marginLeft: '5px',
-                                    fontWeight: 'bold',
-                                    color: blueColor
-                                }}>Mì SO - Lòng đào</p>
-                            </div>
-                            <p>Số 14 đường Quản Trọng Hoàng, Hưng Lợi, Ninh Kiều</p>
-                            <div style = {{
-                                height: '0.5px',
-                                backgroundColor: 'grey'
-                            }}></div>
-                            <div style = {{
-                                display: 'flex',
-                                flexDirection: 'row'
-                            }}>
-                                <p>Trạng thái: </p><p style = {{
-                                    color: 'green',
-                                    fontWeight: 'bold',
-                                    marginLeft: '10px'
-                                }}>Đang giao</p>
+                                Hello
                             </div>
                             <div style = {{
+                                width: '360px',
+                                border: 'solid 0.5px grey',
+                                marginLeft: '20px',
+                                borderRadius: '10px',
+                                padding: '20px',
                                 display: 'flex',
-                                flexDirection: 'row'
+                                flexDirection: 'column'
                             }}>
-                                <p>Tổng tiền: </p><p style = {{
-                                    fontWeight: 'bold',
-                                    marginLeft: '10px'
-                                }}>70.000 vnđ</p>
-                            </div>
-                            <div style = {{
-                                display: 'flex',
-                                flexDirection: 'row'
-                            }}>
-                                <p>Mã đơn hàng: </p><p style = {{
-                                    fontWeight: 'bold',
-                                    marginLeft: '10px'
-                                }}>DSAJIH321</p>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <img src = {storeIcon} style = {{
+                                        height: '30px',
+                                        width: '30px'
+                                    }}></img>
+                                    <p style = {{
+                                        marginLeft: '5px',
+                                        fontWeight: 'bold',
+                                        color: blueColor
+                                    }}>Mì SO - Lòng đào</p>
+                                </div>
+                                <p>Số 14 đường Quản Trọng Hoàng, Hưng Lợi, Ninh Kiều</p>
+                                <div style = {{
+                                    height: '0.5px',
+                                    backgroundColor: 'grey'
+                                }}></div>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <p>Trạng thái: </p><p style = {{
+                                        color: 'green',
+                                        fontWeight: 'bold',
+                                        marginLeft: '10px'
+                                    }}>Đang giao</p>
+                                </div>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <p>Tổng tiền: </p><p style = {{
+                                        fontWeight: 'bold',
+                                        marginLeft: '10px'
+                                    }}>70.000 vnđ</p>
+                                </div>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <p>Mã đơn hàng: </p><p style = {{
+                                        fontWeight: 'bold',
+                                        marginLeft: '10px'
+                                    }}>DSAJIH321</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
+                    );
+                } else {
+                    return(
+                        <div style = {{
+                            height: '520px',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <div style = {{
+                                border: 'solid 0.2px #e6e6e6',
+                                boxShadow: '5px 10px 18px #888888',
+                                height: '90%',
+                                width: '70%'
+                            }}>
+                                <MapContainer style = {{
+                                    height: '100%',
+                                    width: '100%',
+                                    border: 'solid 0.5px grey'
+                                }} center={[14.058324, 108.277199]} zoom={10} scrollWheelZoom={true}>
+                                    <TileLayer
+                                        attribution='Vị trí đơn hàng'
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    />
+                                    <RoutingMachine 
+                                        delivered = {[this.state.instanceOrder.lattitude, this.state.instanceOrder.longitude]}
+                                        current = {[this.state.shippingAddress.lattitude, this.state.shippingAddress.longitude]} 
+                                    />
+                                </MapContainer>
+                            </div>
+                            <div style = {{
+                                width: '360px',
+                                border: 'solid 0.5px grey',
+                                marginLeft: '20px',
+                                borderRadius: '10px',
+                                padding: '20px',
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <img src = {storeIcon} style = {{
+                                        height: '30px',
+                                        width: '30px'
+                                    }}></img>
+                                    <p style = {{
+                                        marginLeft: '5px',
+                                        fontWeight: 'bold',
+                                        color: blueColor
+                                    }}>Mì SO - Lòng đào</p>
+                                </div>
+                                <p>Số 14 đường Quản Trọng Hoàng, Hưng Lợi, Ninh Kiều</p>
+                                <div style = {{
+                                    height: '0.5px',
+                                    backgroundColor: 'grey'
+                                }}></div>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <p>Trạng thái: </p><p style = {{
+                                        color: 'green',
+                                        fontWeight: 'bold',
+                                        marginLeft: '10px'
+                                    }}>Đang giao</p>
+                                </div>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <p>Tổng tiền: </p><p style = {{
+                                        fontWeight: 'bold',
+                                        marginLeft: '10px'
+                                    }}>70.000 vnđ</p>
+                                </div>
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <p>Mã đơn hàng: </p><p style = {{
+                                        fontWeight: 'bold',
+                                        marginLeft: '10px'
+                                    }}>DSAJIH321</p>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
             } else if(this.state.instanceOrder.is_checkout === false) {
                 const item = this.state.listFoodsInstance.map((item, index) => {
                     return(
