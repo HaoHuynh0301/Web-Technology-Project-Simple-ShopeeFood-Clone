@@ -44,5 +44,6 @@ urlpatterns = [
     path('api/middleware/', views.middleware, name="api_middleware"),
     path('api/update-coordinate/<int:pk>/', views.updateCoordinate, name="api_update_coordinate"),
     path('api/shipping-address/', views.InstanceAddressView.as_view(), name = 'shipping-address'),
-    path('api/delivered-orders/', views.DeliveredOrderView.as_view(), name = 'delivered-orders')
+    path('api/delivered-orders/', views.DeliveredOrderView.as_view(), name = 'delivered-orders'),
+    path('api/re-order/', views.ReOrderView.as_view(), name = 're-order')
 ]

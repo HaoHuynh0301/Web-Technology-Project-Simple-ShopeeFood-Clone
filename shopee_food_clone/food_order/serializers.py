@@ -35,7 +35,6 @@ class CustomerCreationSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Customer
         fields = [

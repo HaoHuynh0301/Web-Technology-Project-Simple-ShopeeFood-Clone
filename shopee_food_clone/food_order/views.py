@@ -278,6 +278,7 @@ def checkoutApi(request):
     data = request.data
     lattitude = data['lattitude']
     longitude = data['longitude']
+    cast = data['cast']
     # Get customer information
     customer = request.user
     # Update checkout status for order.
@@ -285,6 +286,7 @@ def checkoutApi(request):
     order.is_checkout = True
     order.lattitude = lattitude
     order.longitude = longitude
+    order.cast = cast
     order.save()
     # Create new shipping.
     ShippingAddress.objects.create(
@@ -407,3 +409,26 @@ class DeliveredOrderView(APIView):
             serializer = OrderSerializer(deliveredOrder, many = True)
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'ERROR'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class ReOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, format = None):
+        user = request.user
+        instanceOrder = Order.objects.filter(customer = user, is_delivered = False)
+        if len(instanceOrder) == 0:
+            reOrderId = request.data['order_id']
+            reOrder = Order.objects.filter(id = reOrderId)
+            if len(reOrder) > 0:
+                newOrder = Order.objects.create(
+                    customer = user,
+                    date_ordered = reOrder[0].date_ordered,
+                    is_checkout = False,
+                    is_delivered = False,
+                    cast = 0.0,
+                    lattitude = '',
+                    longitude = ''
+                )
+            return Response({'msg': 'CREATED'}, status = status.HTTP_200_OK)
+        return Response({'msg': 'Error'}, status = status.HTTP_400_BAD_REQUEST)
