@@ -74,7 +74,6 @@ class OrderHistory extends Component {
             }
         })
         .then((response) => {
-            console.log(response.data);
             this.setState({
                 historyOrders: response.data
             });
@@ -104,7 +103,7 @@ class OrderHistory extends Component {
                         <p style = {{
                             marginLeft: '120px',
                             marginRight: '100px',
-                        }}>{item} vnđ</p>
+                        }}>{item.cast} vnđ</p>
                         <button onClick = {() => {
                             this.handleReOrder(item.id);
                         }} style = {{
