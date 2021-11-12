@@ -28,7 +28,7 @@ class OrderDetailAdmin(admin.ModelAdmin):
 
 # display individual fields of shipping address on admin page.
 class ShippingAdressAdmin(admin.ModelAdmin):
-    list_display = ["id", "customer", "order", "address", "date_created"]
+    list_display = ["id", "customer", "order", "lattitude", "longitude", "date_created"]
 
 
 # Register your models here.

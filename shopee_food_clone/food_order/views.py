@@ -275,34 +275,26 @@ def addToCartApi(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def checkoutApi(request):
-    # JSON format for add: 
-    # {"province":Cần Thơ,
-    # "district":"Ninh Kiều",
-    # "ward":"Xuân Khánh",
-    # "address":"Đại học Cần Thơ"}
-    # Get JSON data from request.
-    data = json.loads(request.body)
-    province = data["province"]
-    district = data["district"]
-    ward = data["ward"]
-    address = data["address"]
+    data = request.data
+    lattitude = data['lattitude']
+    longitude = data['longitude']
     # Get customer information
-    customer = request.user.customer
+    customer = request.user
     # Update checkout status for order.
-    order = Order.objects.get(customer=customer, is_checkout=False)
+    order = Order.objects.get(customer = customer, is_checkout = False)
     order.is_checkout = True
+    order.lattitude = lattitude
+    order.longitude = longitude
     order.save()
     # Create new shipping.
     ShippingAddress.objects.create(
-        customer=customer,
-        order=order,
-        province=province,
-        district=district,
-        ward=ward,
-        address=address,
+        customer = customer,
+        order = order,
+        longitude = longitude,
+        lattitude = lattitude
     )
     # Return JSON result.
-    return Response({"message": "Create order successfully!"}, status=status.HTTP_200_OK)
+    return Response({"message": "Create order successfully!"}, status = status.HTTP_200_OK)
 
 
 # API function to confirm received order of customer. Require login.
