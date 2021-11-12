@@ -81,6 +81,7 @@ class OrderInstance extends Component {
             }
         })
         .then(async (response) => {
+            console.log(response.data.order);
             this.setState({
                 instanceOrder: response.data.order,
                 listFoodsInstance: response.data.items
@@ -128,25 +129,25 @@ class OrderInstance extends Component {
         let lattitude = null;
         let longitude = null;
         navigator.geolocation.getCurrentPosition(function(position) {
-            lattitude = position.coords.latitude;
-            longitude = position.coords.longitude;
+            // lattitude = position.coords.latitude;
+            // longitude = position.coords.longitude;
+            axios.post(`${ipAddress}/api/checkout/`, {
+                lattitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                console.log(response.data);
+                this.getInformation();
+            }).
+            catch((error) => {
+                alert('XÁC NHẬN ĐƠN HÀNG KHÔNG THÀNH CÔNG!');
+            })
         });
-        axios.post(`${ipAddress}/api/checkout/`, {
-            lattitude: lattitude,
-            longitude: longitude
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then((response) => {
-            console.log(response.data);
-            this.getInformation();
-        }).
-        catch((error) => {
-            alert('XÁC NHẬN ĐƠN HÀNG KHÔNG THÀNH CÔNG!');
-        })
     }
 
     mainView = () => {
