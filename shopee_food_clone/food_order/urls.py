@@ -43,4 +43,5 @@ urlpatterns = [
     path('api/order-history/', views.getAllOrderApi, name="api_order_history"),
     path('api/middleware/', views.middleware, name="api_middleware"),
     path('api/update-coordinate/<int:pk>/', views.updateCoordinate, name="api_update_coordinate"),
+    path('api/shipping-address/', views.InstanceAddressView.as_view(), name = 'shipping-address')
 ]

@@ -382,3 +382,16 @@ class CustomerView(APIView):
             instanceUser.save()
             return Response({'msg': 'Updated'}, status = status.HTTP_200_OK)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class InstanceAddressView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        orderId = request.query_params.get('order_id')
+        instanceOrder = Order.objects.filter(id = orderId)
+        if len(instanceOrder) > 0:
+            shipAddress = instanceOrder[0].shippingaddress_set.all()
+            serializer = ShippingAddressSerializer(shipAddress[0])
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response({'msg': 'NOT FOUND'}, status = status.HTTP_400_BAD_REQUEST)
