@@ -24,12 +24,8 @@ class OrderInstance extends Component {
             instanceOrder: {
 
             },
-            listFoodsInstance: [
-               
-            ],
-            shippingAddress: [
-
-            ],
+            listFoodsInstance: null,
+            shippingAddress: null,
 
             // Current location
             Latitude: null,
@@ -178,7 +174,7 @@ class OrderInstance extends Component {
                                         marginLeft: '5px',
                                         fontWeight: 'bold',
                                         color: blueColor
-                                    }}>Mì SO - Lòng đào</p>
+                                    }}>{this.state.instanceOrder.product}</p>
                                 </div>
                                 <p>Số 14 đường Quản Trọng Hoàng, Hưng Lợi, Ninh Kiều</p>
                                 <div style = {{
@@ -217,6 +213,7 @@ class OrderInstance extends Component {
                         </div>
                     );
                 } else if(this.state.shippingAddress !== null) {
+                    console.log(this.state.instanceOrder);
                     return(
                         <div style = {{
                             height: '520px',
@@ -267,9 +264,8 @@ class OrderInstance extends Component {
                                         marginLeft: '5px',
                                         fontWeight: 'bold',
                                         color: blueColor
-                                    }}>Mì SO - Lòng đào</p>
+                                    }}>MÃ SỐ ĐƠN HÀNG: {this.state.instanceOrder.id}</p>
                                 </div>
-                                <p>Số 14 đường Quản Trọng Hoàng, Hưng Lợi, Ninh Kiều</p>
                                 <div style = {{
                                     height: '0.5px',
                                     backgroundColor: 'grey'
@@ -291,16 +287,7 @@ class OrderInstance extends Component {
                                     <p>Tổng tiền: </p><p style = {{
                                         fontWeight: 'bold',
                                         marginLeft: '10px'
-                                    }}>70.000 vnđ</p>
-                                </div>
-                                <div style = {{
-                                    display: 'flex',
-                                    flexDirection: 'row'
-                                }}>
-                                    <p>Mã đơn hàng: </p><p style = {{
-                                        fontWeight: 'bold',
-                                        marginLeft: '10px'
-                                    }}>DSAJIH321</p>
+                                    }}>{this.state.instanceOrder.cast} vnđ</p>
                                 </div>
                             </div>
                         </div>
