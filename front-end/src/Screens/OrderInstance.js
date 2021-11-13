@@ -36,7 +36,7 @@ class OrderInstance extends Component {
             Longitude: null,
             totalCast: 0
         }
-        // this.handleGetOrder = this.handleGetOrder.bind(this);
+        this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
     }
@@ -57,7 +57,7 @@ class OrderInstance extends Component {
         })
         .catch((error) => {
             console.log('ERROR');
-        })
+        });
     }
 
     getInformation = () => {
@@ -115,7 +115,7 @@ class OrderInstance extends Component {
     handleGetOrder = () => {
         const token = localStorage.get('token');
         let totalCast = this.state.totalCast;
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition((position) => {
             axios.post(`${ipAddress}/api/checkout/`, {
                 lattitude: position.coords.latitude,
                 longitude: position.coords.longitude,
@@ -127,12 +127,14 @@ class OrderInstance extends Component {
                 }
             })
             .then((response) => {
-                console.log(response.data);
-                this.getInformation();
+                this.setState({
+                    instanceOrder: response.data.order,
+                    listFoodsInstance: response.data.items
+                });
             }).
             catch((error) => {
-                alert('XÁC NHẬN ĐƠN HÀNG KHÔNG THÀNH CÔNG!');
-            })
+                alert(error);
+            });
         });
     }
 
@@ -361,7 +363,7 @@ class OrderInstance extends Component {
                                     <p>{this.state.totalCast} vnđ</p>
                                 </div>
                                 <button onClick = {() => {
-                                    this.handleGetOrder()
+                                    this.handleGetOrder();
                                 }} style = {{
                                     fontWeight: 'bold',
                                     color: 'white',
