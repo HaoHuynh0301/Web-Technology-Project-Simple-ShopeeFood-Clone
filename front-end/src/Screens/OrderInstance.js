@@ -42,7 +42,6 @@ class OrderInstance extends Component {
     }
 
     getDeliveredCoordinate = () => {
-        //shipping-address/
         const token = localStorage.get('token');
         axios.get(`${ipAddress}/api/shipping-address/`, {
             headers: {
@@ -53,7 +52,7 @@ class OrderInstance extends Component {
         .then((response) => {
             this.setState({
                 shippingAddress: response.data
-            })
+            });
         })
         .catch((error) => {
             console.log('ERROR');
@@ -73,7 +72,6 @@ class OrderInstance extends Component {
                 instanceOrder: response.data.order,
                 listFoodsInstance: response.data.items
             });
-            console.log(response.data.items);
             let tmpContext = response.data.items;
             for (let i = 0; i < tmpContext.length; i = i + 1) {
                 axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
@@ -131,6 +129,7 @@ class OrderInstance extends Component {
                     instanceOrder: response.data.order,
                     listFoodsInstance: response.data.items
                 });
+                this.getDeliveredCoordinate();
             }).
             catch((error) => {
                 alert(error);
@@ -217,7 +216,7 @@ class OrderInstance extends Component {
                             </div>
                         </div>
                     );
-                } else {
+                } else if(this.state.shippingAddress !== null) {
                     return(
                         <div style = {{
                             height: '520px',
@@ -236,7 +235,7 @@ class OrderInstance extends Component {
                                     height: '100%',
                                     width: '100%',
                                     border: 'solid 0.5px grey'
-                                }} center={[14.058324, 108.277199]} zoom={10} scrollWheelZoom={true}>
+                                }} center={[this.state.shippingAddress.lattitude, this.state.shippingAddress.longitude]} zoom={8} scrollWheelZoom={true}>
                                     <TileLayer
                                         attribution='Vị trí đơn hàng'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
