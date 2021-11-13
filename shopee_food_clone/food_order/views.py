@@ -292,11 +292,18 @@ def checkoutApi(request):
     ShippingAddress.objects.create(
         customer = customer,
         order = order,
-        longitude = longitude,
-        lattitude = lattitude
+        longitude = '106.62965',
+        lattitude = '10.82302'
     )
+    orderSerializer = OrderSerializer(order)
+    orderDetails = order.orderdetail_set.all()
+    orderDetailsSerializer = OrderDetailSerializer(orderDetails, many = True)
+    context = {
+        'order': orderSerializer.data,
+        'items': orderDetailsSerializer.data
+    }
     # Return JSON result.
-    return Response({"message": "Create order successfully!"}, status = status.HTTP_200_OK)
+    return Response(context, status = status.HTTP_200_OK)
 
 
 # API function to confirm received order of customer. Require login.
@@ -391,11 +398,13 @@ class InstanceAddressView(APIView):
     
     def get(self, request, format = None):
         user = request.user
-        orders = user.order_set.all()
+        orders = user.order_set.filter(is_delivered = False)
+        print(orders[0])
         if len(orders) > 0:
             shippingAddress = orders[0].shippingaddress_set.all()
-            serializer = ShippingAddressSerializer(shippingAddress[0])
-            return Response(serializer.data, status = status.HTTP_200_OK)
+            if len(shippingAddress) > 0:
+                serializer = ShippingAddressSerializer(shippingAddress[0])
+                return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'NOT FOUND'}, status = status.HTTP_400_BAD_REQUEST)
     
     
@@ -438,5 +447,13 @@ class ReOrderView(APIView):
                         quantity = orderDetail.quantity,
                         date_added = orderDetail.date_added
                     )
-            return Response({'msg': 'CREATED'}, status = status.HTTP_200_OK)
+                    
+                orderSerializer = OrderSerializer(newOrder)
+                orderDetails = newOrder.objects.orderdetail_set.all()  
+                serializer = OrderDetailSerializer(orderDetails, many = True)    
+                context = {
+                    'order': orderSerializer.data,
+                    'items': serializer.data
+                }
+            return Response(context, status = status.HTTP_200_OK)
         return Response({'msg': 'Error'}, status = status.HTTP_400_BAD_REQUEST)
