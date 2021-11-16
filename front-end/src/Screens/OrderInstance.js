@@ -15,7 +15,8 @@ import {
     ipAddress
 } from '../contants';
 import { RoutingMachine } from ".";
-import LoadingGif from '../assets/loading.gif';
+import plusIcon from '../assets/plus-icon.png';
+import minusIcon from '../assets/minus-icon.png';
 const axios = require('axios');
 const localStorage = require('local-storage');
 
@@ -89,10 +90,6 @@ class OrderInstance extends Component {
                     console.log('Error');
                 });
             }
-            this.setState({
-                listFoodsInstance: tmpContext,
-                loaded: true
-            });
         })
         .catch((error) => {
             console.log('KHÔNG CÓ DỮ LIỆU');
@@ -342,7 +339,37 @@ class OrderInstance extends Component {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between'
                             }}>
-                                <p style = {{fontWeight: 'bold'}}>{item.name_of_product} - {item.quantity}</p> <p>{item.get_order_detail_total} vnđ</p>
+                                <p style = {{fontWeight: 'bold', width: '130px'}}>{item.name_of_product}</p> 
+                                <div style = {{
+                                    marginRight: '270px'
+                                }}>
+                                    <button style = {{
+                                        border: 'none',
+                                        backgroundColor: '#FFF'
+                                    }} onClick = {() => {
+
+                                    }}>
+                                        <img src = {minusIcon} style = {{
+                                            height: '20px',
+                                            width: '20px'
+                                        }}></img>
+                                    </button>
+                                    <span>{item.quantity}</span>
+                                    <button style = {{
+                                        border: 'none',
+                                        backgroundColor: '#FFF'
+                                    }} onClick = {() => {
+                                        
+                                    }}>
+                                        <img src = {plusIcon} style = {{
+                                            height: '20px',
+                                            width: '20px'
+                                        }}></img>
+                                    </button>
+                                </div>
+                                <p style = {{
+                                    
+                                }}>{item.get_order_detail_total} vnđ</p>
                             </div>
                             <div style = {{
                                 height: '0.5px',
@@ -371,7 +398,9 @@ class OrderInstance extends Component {
                                 flexDirection: 'column' 
                             }}>
                                 <p style = {{
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
+                                    fontSize: '25px',
+                                    marginBottom: '35px'
                                 }}>Chi tiết đơn hàng</p>
                                 {item}
                                 <div style = {{
