@@ -439,7 +439,7 @@ class ReOrderView(APIView):
                     lattitude = '',
                     longitude = ''
                 )
-                reOrderDetail = reOrder[0].orderdetail_set.all()
+                reOrderDetail = reOrder[0].orderdetail_set.all() 
                 for orderDetail in reOrderDetail:
                     OrderDetail.objects.create(
                         product = orderDetail.product,
@@ -447,9 +447,9 @@ class ReOrderView(APIView):
                         quantity = orderDetail.quantity,
                         date_added = orderDetail.date_added
                     )
-                    
                 orderSerializer = OrderSerializer(newOrder)
-                orderDetails = newOrder.objects.orderdetail_set.all()  
+                orderDetails = newOrder.orderdetail_set.all()  
+                print('OK')
                 serializer = OrderDetailSerializer(orderDetails, many = True)    
                 context = {
                     'order': orderSerializer.data,

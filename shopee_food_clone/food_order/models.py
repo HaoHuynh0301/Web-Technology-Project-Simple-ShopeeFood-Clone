@@ -100,7 +100,7 @@ class Customer(AbstractBaseUser):
 
 # Database table for order
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    customer = models.ForeignKey(Customer, on_delete = models.CASCADE, blank=True, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     is_checkout = models.BooleanField(default=False)
     is_delivered = models.BooleanField(default=False)
@@ -120,7 +120,7 @@ class Order(models.Model):
 
 # Database table for order detail
 class OrderDetail(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete = models.CASCADE, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)
