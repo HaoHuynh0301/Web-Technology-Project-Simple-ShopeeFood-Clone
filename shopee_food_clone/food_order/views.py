@@ -96,7 +96,7 @@ def cart(request):
     customer = request.user.customer
     # Save customer to order.
     order, created = Order.objects.get_or_create(
-        customer=customer, is_checkout=False)
+        customer = customer, is_checkout = False)
     # Save product to cart.
     items = order.orderdetail_set.all()
 
@@ -201,9 +201,9 @@ def addProductsApi(request):
 @permission_classes([IsAuthenticated])
 def editProductsApi(request, pk):
     # Get product with given pk
-    product = Product.objects.get(pk=pk)
+    product = Product.objects.get(pk = pk)
     # Serialize data for the response.
-    productSerializer = ProductSerializer(instance=product, data=request.data)
+    productSerializer = ProductSerializer(instance = product, data = request.data)
     # Save product to database if valid.
     if productSerializer.is_valid():
         productSerializer.save()
@@ -457,3 +457,25 @@ class ReOrderView(APIView):
                 }
             return Response(context, status = status.HTTP_200_OK)
         return Response({'msg': 'Error'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class OrderUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, format = None):
+        orderDetailId = request.data['order_detail_id']
+        statusTmp = request.data['status']
+        instanceOrderDetail = OrderDetail.objects.filter(id = orderDetailId)
+        if len(instanceOrderDetail) > 0:
+            orderDetail = instanceOrderDetail[0]
+            # 1 == "+"
+            if statusTmp == 1:
+                orderDetail.quantity = orderDetail.quantity + 1
+                orderDetail.save()
+            if statusTmp == 2:
+                orderDetail.quantity = orderDetail.quantity - 1
+                if orderDetail.quantity <= 0:
+                    orderDetail.delete()
+                orderDetail.save()
+            return Response({'msg': 'updated'}, status = status.HTTP_200_OK)
+        return Response({'msg': 'not found'}, status = status.HTTP_400_BAD_REQUEST)

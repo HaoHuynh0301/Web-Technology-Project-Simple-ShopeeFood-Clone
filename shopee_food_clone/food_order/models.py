@@ -144,8 +144,8 @@ class OrderDetail(models.Model):
 
 # Database table for shipping information.
 class ShippingAddress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(Customer, on_delete = models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete = models.SET_NULL, null=True)
     lattitude = models.CharField(max_length=255, null=True, blank=True)
     longitude = models.CharField(max_length=255, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
