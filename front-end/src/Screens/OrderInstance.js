@@ -337,11 +337,10 @@ class OrderInstance extends Component {
                             <div style = {{
                                 display: 'flex',
                                 flexDirection: 'row',
-                                justifyContent: 'space-between'
                             }}>
-                                <p style = {{fontWeight: 'bold', width: '130px'}}>{item.name_of_product}</p> 
+                                <p style = {{fontWeight: 'bold', width: '20%'}}>{item.name_of_product}</p> 
                                 <div style = {{
-                                    marginRight: '270px'
+                                    width: '65%'
                                 }}>
                                     <button style = {{
                                         border: 'none',
@@ -368,7 +367,7 @@ class OrderInstance extends Component {
                                     </button>
                                 </div>
                                 <p style = {{
-                                    
+                                    width: '15%'
                                 }}>{item.get_order_detail_total} vnđ</p>
                             </div>
                             <div style = {{
