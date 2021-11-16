@@ -3,6 +3,9 @@ import {
     Navigation,
     Footer
 } from '../Components';
+import {
+    Link
+} from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import storeIcon from '../assets/store.png';
 import 'leaflet/dist/leaflet.css';
@@ -131,6 +134,36 @@ class OrderInstance extends Component {
                 alert(error);
             });
         });
+    }
+
+    emptyInstanceOrders = () => {
+        return(
+            <div style = {{
+                height: '90%',
+                width: '60%',
+                border: 'solid 0.2px #e6e6e6',
+                boxShadow: '5px 10px 18px #888888',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                Bạn không có đơn hàng
+                <Link to = '/' style = {{
+                    height: '50px',
+                    width: '200px',
+                    border: 'solid 0.5px grey',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textDecoration: "none",
+                    borderRadius: '10px',
+                    marginTop: '10px',
+                    color: 'black'
+                }}>Bắt đầu mua hàng ngay</Link>
+            </div>
+        );
     }
 
     mainView = () => {
@@ -371,10 +404,7 @@ class OrderInstance extends Component {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <img style = {{
-                            height: '50px',
-                            width: '50px'
-                        }} src = {LoadingGif}></img>
+                        {this.emptyInstanceOrders()}
                     </div>
                 );
             }
