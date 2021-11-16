@@ -225,8 +225,8 @@ class OrderInstance extends Component {
                             <div style = {{
                                 border: 'solid 0.2px #e6e6e6',
                                 boxShadow: '5px 10px 18px #888888',
-                                height: '90%',
-                                width: '70%'
+                                height: '95%',
+                                width: '75%'
                             }}>
                                 <MapContainer style = {{
                                     height: '100%',
