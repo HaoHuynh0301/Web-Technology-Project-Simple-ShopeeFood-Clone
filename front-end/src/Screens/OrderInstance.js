@@ -71,6 +71,7 @@ class OrderInstance extends Component {
                 instanceOrder: response.data.order,
                 listFoodsInstance: response.data.items
             });
+            console.log(response.data.items);
             let tmpContext = response.data.items;
             for (let i = 0; i < tmpContext.length; i = i + 1) {
                 axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
@@ -80,9 +81,11 @@ class OrderInstance extends Component {
                     }
                 })
                 .then((secondresponse) => {
+                    console.log(secondresponse.data.name);
                     this.setState({
                         totalCast: this.state.totalCast + response.data.items[i].get_order_detail_total
-                    })
+                    });
+                    tmpContext[i].product = secondresponse.data.name;
                 })
                 .catch((error) => {
                     console.log('Error');
@@ -207,7 +210,7 @@ class OrderInstance extends Component {
                                         marginLeft: '5px',
                                         fontWeight: 'bold',
                                         color: blueColor
-                                    }}>{this.state.instanceOrder.product}</p>
+                                    }}>{this.state.instanceOrder.name_of_product}</p>
                                 </div>
                                 <p>Số 14 đường Quản Trọng Hoàng, Hưng Lợi, Ninh Kiều</p>
                                 <div style = {{

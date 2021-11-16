@@ -10,6 +10,7 @@ import {
     ipAddress,
     orangeColor
 } from '../contants';
+import { ScrollView } from "@cantonjs/react-scroll-view";
 const axios = require('axios');
 const localStorage = require('local-storage');
 
@@ -56,7 +57,7 @@ class OrderHistory extends Component {
                 alignItems: 'center'
             }}>
                 Bạn không có đơn hàng
-                <Link to = '/home' style = {{
+                <Link to = '/' style = {{
                     height: '50px',
                     width: '200px',
                     border: 'solid 0.5px grey',
@@ -96,6 +97,10 @@ class OrderHistory extends Component {
         })
     }
 
+    handleEndReached = () => {
+        console.log("load more");
+    };
+
     mainView = () => {
         if(this.state.historyOrders.length > 0) {
             const listHistoryOrder = this.state.historyOrders.map((item, index) => {
@@ -103,14 +108,14 @@ class OrderHistory extends Component {
                     <div key = {index} style = {{
                         display: 'flex',
                         flexDirection: 'row',
-                        // justifyContent: 'space-arundo',
                         borderBottom: 'solid 0.5px #e6e6e6',
                         paddingBottom: '5px',
                         marginTop: '10px'
                     }} key = {index}>
                         <p style = {{
                             marginRight: '100px',
-                            marginLeft: '50px'
+                            marginLeft: '50px',
+                            width: '30px'
                         }}>{item.id}</p>
                         <p>{item.date_ordered}</p>
                         <p style = {{
@@ -167,15 +172,19 @@ class OrderHistory extends Component {
                                 fontWeight: 'bold'
                             }}>ID</p>
                             <p style = {{
-                                marginLeft: '100px',
+                                marginLeft: '125px',
                                 fontWeight: 'bold'
                             }}>Thời gian</p>
                             <p style = {{
-                                marginLeft: '250px',
+                                marginLeft: '260px',
                                 fontWeight: 'bold'
                             }}>Tổng tiền</p>
                         </div>
-                        {listHistoryOrder}
+                        <ScrollView style = {{
+                            height: '90%'
+                        }} onEndReached={this.handleEndReached}>
+                            {listHistoryOrder}
+                        </ScrollView>
                     </div>
                 </div>
             );
