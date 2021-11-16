@@ -33,7 +33,8 @@ class OrderInstance extends Component {
             // Current location
             Latitude: null,
             Longitude: null,
-            totalCast: 0
+            totalCast: 0,
+            loaded: false
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
@@ -66,12 +67,11 @@ class OrderInstance extends Component {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then((response) => {
+        .then(async (response) => {
             this.setState({
                 instanceOrder: response.data.order,
                 listFoodsInstance: response.data.items
             });
-            console.log(response.data.items);
             let tmpContext = response.data.items;
             for (let i = 0; i < tmpContext.length; i = i + 1) {
                 axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
@@ -81,23 +81,22 @@ class OrderInstance extends Component {
                     }
                 })
                 .then((secondresponse) => {
-                    console.log(secondresponse.data.name);
                     this.setState({
-                        totalCast: this.state.totalCast + response.data.items[i].get_order_detail_total
+                        totalCast: this.state.totalCast + response.data.items[i].get_order_detail_total,
                     });
-                    tmpContext[i].product = secondresponse.data.name;
                 })
                 .catch((error) => {
                     console.log('Error');
                 });
             }
             this.setState({
-                listFoodsInstance: tmpContext
+                listFoodsInstance: tmpContext,
+                loaded: true
             });
         })
         .catch((error) => {
             console.log('KHÔNG CÓ DỮ LIỆU');
-        })
+        });
     }
 
     componentDidMount () {
@@ -163,7 +162,9 @@ class OrderInstance extends Component {
                     textDecoration: "none",
                     borderRadius: '10px',
                     marginTop: '10px',
-                    color: 'black'
+                    color: 'black',
+                    borderColor: orangeColor,
+                    fontWeight: 'bold'
                 }}>Bắt đầu mua hàng ngay</Link>
             </div>
         );
@@ -329,7 +330,7 @@ class OrderInstance extends Component {
                         </div>
                     );
                 }
-            } else if(this.state.instanceOrder.is_checkout === false) {
+            } else if(this.state.listFoodsInstance !== null) {
                 const item = this.state.listFoodsInstance.map((item, index) => {
                     return(
                         <div key = {index} style = {{
@@ -341,7 +342,7 @@ class OrderInstance extends Component {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between'
                             }}>
-                                <p style = {{fontWeight: 'bold'}}>{item.product} - {item.quantity}</p> <p>{item.get_order_detail_total} vnđ</p>
+                                <p style = {{fontWeight: 'bold'}}>{item.name_of_product} - {item.quantity}</p> <p>{item.get_order_detail_total} vnđ</p>
                             </div>
                             <div style = {{
                                 height: '0.5px',
