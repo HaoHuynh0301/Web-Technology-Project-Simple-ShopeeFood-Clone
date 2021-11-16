@@ -465,6 +465,7 @@ class OrderUpdateView(APIView):
     def post(self, request, format = None):
         orderDetailId = request.data['order_detail_id']
         statusTmp = request.data['status']
+        customer = request.user
         instanceOrderDetail = OrderDetail.objects.filter(id = orderDetailId)
         if len(instanceOrderDetail) > 0:
             orderDetail = instanceOrderDetail[0]
@@ -474,8 +475,19 @@ class OrderUpdateView(APIView):
                 orderDetail.save()
             if statusTmp == 2:
                 orderDetail.quantity = orderDetail.quantity - 1
+                orderDetail.save()
                 if orderDetail.quantity <= 0:
                     orderDetail.delete()
-                orderDetail.save()
-            return Response({'msg': 'updated'}, status = status.HTTP_200_OK)
+            instanceOrder = Order.objects.filter(customer = customer, is_delivered = False)
+            if len(instanceOrder) > 0:
+                orderDetails = instanceOrder[0].orderdetail_set.all()
+                orderSerializer = OrderSerializer(instanceOrder[0])
+                serializer = OrderDetailSerializer(orderDetails, many = True)
+                print(orderDetails)
+                context = {
+                    'order': orderSerializer.data,
+                    'items': serializer.data
+                }
+                return Response(context, status = status.HTTP_200_OK)
+            return Response({'msg': 'NOT FOUND'}, status = status.HTTP_400_BAD_REQUEST)
         return Response({'msg': 'not found'}, status = status.HTTP_400_BAD_REQUEST)
