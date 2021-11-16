@@ -346,7 +346,44 @@ class OrderInstance extends Component {
                                         border: 'none',
                                         backgroundColor: '#FFF'
                                     }} onClick = {() => {
-
+                                        const token = localStorage.get('token');
+                                        axios.post(`${ipAddress}/api/order/`, {
+                                            order_detail_id: item.id,
+                                            status: 2
+                                        }, {
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${token}`
+                                            }
+                                        })
+                                        .then((response) => {
+                                            console.log(response.data.order);
+                                            this.setState({
+                                                instanceOrder: response.data.order,
+                                                listFoodsInstance: response.data.items,
+                                                totalCast: 0
+                                            });
+                                            let tmpContext = response.data.items;
+                                            for (let i = 0; i < tmpContext.length; i = i + 1) {
+                                                axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        Authorization: `Bearer ${token}`
+                                                    }
+                                                })
+                                                .then((secondresponse) => {
+                                                    this.setState({
+                                                        totalCast: this.state.totalCast + response.data.items[i].get_order_detail_total,
+                                                    });
+                                                })
+                                                .catch((error) => {
+                                                    console.log('Error');
+                                                });
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                        })
                                     }}>
                                         <img src = {minusIcon} style = {{
                                             height: '20px',
@@ -358,7 +395,43 @@ class OrderInstance extends Component {
                                         border: 'none',
                                         backgroundColor: '#FFF'
                                     }} onClick = {() => {
-                                        
+                                        const token = localStorage.get('token');
+                                        axios.post(`${ipAddress}/api/order/`, {
+                                            order_detail_id: item.id,
+                                            status: 1
+                                        }, {
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${token}`
+                                            }
+                                        })
+                                        .then((response) => {
+                                            this.setState({
+                                                instanceOrder: response.data.order,
+                                                listFoodsInstance: response.data.items,
+                                                totalCast: 0
+                                            });
+                                            let tmpContext = response.data.items;
+                                            for (let i = 0; i < tmpContext.length; i = i + 1) {
+                                                axios.get(`${ipAddress}/api/get-product/${tmpContext[i].product}/`, {
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        Authorization: `Bearer ${token}`
+                                                    }
+                                                })
+                                                .then((secondresponse) => {
+                                                    this.setState({
+                                                        totalCast: this.state.totalCast + response.data.items[i].get_order_detail_total,
+                                                    });
+                                                })
+                                                .catch((error) => {
+                                                    console.log('Error');
+                                                });
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                        })
                                     }}>
                                         <img src = {plusIcon} style = {{
                                             height: '20px',
