@@ -224,6 +224,7 @@ def cartApi(request):
         orderDetails = instanceOrder[0].orderdetail_set.all()
         orderSerializer = OrderSerializer(instanceOrder[0])
         serializer = OrderDetailSerializer(orderDetails, many = True)
+        print(orderDetails)
         context = {
             'order': orderSerializer.data,
             'items': serializer.data
@@ -449,7 +450,6 @@ class ReOrderView(APIView):
                     )
                 orderSerializer = OrderSerializer(newOrder)
                 orderDetails = newOrder.orderdetail_set.all()  
-                print('OK')
                 serializer = OrderDetailSerializer(orderDetails, many = True)    
                 context = {
                     'order': orderSerializer.data,

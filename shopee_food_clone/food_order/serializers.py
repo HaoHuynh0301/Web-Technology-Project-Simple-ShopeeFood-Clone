@@ -63,6 +63,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
             "quantity",
             "date_added",
             "get_order_detail_total",
+            "name_of_product"
         ]
 
 

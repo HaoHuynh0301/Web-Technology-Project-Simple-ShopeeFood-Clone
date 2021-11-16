@@ -60,6 +60,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def name_of_product(self):
+        return str(self.name)
 
 
 # Database table for customer
@@ -132,6 +136,10 @@ class OrderDetail(models.Model):
     def get_order_detail_total(self):
         total = self.product.price * self.quantity
         return total
+    
+    @property
+    def name_of_product(self):
+        return str(self.product.name)
 
 
 # Database table for shipping information.
