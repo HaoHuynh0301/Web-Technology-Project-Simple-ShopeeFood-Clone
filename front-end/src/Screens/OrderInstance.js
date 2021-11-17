@@ -7,10 +7,6 @@ import {
     Link
 } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import {
-    Modal,
-    Button
-} from 'react-bootstrap';
 import storeIcon from '../assets/store.png';
 import 'leaflet/dist/leaflet.css';
 import {
@@ -40,13 +36,11 @@ class OrderInstance extends Component {
             Longitude: null,
             totalCast: 0,
             loaded: false,
-
-            //Modal display
-            isShow: false
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
+        this.handleConfirmDelivered = this.handleConfirmDelivered.bind(this);
     }
 
     getDeliveredCoordinate = () => {
@@ -172,6 +166,28 @@ class OrderInstance extends Component {
                 }}>Bắt đầu mua hàng ngay</Link>
             </div>
         );
+    }
+
+    handleConfirmDelivered = () => {
+        const token = localStorage.get('token');
+        axios.post(`${ipAddress}/api/receive-order/${this.state.instanceOrder.id}/`, {
+
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            alert('XÁC NHẬN ĐƠN HÀNG ĐÃ ĐƯỢC THANH TOÁN!');
+            this.setState({
+                instanceOrder: {},
+                listFoodsInstance: null
+            })
+        })
+        .catch((error) => {
+            alert('XÁC NHẬN ĐƠN HÀNG KHÔNG THÀNH CÔNG! VUI LÒNG THỬ LẠI SAU!');
+        })
     }
 
     mainView = () => {
@@ -336,9 +352,7 @@ class OrderInstance extends Component {
                                     backgroundColor: orangeColor,
                                     fontWeight: 'bold'
                                 }} onClick = {() => {
-                                    this.setState({
-                                        isShow: true
-                                    });
+                                    this.handleConfirmDelivered();
                                 }}>Xác nhận thanh toán</button>
                             </div>
                         </div>
@@ -569,29 +583,6 @@ class OrderInstance extends Component {
                 <Navigation />
                 {this.mainView()}
                 <Footer/>
-                <Modal show={this.state.isShow} onHide={() => {
-                    this.setState({
-                        isShow: false
-                    })
-                }}>
-                    <Modal.Header closeButton>
-                    <Modal.Title>Thông tin đơn hàng</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                    </Modal.Body>
-                    <Modal.Footer>
-                    <Button style = {{
-                        width: '100%',
-                        alignSelf: 'center'
-                    }} variant="secondary" onClick={() => {
-                        this.setState({
-                            isShow: false
-                        });
-                    }}>
-                        Đóng
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
             </div>
         );
     }
