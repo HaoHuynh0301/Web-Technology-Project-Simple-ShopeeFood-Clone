@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        {% for product in total_product %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{product.image.url}}" class="card-img-top" alt="{{product.name}}">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{product.name}}
+                    </h5>
+                    <p class="card-text">
+                        Price: ${{product.price}}
+                    </p>
+                    <p class="card-text">
+                        Available: {{product.stock_number}}
+                    </p>
+                    <a href="#" class="btn btn-primary">Order</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
