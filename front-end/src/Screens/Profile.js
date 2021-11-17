@@ -15,7 +15,7 @@ class Profile extends Component {
         super(props);
         this.state = {
             name: '',
-            password: '',
+            password: null,
             phonenumber: '',
             email: ''
         }
@@ -36,6 +36,7 @@ class Profile extends Component {
             }
         })
         .then((response) => {
+            console.log(response.data);
             this.setState({
                 name: response.data.full_name,
                 phonenumber: response.data.phone_number,
@@ -48,24 +49,28 @@ class Profile extends Component {
     }
 
     handleChangeInformation = () => {
-        const token = localStorage.get('token');
-        axios.post(`${ipAddress}/api/customer-infor/`, {
-            full_name: this.state.full_name,
-            email: this.state.email,
-            phone_number: this.state.phonenumber,
-            password: this.state.password
-        } ,{
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then((response) => {
-            alert('CẬP NHẬT THÀNH CÔNG!');
-        })
-        .catch((error) => {
-            alert('CẬP NHẬT KHÔNG THÀNH KHÔNG!');
-        })
+        if(this.state.password === null) {
+            alert('VUI LÒNG NHẬP MẬT KHẨU CẦN THAY ĐỔI!');
+        } else {
+            const token = localStorage.get('token');
+            axios.post(`${ipAddress}/api/customer-infor/`, {
+                full_name: this.state.name,
+                email: this.state.email,
+                phone_number: this.state.phonenumber,
+                password: this.state.password
+            } ,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                alert('CẬP NHẬT THÀNH CÔNG!');
+            })
+            .catch((error) => {
+                alert('CẬP NHẬT KHÔNG THÀNH KHÔNG!');
+            })
+        }
     }
 
     mainView = () => {
