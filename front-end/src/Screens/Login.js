@@ -5,12 +5,8 @@ import {
 } from '../contants';
 import {
     Link,
-    Redirect,
-    Route,
-    useHistory ,
     withRouter
 } from "react-router-dom";
-import { Home } from ".";
 import auth from "../auth";
 import './css/login.css';
 const axios = require('axios');
@@ -27,9 +23,6 @@ class Login extends Component {
     }
 
     handleSignIn = (event) => {
-        // auth.login(() => {
-        //     this.props.history.push('/');
-        // });
         event.preventDefault();
         axios.post(`${ipAddress}/api/login/`, {
             email: this.state.email,

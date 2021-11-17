@@ -13,10 +13,17 @@ import {
     Redirect,
     withRouter 
 } from "react-router-dom";
+import auth from "../auth";
+const localStorage = require('local-storage');
 
-function Navigation() {
-    return(
-        <ReactBoostrap.Navbar collapseOnSelect expand="lg" bg={orangeColor} variant="light" style = {{backgroundColor: orangeColor}}>
+class Navigation extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+         return(
+            <ReactBoostrap.Navbar collapseOnSelect expand="lg" bg={orangeColor} variant="light" style = {{backgroundColor: orangeColor}}>
                 <ReactBoostrap.Container>
                     <ReactBoostrap.Navbar.Brand><Link style = {{textDecoration: "none", color: blackColor}} to = '/'>NotShoppeFood</Link></ReactBoostrap.Navbar.Brand>
                     <ReactBoostrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -39,14 +46,18 @@ function Navigation() {
                                 borderRadius: '20px',
                                 backgroundColor: orangeColor
                             }} onClick = {() => {
-                                
+                                auth.logout(() => {
+                                    this.props.history.push('/login');
+                                })
                             }}>Đăng xuất</button></ReactBoostrap.NavDropdown.Item>
                         </ReactBoostrap.NavDropdown>
                         </ReactBoostrap.Nav>
                     </ReactBoostrap.Navbar.Collapse>
                 </ReactBoostrap.Container>
             </ReactBoostrap.Navbar>
-    );
+        );
+    }
+   
 }
 
-export default Navigation;
+export default withRouter(Navigation);
