@@ -289,12 +289,12 @@ class OrderInstance extends Component {
                                     height: '100%',
                                     width: '100%',
                                     border: 'solid 0.5px grey'
-                                }} center={[this.state.shippingAddress.lattitude, this.state.shippingAddress.longitude]} zoom={8} scrollWheelZoom={true}>
+                                }} center={[this.state.shippingAddress.lattitude, this.state.shippingAddress.longitude]} zoom={9} scrollWheelZoom={true}>
                                     <TileLayer
                                         attribution='Vị trí đơn hàng'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                     />
-                                    <RoutingMachine 
+                                    <RoutingMachine  
                                         delivered = {[this.state.instanceOrder.lattitude, this.state.instanceOrder.longitude]}
                                         current = {[this.state.shippingAddress.lattitude, this.state.shippingAddress.longitude]} 
                                     />
