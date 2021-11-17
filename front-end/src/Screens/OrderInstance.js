@@ -339,7 +339,7 @@ class OrderInstance extends Component {
                                     this.setState({
                                         isShow: true
                                     });
-                                }}>Chi tiết đơn hàng</button>
+                                }}>Xác nhận thanh toán</button>
                             </div>
                         </div>
                     );
@@ -534,6 +534,36 @@ class OrderInstance extends Component {
     }
 
     render() {
+        let item = [];
+        if(this.state.listFoodsInstance !== null) {
+            item = this.state.listFoodsInstance.map((item, index) => {
+                return(
+                    <div key = {index} style = {{
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}>
+                        <div style = {{
+                            display: 'flex',
+                            flexDirection: 'row',
+                        }}>
+                            <p style = {{fontWeight: 'bold', width: '20%'}}>{item.name_of_product}</p> 
+                            <div style = {{
+                                width: '65%'
+                            }}>
+                                <span>{item.quantity}</span>    
+                            </div>
+                            <p style = {{
+                                width: '15%'
+                            }}>{item.get_order_detail_total} vnđ</p>
+                        </div>
+                        <div style = {{
+                            height: '0.5px',
+                            border: 'solid 0.5px grey'
+                        }}></div>
+                    </div>
+                );
+            })
+        }
         return(
             <div>
                 <Navigation />
@@ -545,26 +575,20 @@ class OrderInstance extends Component {
                     })
                 }}>
                     <Modal.Header closeButton>
-                    <Modal.Title>Xác nhận thêm vào đơn hàng của bạn</Modal.Title>
+                    <Modal.Title>Thông tin đơn hàng</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Hello
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={() => {
+                    <Button style = {{
+                        width: '100%',
+                        alignSelf: 'center'
+                    }} variant="secondary" onClick={() => {
                         this.setState({
                             isShow: false
                         });
                     }}>
-                        Hủy
-                    </Button>
-                    <Button style = {{
-                        backgroundColor: orangeColor,
-                        border: 'solid 0.5px ' + orangeColor
-                    }} onClick={() => {
-                        
-                    }}>
-                        Thêm vào
+                        Đóng
                     </Button>
                     </Modal.Footer>
                 </Modal>
