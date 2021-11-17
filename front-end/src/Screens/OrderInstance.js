@@ -7,6 +7,10 @@ import {
     Link
 } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet';
+import {
+    Modal,
+    Button
+} from 'react-bootstrap';
 import storeIcon from '../assets/store.png';
 import 'leaflet/dist/leaflet.css';
 import {
@@ -35,7 +39,10 @@ class OrderInstance extends Component {
             Latitude: null,
             Longitude: null,
             totalCast: 0,
-            loaded: false
+            loaded: false,
+
+            //Modal display
+            isShow: false
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
@@ -280,7 +287,7 @@ class OrderInstance extends Component {
                             <div style = {{
                                 width: '360px',
                                 border: 'solid 0.5px grey',
-                                marginLeft: '20px',
+                                marginLeft: '10px',
                                 borderRadius: '10px',
                                 padding: '20px',
                                 display: 'flex',
@@ -323,6 +330,16 @@ class OrderInstance extends Component {
                                         marginLeft: '10px'
                                     }}>{this.state.instanceOrder.cast} vnđ</p>
                                 </div>
+                                <button style = {{
+                                    border: 'solid 0.5px grey',
+                                    borderRadius: '10px',
+                                    backgroundColor: orangeColor,
+                                    fontWeight: 'bold'
+                                }} onClick = {() => {
+                                    this.setState({
+                                        isShow: true
+                                    });
+                                }}>Chi tiết đơn hàng</button>
                             </div>
                         </div>
                     );
@@ -522,6 +539,35 @@ class OrderInstance extends Component {
                 <Navigation />
                 {this.mainView()}
                 <Footer/>
+                <Modal show={this.state.isShow} onHide={() => {
+                    this.setState({
+                        isShow: false
+                    })
+                }}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận thêm vào đơn hàng của bạn</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Hello
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => {
+                        this.setState({
+                            isShow: false
+                        });
+                    }}>
+                        Hủy
+                    </Button>
+                    <Button style = {{
+                        backgroundColor: orangeColor,
+                        border: 'solid 0.5px ' + orangeColor
+                    }} onClick={() => {
+                        
+                    }}>
+                        Thêm vào
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }

@@ -12,7 +12,7 @@ function Footer() {
             paddingTop: '20px'
         }}>
             <div>
-                <p style = {{fontSize: '18px', marginBottom: '10px', fontWeight: 'bold'}}>Công ty</p>
+                <p style = {{fontSize: '16px', marginBottom: '10px', fontWeight: 'bold'}}>Công ty</p>
                 <p style = {{color: 'blue'}}>Giới thiệu</p>
                 <p style = {{color: 'blue'}}>Trung tâm trợ giúp</p>
                 <p style = {{color: 'blue'}}>Điều khoản sử dụng</p>
@@ -22,7 +22,7 @@ function Footer() {
                 flexDirection: 'column',
                 alignItems: 'center'
             }}>
-                <p style = {{fontSize: '18px', marginBottom: '10px', fontWeight: 'bold'}}>Ứng dụng NotShoppeFood</p>
+                <p style = {{fontSize: '16px', marginBottom: '10px', fontWeight: 'bold'}}>Ứng dụng NotShoppeFood</p>
                 <img style = {{
                     height: '70px',
                     width: '200px',
@@ -47,7 +47,7 @@ function Footer() {
                 <p style = {{color: 'grey', fontSize: '13px', marginTop: '15px'}}>2021@ NotShoppeFood</p>
             </div>
             <div>
-                <p style = {{fontSize: '18px', marginBottom: '10px', fontWeight: 'bold'}}>Địa chỉ công ty</p>
+                <p style = {{fontSize: '16px', marginBottom: '10px', fontWeight: 'bold'}}>Địa chỉ công ty</p>
                 <p style = {{color: 'blue'}}>Số 14, Quản Trọng Hoàng, Ninh Kiều</p>
                 <p style = {{color: 'blue'}}>Khu 2, đại học Cần Thơ</p>
             </div>

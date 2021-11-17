@@ -3,12 +3,7 @@ import {
     Navigation,
     Footer
 } from '../Components';
-import tmpImage from '../assets/hamburger.jpg';
 import heartIcon from '../assets/heart.png';
-import clockIcon from '../assets/clock.png';
-import {
-    Link
-} from 'react-router-dom'
 import { 
     orangeColor ,
     ipAddress
