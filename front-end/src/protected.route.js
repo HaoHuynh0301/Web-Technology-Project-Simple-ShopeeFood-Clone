@@ -7,13 +7,12 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
     return(
         <Route {...rest} render = {
             (props) => {
-                const isAuth = auth.isAuthenticate();
-                console.log(isAuth);
-                if(isAuth === true) {
+                const token = auth.isAuthenticate();
+                if(token) {
                     return(
                         <Component {...props}/>
                     );
-                } else if(isAuth === false) {
+                } else {
                     return(
                         <Redirect to = {
                             {
@@ -23,10 +22,6 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
                                 }
                             }
                         }/>
-                    );
-                } else {
-                    return(
-                        <div>Reload</div>
                     );
                 }
             }

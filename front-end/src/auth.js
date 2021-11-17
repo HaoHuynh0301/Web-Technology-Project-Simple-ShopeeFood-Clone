@@ -23,23 +23,17 @@ const localStorage = require('local-storage');
 
 
 class Auth {
-    constructor() {
-        this.authenticate = true;
-    }
-
     login(cb) {
-        this.authenticate = true;
         cb();
     }
 
     logout(cb) {
         localStorage.set('token', null);
-        this.authenticate = false;
         cb();
     }
 
     isAuthenticate() {
-        return this.authenticate;
+        return localStorage.get('token')
     }
 }
 
