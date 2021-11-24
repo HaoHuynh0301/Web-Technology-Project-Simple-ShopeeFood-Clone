@@ -113,7 +113,7 @@ class Profile extends Component {
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}> 
-                            <p style = {{marginRight: '133px', fontWeight: 'bold'}}>Tên</p>
+                            <p style = {{marginRight: '133px', fontWeight: 'bold'}}>Tên *</p>
                             <input type = 'text' value = {this.state.name} onChange = {(event) => {
                                 this.setState({
                                     name: event.target.value
@@ -130,7 +130,7 @@ class Profile extends Component {
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}> 
-                            <p style = {{marginRight: '118px', fontWeight: 'bold'}}>Email</p>
+                            <p style = {{marginRight: '118px', fontWeight: 'bold'}}>Email *</p>
                             <input type = 'text' value = {this.state.email} onChange = {(event) => {
                                 this.setState({
                                     email: event.target.value
@@ -147,7 +147,7 @@ class Profile extends Component {
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}> 
-                            <p style = {{marginRight: '88px', fontWeight: 'bold'}}>Mật khẩu</p>
+                            <p style = {{marginRight: '88px', fontWeight: 'bold'}}>Mật khẩu *</p>
                             <input type = 'password' value = {this.state.password} onChange = {(event) => {
                                 this.setState({
                                     password: event.target.value
@@ -161,8 +161,8 @@ class Profile extends Component {
                         </div>
                         <button onClick = {this.handleChangeInformation} style = {{
                             border: 'solid 0.5px grey',
-                            padding: '10px',
-                            borderRadius: '5px',
+                            padding: '15px',
+                            borderRadius: '20px',
                             backgroundColor: blueColor,
                             color: 'white',
                             height: '30px',
@@ -186,7 +186,7 @@ class Profile extends Component {
                             flexDirection: 'row',
                             alignItems: 'center'
                         }}> 
-                            <p style = {{marginRight: '60px', fontWeight: 'bold'}}>Số điện thoại</p>
+                            <p style = {{marginRight: '60px', fontWeight: 'bold'}}>Số điện thoại *</p>
                             <input type = 'text' value = {this.state.phonenumber} onChange = {(event) => {
                                 this.setState({
                                     phonenumber: event.target.value
@@ -200,8 +200,8 @@ class Profile extends Component {
                         </div>
                         <button onClick = {this.handleChangeInformation} style = {{
                                 border: 'solid 0.5px grey',
-                                padding: '10px',
-                                borderRadius: '5px',
+                                padding: '15px',
+                                borderRadius: '20px',
                                 backgroundColor: blueColor,
                                 color: 'white',
                                 height: '30px',
