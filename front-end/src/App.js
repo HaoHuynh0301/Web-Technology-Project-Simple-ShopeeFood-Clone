@@ -2,13 +2,11 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
     BrowserRouter
 } from "react-router-dom";
 import {
     Login,
     Register,
-    Home,
     Profile,
     OrderHistory,
     FoodDetail,
@@ -18,9 +16,6 @@ import {
     Bia
 } from './Screens';
 import { ProtectedRoute } from './protected.route';
-import auth from './auth';
-const localStorage = require('local-storage');
-const axios = require('axios');
 
 function App() {
     
@@ -33,8 +28,6 @@ function App() {
                 <Route exact path = '/register'>
                     <Register />
                 </Route>
-                <ProtectedRoute exact path = '/home' component = {Home}>
-                </ProtectedRoute >
                 <Route exact path = '/profile'>
                     <Profile />
                 </Route>

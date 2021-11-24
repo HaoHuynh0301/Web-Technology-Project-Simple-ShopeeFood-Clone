@@ -145,13 +145,13 @@ class OrderHistory extends Component {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: '#f2f2f2',
+                    backgroundColor: 'white',
                 }}>
                     <p style = {{
                         fontWeight: 'bold',
                         color: orangeColor,
                         fontSize: '25px'
-                    }}>NotShoppeFood</p>
+                    }}>Lịch sử đơn hàng</p>
 
                     {/* History Order Wrapper */}
                     <div style = {{

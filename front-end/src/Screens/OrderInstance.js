@@ -350,7 +350,7 @@ class OrderInstance extends Component {
                                     border: 'solid 0.5px grey',
                                     borderRadius: '10px',
                                     backgroundColor: orangeColor,
-                                    fontWeight: 'bold'
+                                    // fontWeight: 'bold'
                                 }} onClick = {() => {
                                     this.handleConfirmDelivered();
                                 }}>Xác nhận thanh toán</button>

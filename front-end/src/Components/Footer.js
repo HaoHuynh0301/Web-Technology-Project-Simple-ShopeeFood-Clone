@@ -12,7 +12,7 @@ import {
 function Footer() {
     return(
         <footer className="w-100 py-4 flex-shrink-0" style = {{
-            borderTop: 'solid 0.5px grey'
+            borderTop: 'solid 0.5px grey',
         }}>
             <div className="container py-4">
             <div className="row gy-4 gx-5">
@@ -44,7 +44,9 @@ function Footer() {
                 <form action="#">
                     <div className="input-group mb-3">
                     <input className="form-control" type="text" placeholder="Số điện thoại" aria-label="Recipient's username" aria-describedby="button-addon2" />
-                    <button className="btn btn-primary" id="button-addon2" type="button"><i className="fas fa-paper-plane" /></button>
+                    <button style = {{
+                        backgroundColor: '#ff7733'
+                    }} className="btn btn-primary" id="button-addon2" type="button"><i className="fas fa-paper-plane" /></button>
                     </div>
                 </form>
                 </div>
