@@ -8,9 +8,8 @@
 .mainContentRegister {
     /* margin-top: 200px; */
     width: 600px;
-    height: 80%;
-    background-color: aliceblue;
-    border-radius: 30px;
+    height: 97%;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,24 +18,24 @@
 }
 
 .inputType {
-    margin-left: 10px;
+    /* margin-left: 10px; */
     height: 35px;
-    width: 300px;
+    width: 400px;
     font-size: 18px;
-    border-radius: 10px;
-    border-width: 0;
+    border-radius: 20px;
     /* color: #FFF; */
-    border-bottom-width: 1px;
-    background-color: aliceblue;
+    border-width: 1px;
+    /* border-color: rgb(214, 212, 212); */
+    background-color: white;
+    padding: 12px
 }
 
 .submitBtn {
     margin-top: 20px;
-    height: 50px;
-    width: 95%;
+    height: 40px;
+    width: 100%;
     background-color: #ff7733;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 15px;
     border-radius: 30px;
     border-width: 0px;
     margin-bottom: 20px;

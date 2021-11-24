@@ -10,7 +10,6 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
             (props) => {
                 const token = auth.isAuthenticate();
                 let dateNow = new Date();
-                console.log((dateNow.getTime()/1000) - ((jwt_decode(token).exp)))
                 if(token && ((jwt_decode(token).exp)) < (dateNow.getTime()/1000)) {
                     return(
                         <Redirect to = {

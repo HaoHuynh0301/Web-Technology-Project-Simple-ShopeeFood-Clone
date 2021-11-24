@@ -113,7 +113,7 @@ class Bia extends Component {
                         display: 'flex',
                         flexDirection: 'row' 
                     }} key = {index}>
-                        <img src = {`http://192.168.1.2:8000${item.image}`} style = {{
+                        <img src = {`http://192.168.1.3:8000${item.image}`} style = {{
                             borderRadius: '10px',
                             boxShadow: '2px 2px 2px #888888',
                             height: '100%',

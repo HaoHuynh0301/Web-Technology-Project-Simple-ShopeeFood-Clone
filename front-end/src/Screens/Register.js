@@ -8,6 +8,7 @@ import {
     Link,
 } from "react-router-dom";
 import './css/register.css';
+import background from '../assets/login-background.jpg';
 const axios = require('axios');
 const localStorage = require('local-storage');
 
@@ -46,13 +47,20 @@ class Register extends Component {
 
     render() {
         return(
-            <div className = 'Container'>
+            <div className = 'Container' style = {{
+                backgroundImage: `url(${background})`
+            }}>
                 <div className = 'mainContentRegister'>
-                    <h1 style = {{marginBottom: '40px'}}>Đăng ký</h1>
+                    <h2 style = {{
+                        marginBottom: '40px',
+                        alignSelf: 'flex-start',
+                        marginLeft: '95px',
+                        marginBottom: '40px'
+                    }}>Đăng ký</h2>
                     <form onSubmit = {this.handleRegister}>
                         <div style = {{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             justifyContent: "center",
                             marginBottom: '10px'
                         }}>
@@ -62,9 +70,11 @@ class Register extends Component {
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 width: '180px',
-                                fontSize: fontSize,
+                                fontSize: "17px",
+                                fontWeight: 'bold',
+                                marginBottom: '10px'
                             }}>
-                                Họ và tên
+                                Họ và tên *
                             </div>
                             <input
                                 className = 'inputType'
@@ -78,7 +88,7 @@ class Register extends Component {
                         </div>
                         <div style = {{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             justifyContent: "center",
                             marginBottom: '10px'
                         }}>
@@ -88,9 +98,11 @@ class Register extends Component {
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 width: '180px',
-                                fontSize: fontSize
+                                fontSize: "17px",
+                                fontWeight: 'bold',
+                                marginBottom: '10px'
                             }}>
-                                Số điện thoại
+                                Số điện thoại *
                             </div>
                             <input
                                 className = 'inputType'
@@ -104,7 +116,7 @@ class Register extends Component {
                         </div>
                         <div style = {{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             justifyContent: "center",
                             marginBottom: '10px'
                         }}>
@@ -114,9 +126,11 @@ class Register extends Component {
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 width: '180px',
-                                fontSize: fontSize
+                                fontSize: "17px",
+                                fontWeight: 'bold',
+                                marginBottom: '10px'
                             }}>
-                                Email
+                                Email *
                             </div>
                             <input
                                 className = 'inputType'
@@ -130,7 +144,7 @@ class Register extends Component {
                         </div>
                         <div style = {{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             justifyContent: "center",
                             marginBottom: '10px'
                         }}>
@@ -140,9 +154,11 @@ class Register extends Component {
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 width: '180px',
-                                fontSize: fontSize
+                                fontSize: "17px",
+                                fontWeight: 'bold',
+                                marginBottom: '10px'
                             }}>
-                                Tên đăng nhập
+                                Tên đăng nhập *
                             </div>
                             <input
                                 className = 'inputType'
@@ -156,7 +172,7 @@ class Register extends Component {
                         </div>   
                         <div style = {{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             justifyContent: "center",
                             marginBottom: '10px'
                         }}>
@@ -166,9 +182,11 @@ class Register extends Component {
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 width: '180px',
-                                fontSize: fontSize
+                                fontSize: "17px",
+                                fontWeight: 'bold',
+                                marginBottom: '10px'
                             }}>
-                                Mật khẩu
+                                Mật khẩu *
                             </div>
                             <input
                                 className = 'inputType'
@@ -182,7 +200,7 @@ class Register extends Component {
                         </div>   
                         <div style = {{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
                             justifyContent: "center",
                             marginBottom: '10px'
                         }}>
@@ -192,9 +210,11 @@ class Register extends Component {
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 width: '180px',
-                                fontSize: fontSize
+                                fontSize: "17px",
+                                fontWeight: 'bold',
+                                marginBottom: '10px'
                             }}>
-                                Xác nhận mật khẩu
+                                Xác nhận mật khẩu *
                             </div>
                             <input
                                 className = 'inputType'
@@ -214,7 +234,9 @@ class Register extends Component {
                         justifyContent: "center",
                         justifyContent: "center"
                     }}>
-                        <p>Bạn đã có tài khoản ? 
+                        <p style = {{
+                            fontWeight: 'bold'
+                        }}>Bạn đã có tài khoản ? 
                             <Link
                                 to = '/login'
                                 style = {{

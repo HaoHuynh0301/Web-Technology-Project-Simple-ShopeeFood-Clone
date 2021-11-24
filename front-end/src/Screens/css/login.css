@@ -3,15 +3,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(	#e09952, #b3b3b3);
+    /* background-image: linear-gradient(	#e09952, #b3b3b3); */
     height: 100vh;
 }
 
 .mainContent {
     width: 400px;
     height: 600px;
-    background-color: aliceblue;
-    border-radius: 30px;
+    background-color: white;
+    /* border-radius: 30px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,7 +20,9 @@
 }
 
 .signInTitleWrapper {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+    align-self: flex-start;
+    margin-left: 53px;
 }
 
 .emailInput {
@@ -30,7 +32,7 @@
 .inputWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center; 
     margin-bottom: 20px;
 }
@@ -40,22 +42,24 @@
     height: 35px;
     width: 300px;
     font-size: 18px;
-    border-radius: 10px;
-    border-width: 0;
+    border-radius: 20px;
     /* color: #FFF; */
-    border-bottom-width: 1px;
-    background-color: aliceblue;
+    border-width: 0.5px;
+    border-color: rgb(214, 212, 212);
+    background-color: white;
+    padding: 12px
     /* text-decoration-color: grey; */
 }
 
 .submitSignInBtn {
     margin-top: 20px;
-    height: 50px;
-    width: 90%;
+    height: 40px;
+    width: 93%;
     background-color: #ff7733;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 15px;
+    /* font-weight: bold; */
     border-radius: 30px;
     border-width: 0px;
     margin-bottom: 20px;
+    /* color: white; */
 }

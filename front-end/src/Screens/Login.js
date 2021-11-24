@@ -8,6 +8,7 @@ import {
     withRouter
 } from "react-router-dom";
 import auth from "../auth";
+import Loginbackground from '../assets/login-background.jpg';
 import './css/login.css';
 const axios = require('axios');
 const localStorage = require('local-storage');
@@ -45,10 +46,12 @@ class Login extends Component {
 
     render() {
         return(
-            <div className = 'Container'>
+            <div className = 'Container' style = {{
+                backgroundImage: `url(${Loginbackground})`,
+            }}>
                 <div className = 'mainContent'>
                     <div className  = 'signInTitleWrapper'>
-                        <h1>Đăng nhập</h1>
+                        <h2>Đăng nhập</h2>
                     </div>
                     <form onSubmit = {this.handleSignIn}>
                         <div class = 'inputWrapper'>
@@ -57,8 +60,9 @@ class Login extends Component {
                                 flexDirection: "row",
                                 alignSelf: "flex-start",
                                 marginLeft: "12px",
-                                fontSize: "20px"
-                            }}>Email</p>
+                                fontSize: "17px",
+                                fontWeight: 'bold'
+                            }}>Email *</p>
                             <input type = 'text' className = 'inputStyle' 
                                 value = {this.state.email}
                                 onChange = {(event) => {
@@ -66,6 +70,7 @@ class Login extends Component {
                                         email: event.target.value
                                     });
                                 }}
+                                placeholder = 'mail@gmail.com'
                             ></input>
                         </div>
                         <div class = 'inputWrapper'>
@@ -74,8 +79,9 @@ class Login extends Component {
                                 flexDirection: "row",
                                 alignSelf: "flex-start",
                                 marginLeft: "12px",
-                                fontSize: "20px"
-                            }}>Mật khẩu</p>
+                                fontSize: "17px",
+                                fontWeight: 'bold'
+                            }}>Mật khẩu *</p>
                             <input type = 'password' className = 'inputStyle'
                                 value = {this.state.password}
                                 onChange = {(event) => {
@@ -83,6 +89,7 @@ class Login extends Component {
                                         password: event.target.value
                                     });
                                 }}
+                                placeholder = 'admin12345'
                             ></input>
                         </div>
                         <input type = 'submit' value = 'Đăng nhập' className = 'submitSignInBtn'></input>
@@ -93,7 +100,10 @@ class Login extends Component {
                         justifyContent: "center",
                         justifyContent: "center",
                     }}>
-                        <p>Bạn chưa có tài khoản ? 
+                        <p style = {{
+                            fontSize: "14px",
+                            fontWeight: 'bold'
+                        }}>Bạn chưa có tài khoản ? 
                             <Link
                                 to = '/register'
                                 style = {{
