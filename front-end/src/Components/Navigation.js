@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import *  as ReactBoostrap from 'react-bootstrap';
 import {
     orangeColor,
-    blackColor
+    blackColor,
+    ipAddress
 } from '../contants';
 import {
     Link,
@@ -15,10 +16,36 @@ import shopIcon from '../assets/shopIcon.png';
 import historyIcon from '../assets/historyIcon.png';
 import accountIcon from '../assets/accountIcon.png';
 import orderIcon from '../assets/orderIcon.png'
+const axios = require('axios');
+const localStorage = require('local-storage');
+
 
 class Navigation extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            avaLink: ''
+        }
+    }
+
+    getUserInformation = () => {
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/customer-infor/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log('Error');
+        })
+    }
+
+    componentDidMount = () => {
+        this.getUserInformation();
     }
 
     render() {

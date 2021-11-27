@@ -42,6 +42,7 @@ class CustomerSerializer(serializers.ModelSerializer):
             "email",
             "password",
             "phone_number",
+            "avatar"
         ]
         
 
