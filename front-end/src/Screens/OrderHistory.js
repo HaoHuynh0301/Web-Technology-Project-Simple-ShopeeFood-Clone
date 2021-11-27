@@ -68,7 +68,9 @@ class OrderHistory extends Component {
                     textDecoration: "none",
                     borderRadius: '10px',
                     marginTop: '10px',
-                    color: 'black'
+                    color: 'black',
+                    borderColor: orangeColor,
+                    fontWeight: 'bold'
                 }}>Bắt đầu mua hàng ngay</Link>
             </div>
         );
@@ -191,9 +193,9 @@ class OrderHistory extends Component {
         } else {
             return(
                 <div style = {{
-                    height: '635px',
+                    height: '520px',
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
