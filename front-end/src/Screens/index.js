@@ -8,6 +8,7 @@ import DoAn from "./DoAn";
 import ThucPham from "./ThucPham";
 import Bia from "./Bia";
 import RoutingMachine from "./RoutingMachine";
+import Voucher from "./Voucher";
 
 export {
     Login,
@@ -19,5 +20,6 @@ export {
     DoAn,
     ThucPham,
     Bia,
-    RoutingMachine
+    RoutingMachine,
+    Voucher
 }

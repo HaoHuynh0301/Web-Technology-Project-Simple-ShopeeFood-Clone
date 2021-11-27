@@ -64,3 +64,15 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShippingAddress
         fields = "__all__"
+        
+
+class VoucherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voucher
+        fields = "__all__"
+        
+
+class CustomerVoucherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerVoucher
+        fields = "__all__"

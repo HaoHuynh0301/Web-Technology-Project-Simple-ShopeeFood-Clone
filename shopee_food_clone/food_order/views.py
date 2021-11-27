@@ -485,3 +485,15 @@ class OrderUpdateView(APIView):
                 return Response(context, status = status.HTTP_200_OK)
             return Response({'msg': 'NOT FOUND'}, status = status.HTTP_400_BAD_REQUEST)
         return Response({'msg': 'not found'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class VoucherView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        voucherCode = request.data['code']
+        voucher = Voucher.objects.filter(code = voucherCode)
+        if len(voucher) > 0:
+            serializer = VoucherSerializer(voucher[1])
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response({'msg': 'Not found!'}, status = status.HTTP_400_BAD_REQUEST)
