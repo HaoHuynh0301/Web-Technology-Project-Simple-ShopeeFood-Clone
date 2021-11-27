@@ -4,11 +4,10 @@ import {
     Footer
 } from '../Components';
 import {
-    blueColor,
     ipAddress
 } from '../contants';
-import accountIcon from '../assets/accountIcon.png';
 import noVoucherIcon from '../assets/novoucherIcon.png';
+import { ScrollView } from "@cantonjs/react-scroll-view";
 const axios = require('axios');
 const localStorage = require('local-storage');
 
@@ -16,29 +15,58 @@ class Voucher extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vouchers: null
+            vouchers: []
         }
         
         this.getVoucherInformation = this.getVoucherInformation.bind(this);
     }
 
     mainView = () => {
-        return(
-            <div style = {{
-                height: '520px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
-                <span style = {{
-                    fontSize: '30px',
-                    fontWeight: 'bold',
-                    // marginTop: '10px'
-                }}>MÃ KHUYẾN MÃI</span>
-                {this.emptyVoucherView()}
-            </div>
-        );
+        if(this.state.vouchers.length > 0) {
+           return(
+                <div style = {{
+                    height: '520px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <span style = {{
+                        fontSize: '30px',
+                        fontWeight: 'bold',
+                    }}>MÃ KHUYẾN MÃI</span>
+                    <div style = {{
+                        height: '70%',
+                        width: '60%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        border: 'solid 0.5px grey',
+                        marginTop: '20px'
+                    }}>
+
+                    </div>
+                </div>
+           );
+        } else {
+            return(
+                <div style = {{
+                    height: '520px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <span style = {{
+                        fontSize: '30px',
+                        fontWeight: 'bold',
+                    }}>MÃ KHUYẾN MÃI</span>
+                    {this.emptyVoucherView()}
+                </div>
+            );
+        }
+        
     }
 
     emptyVoucherView = () => {

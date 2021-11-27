@@ -15,6 +15,7 @@ import shopIcon from '../assets/shopIcon.png';
 import historyIcon from '../assets/historyIcon.png';
 import accountIcon from '../assets/accountIcon.png';
 import orderIcon from '../assets/orderIcon.png'
+import voucherIcon from '../assets/voucherIcon.png';
 const axios = require('axios');
 const localStorage = require('local-storage');
 
@@ -107,6 +108,11 @@ class Navigation extends Component {
                                 width: '30px',
                                 marginRight: '5px'
                             }} /><Link style = {{textDecoration: "none", color: blackColor}} to = '/order-instance'>Đơn hàng hiện tại</Link></ReactBoostrap.NavDropdown.Item>
+                            <ReactBoostrap.NavDropdown.Item><img src = {voucherIcon} style = {{
+                                height:'30px',
+                                width: '30px',
+                                marginRight: '5px'
+                            }} /><Link style = {{textDecoration: "none", color: blackColor}} to = '/voucher'>Ví Voucher</Link></ReactBoostrap.NavDropdown.Item>
                             <ReactBoostrap.NavDropdown.Item><button style = {{
                                 borderWidth: '0px',
                                 backgroundColor: 'auto',
