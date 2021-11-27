@@ -7,31 +7,16 @@ from .models import *
 
 # Serializer for register customer.
 class CustomerCreationSerializer(serializers.ModelSerializer):
-    full_name = serializers.CharField()
-    username = serializers.CharField()
-    email = serializers.EmailField()
-    password1 = serializers.CharField()
-    password2 = serializers.CharField()
-    phone_number = serializers.CharField()
-
     class Meta:
         model = Customer
         fields = [
             "full_name",
-            "username",
+            "full_name",
             "email",
-            "password1",
-            "password2",
+            "password",
             "phone_number",
         ]
 
-    def clean_password2(self):
-        # Check that the two password entries match
-        password1 = self.data["password1"]
-        password2 = self.data["password2"]
-        if password1 and password2 and password1 != password2:
-            return False
-        return True
 
 
 class CustomerSerializer(serializers.ModelSerializer):

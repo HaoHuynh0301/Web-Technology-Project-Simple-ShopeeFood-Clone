@@ -94,13 +94,17 @@ class Profile extends Component {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                // marginTop: '5px',
+                // marginBottom: '5px',
+                backgroundColor: '#f2f2f2'
             }}>
                 <div style = {{
                     height: '100%',
                     width: '40%',
                     border: 'solid 0.2px #e6e6e6',
-                    boxShadow: '5px 10px 18px #888888'
+                    boxShadow: '5px 10px 18px #888888',
+                    background: 'white'
                 }}>
                     <div style = {{
                         paddingTop: '10px',
@@ -130,9 +134,10 @@ class Profile extends Component {
                                 marginBottom: '10px'
                             }}>Tải ảnh đại diện</span>
                             <img src = {this.state.avaLink} style = {{
-                                height: '50px',
-                                width: '50px',
-                                borderRadius: '50px'
+                                height: '70px',
+                                width: '70px',
+                                borderRadius: '50px',
+                                marginLeft: '20px'
                             }} />
                         </div>
                         <div style = {{
@@ -142,7 +147,7 @@ class Profile extends Component {
                                 Tải ảnh lên từ 
                                 <input style = {{
                                     borderWidth: '0px',
-                                    marginLeft: '5px'
+                                    marginLeft: '5px',
                                 }} type="file" onChange = {(event) => {
                                     this.setState({
                                         img: event.target.files[0]

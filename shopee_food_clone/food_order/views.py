@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from django.contrib.auth.hashers import make_password
 
 from .serializers import *
 from .models import *
@@ -118,21 +119,13 @@ def checkout(request):
 # API function to register customer.
 @api_view(["POST"])
 def registerUserApi(request):
-    # Serialize POST request.
-    serializer = CustomerCreationSerializer(data=request.data)
-    # Save customer to database if valid.
-    if serializer.is_valid() and serializer.clean_password2():
-        form = CustomerCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            full_name = form.cleaned_data["full_name"]
-            phone_number = form.cleaned_data["phone_number"]
-            Customer.objects.create(
-                user=user, full_name=full_name, phone_number=phone_number
-            )
-        # Return JSON result.
+    serializer = CustomerCreationSerializer(data = request.data)
+    print(request.data)
+    if serializer.is_valid():
+        serializer.validated_data['password'] = make_password(serializer.validated_data['password'])
+        serializer.save()
         return Response({'msg':'Created'}, status=status.HTTP_201_CREATED)
-    # Return JSON errors.
+    print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
