@@ -11,6 +11,7 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
                 const token = auth.isAuthenticate();
                 let dateNow = new Date();
                 if(token !== null && ((jwt_decode(token).exp)) < (dateNow.getTime()/1000)) {
+                    alert('PHIÊN ĐĂNG NHẬP HẾT HẠN!');
                     return(
                         <Redirect to = {
                             {
