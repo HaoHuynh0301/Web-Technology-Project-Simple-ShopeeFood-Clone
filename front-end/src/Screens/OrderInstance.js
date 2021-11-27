@@ -36,7 +36,8 @@ class OrderInstance extends Component {
             Longitude: null,
             totalCast: 0,
             loaded: false,
-            voucher: ''
+            voucher: '',
+            applyingVoucher: null
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
@@ -46,7 +47,27 @@ class OrderInstance extends Component {
     }
 
     handleUseVoucher = () => {
-
+        const token = localStorage.get('token');
+        axios.get(`${ipAddress}/api/voucher?code=${this.state.voucher}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            let tmpCast = (1 - Number(response.data.percentage)/100) * this.state.totalCast
+            this.setState({
+                totalCast: tmpCast,
+                applyingVoucher: this.state.voucher,
+                voucher: ''
+            });
+        })
+        .catch((error) => {
+            alert('Voucher không hợp lệ');
+            this.setState({
+                voucher: ''
+            })
+        })
     }
 
     getDeliveredCoordinate = () => {
@@ -122,7 +143,8 @@ class OrderInstance extends Component {
             axios.post(`${ipAddress}/api/checkout/`, {
                 lattitude: position.coords.latitude,
                 longitude: position.coords.longitude,
-                cast: totalCast
+                cast: totalCast,
+                voucher: this.state.applyingVoucher
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -527,8 +549,13 @@ class OrderInstance extends Component {
                                     <input style = {{
                                         border: 'solid 0.5px grey',
                                         borderRadius: '20px',
-                                        width: '150px'
-                                    }} type = 'text' value = {this.state.voucher}></input>
+                                        width: '150px',
+                                        padding: '5px'
+                                    }} onChange = {(event) => {
+                                        this.setState({
+                                            voucher: event.target.value
+                                        });
+                                    }}type = 'text' value = {this.state.voucher}></input>
                                     <button style = {{
                                         fontSize: '12px',
                                         borderWidth: '0px',

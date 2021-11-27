@@ -273,6 +273,7 @@ def checkoutApi(request):
     lattitude = data['lattitude']
     longitude = data['longitude']
     cast = data['cast']
+    voucher = data['voucher']
     # Get customer information
     customer = request.user
     # Update checkout status for order.
@@ -296,6 +297,13 @@ def checkoutApi(request):
         'order': orderSerializer.data,
         'items': orderDetailsSerializer.data
     }
+    
+    if voucher != None:
+        voucher = Voucher.objects.get(code = voucher)
+        voucher.quantity -= 1
+        voucher.save()
+        if voucher.quantity < 1:
+            voucher.delete()
     # Return JSON result.
     return Response(context, status = status.HTTP_200_OK)
 
@@ -491,10 +499,10 @@ class VoucherView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request, format = None):
-        voucherCode = request.data['code']
+        voucherCode = request.query_params.get('code')
         voucher = Voucher.objects.filter(code = voucherCode)
         if len(voucher) > 0:
-            serializer = VoucherSerializer(voucher[1])
+            serializer = VoucherSerializer(voucher[0])
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'Not found!'}, status = status.HTTP_400_BAD_REQUEST)
     
