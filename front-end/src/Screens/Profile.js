@@ -7,6 +7,7 @@ import {
     blueColor,
     ipAddress
 } from '../contants';
+import accountIcon from '../assets/accountIcon.png';
 const axios = require('axios');
 const localStorage = require('local-storage');
 
@@ -17,7 +18,9 @@ class Profile extends Component {
             name: '',
             password: null,
             phonenumber: '',
-            email: ''
+            email: '',
+            avaLink: '',
+            img: ''
         }
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
@@ -41,7 +44,16 @@ class Profile extends Component {
                 name: response.data.full_name,
                 phonenumber: response.data.phone_number,
                 email: response.data.email,
-            })
+            });
+            if(response.data.avatar !== null) {
+                this.setState({
+                    avaLink: `${ipAddress}${response.data.avatar}`
+                });
+            } else {
+                this.setState({
+                    avaLink: accountIcon
+                });
+            }
         })
         .catch((error) => {
             console.log('Error');
@@ -49,18 +61,20 @@ class Profile extends Component {
     }
 
     handleChangeInformation = () => {
+        console.log(this.state.img);
         if(this.state.password === null) {
             alert('VUI LÒNG NHẬP MẬT KHẨU CẦN THAY ĐỔI!');
         } else {
             const token = localStorage.get('token');
-            axios.post(`${ipAddress}/api/customer-infor/`, {
-                full_name: this.state.name,
-                email: this.state.email,
-                phone_number: this.state.phonenumber,
-                password: this.state.password
-            } ,{
+            let form_data = new FormData();
+            form_data.append('full_name', this.state.name);
+            form_data.append('email', this.state.email);
+            form_data.append('phone_number', this.state.phonenumber);
+            form_data.append('password', this.state.password);
+            form_data.append('avatar', this.state.img, this.state.img.name);
+            axios.post(`${ipAddress}/api/customer-infor/`, form_data ,{
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`
                 }
             })
@@ -76,14 +90,14 @@ class Profile extends Component {
     mainView = () => {
         return(
             <div style = {{
-                height: '520px',
+                height: '580px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
                 <div style = {{
-                    height: '90%',
+                    height: '100%',
                     width: '40%',
                     border: 'solid 0.2px #e6e6e6',
                     boxShadow: '5px 10px 18px #888888'
@@ -94,6 +108,60 @@ class Profile extends Component {
                         borderBottom: 'solid 0.5px #e6e6e6',
                     }}>
                         <p style = {{fontWeight: 'bold', fontSize: '20px'}}>Thông tin người dùng</p>
+                    </div>
+                    <div style = {{
+                        height: '20%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        paddingTop: '20px',
+                        paddingLeft: '20px',
+                        borderBottom: 'solid 0.5px #e6e6e6',
+                        paddingBottom: '20px',
+                        alignItems: 'center'
+                    }}>
+                        <div style = {{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                        }}>
+                            <span style = {{
+                                fontWeight: 'bold',
+                                color: blueColor,
+                                marginBottom: '10px'
+                            }}>Tải ảnh đại diện</span>
+                            <img src = {this.state.avaLink} style = {{
+                                height: '50px',
+                                width: '50px',
+                                borderRadius: '50px'
+                            }} />
+                        </div>
+                        <div style = {{
+                            marginLeft: '50px'
+                        }}>
+                            <span>
+                                Tải ảnh lên từ 
+                                <input style = {{
+                                    borderWidth: '0px',
+                                    marginLeft: '5px'
+                                }} type="file" onChange = {(event) => {
+                                    this.setState({
+                                        img: event.target.files[0]
+                                    });
+                                }}></input>
+                            </span>
+                            <button style = {{
+                                border: 'solid 0.5px grey',
+                                padding: '15px',
+                                borderRadius: '20px',
+                                backgroundColor: blueColor,
+                                color: 'white',
+                                height: '30px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                marginTop: '5px',
+                            }} onClick = {() => this.handleChangeInformation()}>Cập nhật</button>
+                        </div>
                     </div>
                     <div style = {{
                         paddingTop: '20px',

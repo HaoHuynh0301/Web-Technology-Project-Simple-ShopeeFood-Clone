@@ -385,6 +385,7 @@ class CustomerView(APIView):
     def post(self, request, format = None):
         password = request.data['password']
         instanceUser = request.user
+        print(request.data)
         serializer = CustomerSerializer(instanceUser, data = request.data)
         if serializer.is_valid():
             serializer.save()

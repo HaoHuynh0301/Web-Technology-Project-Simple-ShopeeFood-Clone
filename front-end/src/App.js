@@ -28,9 +28,8 @@ function App() {
                 <Route exact path = '/register'>
                     <Register />
                 </Route>
-                <Route exact path = '/profile'>
-                    <Profile />
-                </Route>
+                <ProtectedRoute exact path = '/profile' component = {Profile}>
+                </ProtectedRoute>
                 <ProtectedRoute exact path = '/history-order' component = {OrderHistory}>
                 </ProtectedRoute>
                 <ProtectedRoute exact path = '/detail/:id' component = {FoodDetail}>
