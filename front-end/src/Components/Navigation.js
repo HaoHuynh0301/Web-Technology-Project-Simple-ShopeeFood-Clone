@@ -47,7 +47,8 @@ class Navigation extends Component {
                         </ReactBoostrap.Nav>
                         <ReactBoostrap.Nav>
                         <ReactBoostrap.NavDropdown style = {{
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            width: '130px'
                         }} title={
                             <img src = {backgroundImg} style = {{
                                 height: '35px',

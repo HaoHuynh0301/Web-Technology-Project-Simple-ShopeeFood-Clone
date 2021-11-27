@@ -105,7 +105,7 @@ class FoodDetail extends Component {
                             width: '480px',
                             borderRadius: '10px',
                             boxShadow: '5px 10px 18px #888888',
-                        }} src = {`http://192.168.1.3:8000${this.state.foodInformation.image}`}></img>
+                        }} src = {`${ipAddress}${this.state.foodInformation.image}`}></img>
                         <p style = {{
                             fontWeight: 'bold',
                             marginTop: '20px'
