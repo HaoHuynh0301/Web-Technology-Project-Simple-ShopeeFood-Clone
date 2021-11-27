@@ -20,7 +20,7 @@ class Profile extends Component {
             phonenumber: '',
             email: '',
             avaLink: '',
-            img: ''
+            img: null
         }
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
         this.handleChangeInformation = this.handleChangeInformation.bind(this);
@@ -61,9 +61,28 @@ class Profile extends Component {
     }
 
     handleChangeInformation = () => {
-        console.log(this.state.img);
         if(this.state.password === null) {
             alert('VUI LÒNG NHẬP MẬT KHẨU CẦN THAY ĐỔI!');
+        } else if(this.state.img === null) {
+            const token = localStorage.get('token');
+            let form_data = new FormData();
+            form_data.append('full_name', this.state.name);
+            form_data.append('email', this.state.email);
+            form_data.append('phone_number', this.state.phonenumber);
+            form_data.append('password', this.state.password);
+            axios.post(`${ipAddress}/api/customer-infor/`, form_data ,{
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                alert('CẬP NHẬT THÀNH CÔNG!');
+                this.getUserInformation();
+            })
+            .catch((error) => {
+                alert('CẬP NHẬT KHÔNG THÀNH KHÔNG!');
+            })
         } else {
             const token = localStorage.get('token');
             let form_data = new FormData();
@@ -80,6 +99,7 @@ class Profile extends Component {
             })
             .then((response) => {
                 alert('CẬP NHẬT THÀNH CÔNG!');
+                this.getUserInformation();
             })
             .catch((error) => {
                 alert('CẬP NHẬT KHÔNG THÀNH KHÔNG!');
