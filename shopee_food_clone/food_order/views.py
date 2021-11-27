@@ -497,3 +497,15 @@ class VoucherView(APIView):
             serializer = VoucherSerializer(voucher[1])
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'Not found!'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class CustomerVoucherView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format = None):
+        user = request.user
+        cusVouchers = CustomerVoucher.objects.filter(customer = user)
+        if len(cusVouchers) > 0:
+            serializer = CustomerVoucherSerializer(cusVouchers, many = True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)
