@@ -1,13 +1,5 @@
 import appstore from '../assets/appstore.png';
 import './footer.css';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect,
-    withRouter 
-} from "react-router-dom";
 
 function Footer() {
     return(

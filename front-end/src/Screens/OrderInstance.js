@@ -36,11 +36,17 @@ class OrderInstance extends Component {
             Longitude: null,
             totalCast: 0,
             loaded: false,
+            voucher: ''
         }
         this.handleGetOrder = this.handleGetOrder.bind(this);
         this.getDeliveredCoordinate = this.getDeliveredCoordinate.bind(this);
         this.getInformation = this.getInformation.bind(this);
         this.handleConfirmDelivered = this.handleConfirmDelivered.bind(this);
+        this.handleUseVoucher = this.handleUseVoucher.bind(this);
+    }
+
+    handleUseVoucher = () => {
+
     }
 
     getDeliveredCoordinate = () => {
@@ -506,6 +512,32 @@ class OrderInstance extends Component {
                                     marginBottom: '35px'
                                 }}>Chi tiết đơn hàng</p>
                                 {item}
+                                <div style = {{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    backgroundColor: '#f2f2f2',
+                                    height: '30px',
+                                    marginTop: '10px',
+                                    padding: '5px',
+                                    justifyContent: 'space-between'
+                                }}>
+                                    <span style = {{
+                                        fontWeight: 'bold'
+                                    }}>Mã khuyến mãi</span>
+                                    <input style = {{
+                                        border: 'solid 0.5px grey',
+                                        borderRadius: '20px',
+                                        width: '150px'
+                                    }} type = 'text' value = {this.state.voucher}></input>
+                                    <button style = {{
+                                        fontSize: '12px',
+                                        borderWidth: '0px',
+                                        backgroundColor: '#00e600',
+                                        borderRadius: '5px'
+                                    }} onClick = {() => {
+                                        this.handleUseVoucher();
+                                    }} >Áp dụng</button>
+                                </div>
                                 <div style = {{
                                     display: 'flex',
                                     flexDirection: 'row',
