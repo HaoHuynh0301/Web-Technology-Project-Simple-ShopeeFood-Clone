@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import {
     orangeColor,
-    fontSize,
     ipAddress
 } from '../contants';
 import {
     Link,
+    withRouter 
 } from "react-router-dom";
 import './css/register.css';
 import background from '../assets/login-background.jpg';
@@ -36,7 +36,8 @@ class Register extends Component {
         })
         .then((response) => {
             alert('ĐĂNG KÝ TÀI KHOẢN THÀNH CÔNG');
-            // this.props.history.push('/login');
+            
+            this.props.history.push('/login');
         })
         .catch((error) => {
             alert('THÔNG TIN TÀI KHOẢN KHÔNG HỢP LỆ');
@@ -194,6 +195,7 @@ class Register extends Component {
                                         pass1: event.target.value
                                     });
                                 }}
+                                type = 'password'
                             ></input>
                         </div>   
                         <input className = 'submitBtn' type = 'submit' value = 'Đăng ký'></input>
@@ -222,4 +224,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default withRouter(Register);
