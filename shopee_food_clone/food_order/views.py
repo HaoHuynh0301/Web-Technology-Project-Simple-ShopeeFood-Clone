@@ -506,6 +506,9 @@ class CustomerVoucherView(APIView):
         user = request.user
         cusVouchers = CustomerVoucher.objects.filter(customer = user)
         if len(cusVouchers) > 0:
-            serializer = CustomerVoucherSerializer(cusVouchers, many = True)
+            tmp = []
+            for voucher in cusVouchers:
+                tmp.append(voucher.voucher)
+            serializer = VoucherSerializer(tmp, many = True)
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)
