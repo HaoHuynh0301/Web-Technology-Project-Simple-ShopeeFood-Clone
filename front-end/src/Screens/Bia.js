@@ -4,7 +4,6 @@ import {
     Footer
 } from '../Components';
 import { ScrollView } from "@cantonjs/react-scroll-view";
-import tmpImage from '../assets/hamburger.jpg';
 import backgroundImg from '../assets/foodbackground2.jpg';
 import {
     blueColor,
@@ -113,7 +112,7 @@ class Bia extends Component {
                         display: 'flex',
                         flexDirection: 'row' 
                     }} key = {index}>
-                        <img src = {`http://192.168.1.3:8000${item.image}`} style = {{
+                        <img src = {`${ipAddress}${item.image}`} style = {{
                             borderRadius: '10px',
                             boxShadow: '2px 2px 2px #888888',
                             height: '100%',
