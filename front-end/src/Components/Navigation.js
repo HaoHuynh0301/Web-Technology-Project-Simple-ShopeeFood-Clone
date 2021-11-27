@@ -37,7 +37,16 @@ class Navigation extends Component {
             }
         })
         .then((response) => {
-            console.log(response.data);
+            if(response.data.avatar !== null) {
+                this.setState({
+                    avaLink: `${ipAddress}${response.data.avatar}`
+                });
+            } else {
+                this.setState({
+                    avaLink: accountIcon
+                });
+            }
+            
         })
         .catch((error) => {
             console.log('Error');
@@ -49,6 +58,7 @@ class Navigation extends Component {
     }
 
     render() {
+        console.log(this.state.avaLink);
          return(
             <ReactBoostrap.Navbar collapseOnSelect expand="lg" bg={orangeColor} variant="light" style = {{backgroundColor: orangeColor}}>
                 <ReactBoostrap.Container>
@@ -77,11 +87,11 @@ class Navigation extends Component {
                             fontWeight: 'bold',
                             width: '130px'
                         }} title={
-                            <img src = {backgroundImg} style = {{
+                            <img src = {this.state.avaLink} style = {{
                                 height: '35px',
                                 width: '35px',
                                 borderRadius: '50px'
-                            }} />
+                            }}/>
                         } id="collasible-nav-dropdown">
                             <ReactBoostrap.NavDropdown.Item><img src = {accountIcon} style = {{
                                 height:'30px',
