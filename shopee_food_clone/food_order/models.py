@@ -161,3 +161,11 @@ class Voucher(models.Model):
     
     def __str__(self):
         return str(self.code)
+    
+    
+class CustomerVoucher(models.Model):
+    customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
+    voucher = models.ForeignKey(Voucher, on_delete = models.CASCADE)
+    
+    def __str__(self):
+        return str(self.voucher.code)
