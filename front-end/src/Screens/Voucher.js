@@ -7,6 +7,7 @@ import {
     ipAddress
 } from '../contants';
 import noVoucherIcon from '../assets/novoucherIcon.png';
+import voucherIcon from '../assets/voucherIcon.png';
 import { ScrollView } from "@cantonjs/react-scroll-view";
 const axios = require('axios');
 const localStorage = require('local-storage');
@@ -19,10 +20,47 @@ class Voucher extends Component {
         }
         
         this.getVoucherInformation = this.getVoucherInformation.bind(this);
+        this.handleEndReached = this.handleEndReached.bind(this);
     }
+
+    handleEndReached = () => {
+        console.log("load more");
+    };
+
 
     mainView = () => {
         if(this.state.vouchers.length > 0) {
+            const listVouchers = this.state.vouchers.map((item, index) => {
+                return(
+                    <div key = {index} style = {{
+                        height: '70px',
+                        width: '400px',
+                        borderBottom: 'solid 1px grey',
+                        display: 'flex',
+                        flexDirection: 'row'
+                    }}>
+                        <img src = {voucherIcon} style = {{
+                            height: '50px',
+                            width: '50px'
+                        }}></img>
+                        <div style = {{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: "space-around",
+                            marginLeft: '20px'
+                        }}>
+                            <span style = {{
+                                fontWeight: 'bold'
+                            }}>Giảm trực tiếp {item.percentage}% vào tổng giá</span>
+                            <span>Số lượng: {item.quantity}</span>
+                        </div>
+                        <button style = {{
+                            
+                        }}></button>
+                    </div>
+                );
+            });
+
            return(
                 <div style = {{
                     height: '520px',
@@ -30,6 +68,7 @@ class Voucher extends Component {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
+                    backgroundColor: '#f2f2f2'
                 }}>
                     <span style = {{
                         fontSize: '30px',
@@ -43,9 +82,15 @@ class Voucher extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                         border: 'solid 0.5px grey',
-                        marginTop: '20px'
-                    }}>
+                        marginTop: '20px',
+                        backgroundColor: 'white'
 
+                    }}>
+                        <ScrollView style = {{
+                            height: '90%'
+                        }} onEndReached={this.handleEndReached}>
+                            {listVouchers}
+                        </ScrollView>
                     </div>
                 </div>
            );
