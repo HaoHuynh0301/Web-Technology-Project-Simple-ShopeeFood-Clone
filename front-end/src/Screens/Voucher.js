@@ -4,7 +4,8 @@ import {
     Footer
 } from '../Components';
 import {
-    ipAddress
+    ipAddress,
+    orangeColor
 } from '../contants';
 import noVoucherIcon from '../assets/novoucherIcon.png';
 import voucherIcon from '../assets/voucherIcon.png';
@@ -21,6 +22,12 @@ class Voucher extends Component {
         
         this.getVoucherInformation = this.getVoucherInformation.bind(this);
         this.handleEndReached = this.handleEndReached.bind(this);
+        this.copyToClipboard = this.copyToClipboard.bind(this);
+    }
+
+    copyToClipboard = (e, code) => {
+        navigator.clipboard.writeText(code);
+        alert('Sao chép mã khuyến mãi thành công!');
     }
 
     handleEndReached = () => {
@@ -37,7 +44,8 @@ class Voucher extends Component {
                         width: '400px',
                         borderBottom: 'solid 1px grey',
                         display: 'flex',
-                        flexDirection: 'row'
+                        flexDirection: 'row',
+                        paddingBottom: '5px'
                     }}>
                         <img src = {voucherIcon} style = {{
                             height: '50px',
@@ -47,7 +55,9 @@ class Voucher extends Component {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: "space-around",
-                            marginLeft: '20px'
+                            marginLeft: '20px',
+                            borderRight: 'solid 0.5px grey',
+                            paddingRight: '5px'
                         }}>
                             <span style = {{
                                 fontWeight: 'bold'
@@ -55,8 +65,16 @@ class Voucher extends Component {
                             <span>Số lượng: {item.quantity}</span>
                         </div>
                         <button style = {{
-                            
-                        }}></button>
+                            marginLeft: '10px',
+                            borderWidth: '0px',
+                            backgroundColor: orangeColor,
+                            height: '60px',
+                            borderRadius: '30px',
+                            fontSize: '15px',
+                            fontWeight: 'bold'
+                        }} onClick = {(e) => {
+                            this.copyToClipboard(e, item.code);
+                        }}>Sử dụng ngay</button>
                     </div>
                 );
             });
