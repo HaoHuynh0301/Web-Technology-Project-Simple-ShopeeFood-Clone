@@ -283,7 +283,7 @@ class OrderInstance extends Component {
                                     <p>Tổng tiền: </p><p style = {{
                                         fontWeight: 'bold',
                                         marginLeft: '10px'
-                                    }}>70.000 vnđ</p>
+                                    }}>{this.state.instanceOrder.cast} vnđ</p>
                                 </div>
                                 <div style = {{
                                     display: 'flex',
