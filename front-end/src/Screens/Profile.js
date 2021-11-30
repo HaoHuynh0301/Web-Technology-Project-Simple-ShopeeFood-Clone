@@ -115,8 +115,6 @@ class Profile extends Component {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                // marginTop: '5px',
-                // marginBottom: '5px',
                 backgroundColor: '#f2f2f2'
             }}>
                 <div style = {{

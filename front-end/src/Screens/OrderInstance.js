@@ -590,7 +590,7 @@ class OrderInstance extends Component {
                             <button style = {{
                                 border: 'none',
                                 backgroundColor: 'white',
-                                marginTop: '20%',
+                                alignSelf: 'flex-end',
                                 fontWeight: 'bold'
                             }} onClick = {() => {
                                 const token = localStorage.get('token')
