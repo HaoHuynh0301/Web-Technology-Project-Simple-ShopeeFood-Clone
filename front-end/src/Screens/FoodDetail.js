@@ -210,9 +210,9 @@ class FoodDetail extends Component {
                     <Modal.Title>Xác nhận thêm vào đơn hàng của bạn</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>+ {this.state.foodInformation.name}</p>
-                        <p>+ {this.state.foodInformation.description}</p>
-                        <p>+ {this.state.foodInformation.price}</p>
+                        <p>+ Tên sản phẩm: {this.state.foodInformation.name}</p>
+                        <p>+ Ghi chú: {this.state.foodInformation.description}</p>
+                        <p>+ Giá: {this.state.foodInformation.price} vnđ</p>
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={() => {

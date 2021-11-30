@@ -4,6 +4,7 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
+import carIcon from '../assets/car.gif';
 
 L.Marker.prototype.options.icon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
@@ -21,12 +22,12 @@ export default function RoutingMachine(props) {
         addWaypoints: false,
         draggableWaypoints: false,
         fitSelectedRoutes: false,
-        showAlternatives: false
+        showAlternatives: false,
+        
       }).addTo(map);
-  
       return () => map.removeControl(routingControl);
     }, [map]);
-  
+
     return null;
   }
 

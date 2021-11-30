@@ -35,5 +35,6 @@ urlpatterns = [
     path('api/re-order/', views.ReOrderView.as_view(), name = 're-order'),
     path('api/order/', views.OrderUpdateView.as_view(), name = 'order'),
     path('api/voucher/', views.VoucherView.as_view(), name = 'voucher'),
-    path('api/cus-vouchers/', views.CustomerVoucherView.as_view(), name = 'customer-voucher')
+    path('api/cus-vouchers/', views.CustomerVoucherView.as_view(), name = 'customer-voucher'),
+    path('api/remove-order/', views.RemoveOrderView.as_view(), name = 'remove-order')
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

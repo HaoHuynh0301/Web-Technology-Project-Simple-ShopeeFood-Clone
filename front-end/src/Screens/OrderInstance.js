@@ -587,6 +587,31 @@ class OrderInstance extends Component {
                                     borderRadius: '10px'
                                 }}>Đặt hàng</button>
                             </div>
+                            <button style = {{
+                                border: 'none',
+                                backgroundColor: 'white',
+                                marginTop: '20%',
+                                fontWeight: 'bold'
+                            }} onClick = {() => {
+                                const token = localStorage.get('token')
+                                axios.post(`${ipAddress}/api/remove-order/`, {
+                                    id: this.state.instanceOrder.id
+                                } , {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${token}`
+                                    }
+                                })
+                                .then((response) => {
+                                    alert('HỦY ĐƠN HÀNG THÀNH CÔNG!');
+                                    this.setState({
+                                        listFoodsInstance: null
+                                    })
+                                })
+                                .catch((error) => {
+                                    alert('HỦY ĐƠN HÀNG KHÔNG THÀNH CÔNG! VUI LÒNG THỬ LẠI SAU');
+                                })
+                            }}>Hủy đơn hàng</button>
                         </div>
                     </div>
                 );    

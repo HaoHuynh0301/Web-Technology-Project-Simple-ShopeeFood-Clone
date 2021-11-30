@@ -520,3 +520,15 @@ class CustomerVoucherView(APIView):
             serializer = VoucherSerializer(tmp, many = True)
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)
+    
+    
+class RemoveOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, format = None):
+        orderId = request.data['id']
+        orders = Order.objects.filter(id = orderId)
+        if len(orders):
+            orders[0].delete()
+            return Response({'msg': 'OK'}, status = status.HTTP_200_OK)
+        return Response({'msg': 'Not found'}, status = status.HTTP_400_BAD_REQUEST)

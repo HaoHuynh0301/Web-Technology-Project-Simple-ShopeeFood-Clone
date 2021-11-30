@@ -170,15 +170,15 @@ class OrderHistory extends Component {
                             flexDirection: 'row',
                         }}>
                             <p style = {{
-                                marginLeft: '40px',
+                                marginLeft: '53px',
                                 fontWeight: 'bold'
                             }}>ID</p>
                             <p style = {{
-                                marginLeft: '125px',
+                                marginLeft: '180px',
                                 fontWeight: 'bold'
                             }}>Thời gian</p>
                             <p style = {{
-                                marginLeft: '260px',
+                                marginLeft: '190px',
                                 fontWeight: 'bold'
                             }}>Tổng tiền</p>
                         </div>
